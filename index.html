@@ -1749,7 +1749,7 @@
                 transactions: [],
                 settings: { ppn: 11 },
                 users: [
-                    { username: 'admin', passwordHash: null } // akan diisi saat init
+                    { username: 'admin', passwordHash: null }
                 ],
                 currentUser: 'admin',
                 lastInvoiceNumber: 0
@@ -1766,27 +1766,24 @@
         }
 
         // ================================================================
-        //  INIT AUTH (hash password default saat pertama kali)
+        //  INIT AUTH
         // ================================================================
 
         let isAuthenticated = false;
 
         async function initAuth() {
             const db = getDb();
-            // Cek apakah user admin sudah punya hash
             const adminUser = db.users.find(u => u.username === 'admin');
             if (adminUser && !adminUser.passwordHash) {
-                // Hash default password 'admin123'
                 adminUser.passwordHash = await hashPassword('admin123');
                 saveDb(db);
             }
-            // Cek apakah sudah login sebelumnya
             const session = sessionStorage.getItem('malik_kasir_session');
             if (session) {
                 try {
                     const data = JSON.parse(session);
                     const user = db.users.find(u => u.username === data.username);
-                    if (user && data.timestamp > Date.now() - 3600000) { // session 1 jam
+                    if (user && data.timestamp > Date.now() - 3600000) {
                         isAuthenticated = true;
                         document.getElementById('currentUser').textContent = data.username;
                         document.getElementById('loginContainer').classList.add('hidden');
@@ -1797,7 +1794,6 @@
                     }
                 } catch (_) {}
             }
-            // Tampilkan login
             document.getElementById('loginContainer').classList.remove('hidden');
             document.getElementById('appMain').classList.add('hidden');
             document.getElementById('appHeader').style.display = 'none';
@@ -1835,7 +1831,6 @@
 
                 const hashed = await hashPassword(password);
                 if (hashed === user.passwordHash) {
-                    // Login sukses
                     errorEl.textContent = '';
                     isAuthenticated = true;
                     sessionStorage.setItem('malik_kasir_session', JSON.stringify({
@@ -1848,7 +1843,6 @@
                     document.getElementById('appHeader').style.display = 'flex';
                     document.getElementById('appTabs').style.display = 'flex';
                     showToast('✅ Selamat datang, ' + username + '!', 'success');
-                    // Load data
                     refreshProductCache();
                     filterProducts();
                     updateCartTotal();
@@ -1906,17 +1900,14 @@
                 }
 
                 if (newUsername) {
-                    // Cek apakah username sudah ada
                     if (db.users.some(u => u.username === newUsername && u.username !== currentUser)) {
                         return showToast('Username sudah digunakan!', 'error');
                     }
-                    // Hapus user lama, tambahkan user baru
                     db.users = db.users.filter(u => u.username !== currentUser);
                     user.username = newUsername;
                     db.users.push(user);
                     db.currentUser = newUsername;
                     document.getElementById('currentUser').textContent = newUsername;
-                    // Update session
                     sessionStorage.setItem('malik_kasir_session', JSON.stringify({
                         username: newUsername,
                         timestamp: Date.now()
@@ -1937,19 +1928,225 @@
         }
 
         // ================================================================
-        //  DEFAULT PRODUCTS
+        //  DEFAULT PRODUCTS - HARGA UNIVERSAL (tidak terlalu mahal, tidak terlalu murah)
         // ================================================================
 
         const DEFAULT_PRODUCTS = [
-            { name: "Samsung - LCD Ori - LCD Samsung Original", price: 2512500, stock: 99, type: "produk" },
-            { name: "Samsung - Baterai Ori - Baterai Samsung", price: 675000, stock: 99, type: "produk" },
-            { name: "iPhone 12 - LCD Ori - LCD iPhone 12 Original", price: 5250000, stock: 99, type: "produk" },
-            { name: "iPhone 12 - Baterai Ori - Baterai iPhone", price: 1125000, stock: 99, type: "produk" },
-            { name: "Xiaomi - LCD Ori - LCD Xiaomi Original", price: 1950000, stock: 99, type: "produk" },
-            { name: "Jasa Ringan - Pasang Baterai", price: 75000, stock: 9999, type: "jasa" },
-            { name: "Jasa Ringan - Pasang LCD", price: 112500, stock: 9999, type: "jasa" },
-            { name: "Jasa Sedang - Flash/Install Ulang OS", price: 150000, stock: 9999, type: "jasa" },
-            { name: "Jasa Berat - Microsoldering IC Power", price: 375000, stock: 9999, type: "jasa" },
+            // SAMSUNG
+            { name: "Samsung LCD Ori - LCD Samsung Original", price: 1250000, stock: 99, type: "produk" },
+            { name: "Samsung LCD OEM - LCD Samsung OEM", price: 750000, stock: 99, type: "produk" },
+            { name: "Samsung LCD Copy - LCD Samsung Copy", price: 450000, stock: 99, type: "produk" },
+            { name: "Samsung Baterai Ori - Baterai Samsung", price: 350000, stock: 99, type: "produk" },
+            { name: "Samsung Baterai OEM - Baterai Samsung OEM", price: 220000, stock: 99, type: "produk" },
+            { name: "Samsung Flex Charger - Port Charger", price: 180000, stock: 99, type: "produk" },
+            { name: "Samsung Flex Tombol - Tombol Volume/Power", price: 150000, stock: 99, type: "produk" },
+            { name: "Samsung Speaker - Speaker HP", price: 200000, stock: 99, type: "produk" },
+            { name: "Samsung Kamera Ori - Kamera Belakang", price: 450000, stock: 99, type: "produk" },
+            { name: "Samsung Kamera OEM - Kamera Belakang", price: 280000, stock: 99, type: "produk" },
+            { name: "Samsung IC Power - IC Power Management", price: 550000, stock: 99, type: "produk" },
+            { name: "Samsung IC Charging - IC Charging", price: 500000, stock: 99, type: "produk" },
+            { name: "Samsung IC EMMC - IC EMMC/UFS", price: 750000, stock: 99, type: "produk" },
+            { name: "Samsung Flashing - Flashing/Update Software", price: 150000, stock: 99, type: "produk" },
+            { name: "Samsung Unlock FRP - Unlock FRP/Pattern", price: 200000, stock: 99, type: "produk" },
+
+            // XIAOMI
+            { name: "Xiaomi LCD Ori - LCD Xiaomi Original", price: 1100000, stock: 99, type: "produk" },
+            { name: "Xiaomi LCD OEM - LCD Xiaomi OEM", price: 650000, stock: 99, type: "produk" },
+            { name: "Xiaomi LCD Copy - LCD Xiaomi Copy", price: 400000, stock: 99, type: "produk" },
+            { name: "Xiaomi Baterai Ori - Baterai Xiaomi", price: 300000, stock: 99, type: "produk" },
+            { name: "Xiaomi Baterai OEM - Baterai Xiaomi OEM", price: 190000, stock: 99, type: "produk" },
+            { name: "Xiaomi Flex Charger - Port Charger", price: 160000, stock: 99, type: "produk" },
+            { name: "Xiaomi USB Board - USB Board", price: 150000, stock: 99, type: "produk" },
+            { name: "Xiaomi Flex Tombol - Flex Tombol", price: 140000, stock: 99, type: "produk" },
+            { name: "Xiaomi Speaker - Speaker HP", price: 180000, stock: 99, type: "produk" },
+            { name: "Xiaomi Kamera Ori - Kamera Belakang", price: 400000, stock: 99, type: "produk" },
+            { name: "Xiaomi IC Power - IC Power", price: 500000, stock: 99, type: "produk" },
+            { name: "Xiaomi IC Charging - IC Charging", price: 450000, stock: 99, type: "produk" },
+            { name: "Xiaomi Flashing - Flashing Software", price: 140000, stock: 99, type: "produk" },
+            { name: "Xiaomi Unbrick - Unbrick/Bootloop", price: 350000, stock: 99, type: "produk" },
+
+            // OPPO
+            { name: "OPPO LCD Ori - LCD OPPO Original", price: 1200000, stock: 99, type: "produk" },
+            { name: "OPPO LCD OEM - LCD OPPO OEM", price: 700000, stock: 99, type: "produk" },
+            { name: "OPPO LCD Copy - LCD OPPO Copy", price: 420000, stock: 99, type: "produk" },
+            { name: "OPPO Baterai Ori - Baterai OPPO", price: 320000, stock: 99, type: "produk" },
+            { name: "OPPO Baterai OEM - Baterai OPPO OEM", price: 200000, stock: 99, type: "produk" },
+            { name: "OPPO Flex Charger - Port Charger", price: 170000, stock: 99, type: "produk" },
+            { name: "OPPO IC Power - IC Power", price: 520000, stock: 99, type: "produk" },
+            { name: "OPPO IC Charging - IC Charging", price: 480000, stock: 99, type: "produk" },
+            { name: "OPPO Flashing - Flashing Software", price: 145000, stock: 99, type: "produk" },
+
+            // VIVO
+            { name: "Vivo LCD Ori - LCD Vivo Original", price: 1150000, stock: 99, type: "produk" },
+            { name: "Vivo LCD OEM - LCD Vivo OEM", price: 680000, stock: 99, type: "produk" },
+            { name: "Vivo LCD Copy - LCD Vivo Copy", price: 410000, stock: 99, type: "produk" },
+            { name: "Vivo Baterai Ori - Baterai Vivo", price: 310000, stock: 99, type: "produk" },
+            { name: "Vivo Baterai OEM - Baterai Vivo OEM", price: 195000, stock: 99, type: "produk" },
+            { name: "Vivo Flex Charger - Port Charger", price: 165000, stock: 99, type: "produk" },
+            { name: "Vivo IC Power - IC Power", price: 510000, stock: 99, type: "produk" },
+            { name: "Vivo Flashing - Flashing Software", price: 140000, stock: 99, type: "produk" },
+
+            // REALME
+            { name: "Realme LCD Ori - LCD Realme Original", price: 1050000, stock: 99, type: "produk" },
+            { name: "Realme LCD OEM - LCD Realme OEM", price: 620000, stock: 99, type: "produk" },
+            { name: "Realme LCD Copy - LCD Realme Copy", price: 380000, stock: 99, type: "produk" },
+            { name: "Realme Baterai Ori - Baterai Realme", price: 290000, stock: 99, type: "produk" },
+            { name: "Realme Flex Charger - Port Charger", price: 155000, stock: 99, type: "produk" },
+            { name: "Realme IC Power - IC Power", price: 480000, stock: 99, type: "produk" },
+            { name: "Realme Flashing - Flashing Software", price: 135000, stock: 99, type: "produk" },
+
+            // INFINIX
+            { name: "Infinix LCD Ori - LCD Infinix Original", price: 850000, stock: 99, type: "produk" },
+            { name: "Infinix LCD OEM - LCD Infinix OEM", price: 520000, stock: 99, type: "produk" },
+            { name: "Infinix LCD Copy - LCD Infinix Copy", price: 330000, stock: 99, type: "produk" },
+            { name: "Infinix Baterai Ori - Baterai Infinix", price: 250000, stock: 99, type: "produk" },
+            { name: "Infinix Flex Charger - Port Charger", price: 140000, stock: 99, type: "produk" },
+            { name: "Infinix IC Power - IC Power", price: 430000, stock: 99, type: "produk" },
+            { name: "Infinix Flashing - Flashing Software", price: 125000, stock: 99, type: "produk" },
+
+            // TECNO
+            { name: "Tecno LCD Ori - LCD Tecno Original", price: 780000, stock: 99, type: "produk" },
+            { name: "Tecno LCD OEM - LCD Tecno OEM", price: 480000, stock: 99, type: "produk" },
+            { name: "Tecno Baterai Ori - Baterai Tecno", price: 230000, stock: 99, type: "produk" },
+            { name: "Tecno Flex Charger - Port Charger", price: 130000, stock: 99, type: "produk" },
+            { name: "Tecno Flashing - Flashing Software", price: 120000, stock: 99, type: "produk" },
+
+            // ITEL
+            { name: "Itel LCD Ori - LCD Itel Original", price: 700000, stock: 99, type: "produk" },
+            { name: "Itel LCD OEM - LCD Itel OEM", price: 430000, stock: 99, type: "produk" },
+            { name: "Itel Baterai Ori - Baterai Itel", price: 210000, stock: 99, type: "produk" },
+            { name: "Itel Flex Charger - Port Charger", price: 120000, stock: 99, type: "produk" },
+            { name: "Itel Flashing - Flashing Software", price: 110000, stock: 99, type: "produk" },
+
+            // IPHONE
+            { name: "iPhone X LCD Ori - LCD iPhone X Original", price: 2200000, stock: 99, type: "produk" },
+            { name: "iPhone X LCD OEM - LCD iPhone X OEM", price: 1400000, stock: 99, type: "produk" },
+            { name: "iPhone X LCD Copy - LCD iPhone X Copy", price: 850000, stock: 99, type: "produk" },
+            { name: "iPhone 11 LCD Ori - LCD iPhone 11 Original", price: 2800000, stock: 99, type: "produk" },
+            { name: "iPhone 11 LCD OEM - LCD iPhone 11 OEM", price: 1700000, stock: 99, type: "produk" },
+            { name: "iPhone 11 LCD Copy - LCD iPhone 11 Copy", price: 1000000, stock: 99, type: "produk" },
+            { name: "iPhone 12 LCD Ori - LCD iPhone 12 Original", price: 3500000, stock: 99, type: "produk" },
+            { name: "iPhone 12 LCD OEM - LCD iPhone 12 OEM", price: 2100000, stock: 99, type: "produk" },
+            { name: "iPhone 12 LCD Copy - LCD iPhone 12 Copy", price: 1300000, stock: 99, type: "produk" },
+            { name: "iPhone 13 LCD Ori - LCD iPhone 13 Original", price: 4000000, stock: 99, type: "produk" },
+            { name: "iPhone 13 LCD OEM - LCD iPhone 13 OEM", price: 2500000, stock: 99, type: "produk" },
+            { name: "iPhone 13 LCD Copy - LCD iPhone 13 Copy", price: 1500000, stock: 99, type: "produk" },
+            { name: "iPhone 14 LCD Ori - LCD iPhone 14 Original", price: 4600000, stock: 99, type: "produk" },
+            { name: "iPhone 14 LCD OEM - LCD iPhone 14 OEM", price: 2900000, stock: 99, type: "produk" },
+            { name: "iPhone 14 LCD Copy - LCD iPhone 14 Copy", price: 1800000, stock: 99, type: "produk" },
+            { name: "iPhone Baterai Ori - Baterai iPhone Original", price: 650000, stock: 99, type: "produk" },
+            { name: "iPhone Baterai OEM - Baterai iPhone OEM", price: 420000, stock: 99, type: "produk" },
+            { name: "iPhone Flex Charger - Port Charger iPhone", price: 350000, stock: 99, type: "produk" },
+            { name: "iPhone IC Charging - IC Charging iPhone", price: 850000, stock: 99, type: "produk" },
+            { name: "iPhone IC Power - IC Power iPhone", price: 1000000, stock: 99, type: "produk" },
+            { name: "iPhone IC Baseband - IC Baseband/No Service", price: 1300000, stock: 99, type: "produk" },
+            { name: "iPhone IC NAND - IC NAND/Bootloop", price: 1600000, stock: 99, type: "produk" },
+            { name: "iPhone Speaker - Speaker iPhone", price: 380000, stock: 99, type: "produk" },
+            { name: "iPhone Flex Mic - Flex Mic iPhone", price: 340000, stock: 99, type: "produk" },
+            { name: "iPhone Restore iTunes - Restore Software", price: 200000, stock: 99, type: "produk" },
+            { name: "iPhone Unlock iCloud - Unlock iCloud", price: 450000, stock: 99, type: "produk" },
+
+            // LAPTOP
+            { name: "Laptop Install Windows - Install Ulang Windows", price: 150000, stock: 99, type: "produk" },
+            { name: "Laptop Install MacOS - Install Ulang MacOS", price: 300000, stock: 99, type: "produk" },
+            { name: "Laptop Install Linux - Install Ulang Linux", price: 200000, stock: 99, type: "produk" },
+            { name: "Laptop Upgrade RAM - RAM DDR3 4GB", price: 350000, stock: 99, type: "produk" },
+            { name: "Laptop Upgrade RAM - RAM DDR3 8GB", price: 550000, stock: 99, type: "produk" },
+            { name: "Laptop Upgrade RAM - RAM DDR4 8GB", price: 650000, stock: 99, type: "produk" },
+            { name: "Laptop Upgrade RAM - RAM DDR4 16GB", price: 1050000, stock: 99, type: "produk" },
+            { name: "Laptop Upgrade SSD - SSD SATA 120GB", price: 350000, stock: 99, type: "produk" },
+            { name: "Laptop Upgrade SSD - SSD SATA 240GB", price: 500000, stock: 99, type: "produk" },
+            { name: "Laptop Upgrade SSD - SSD SATA 480GB", price: 750000, stock: 99, type: "produk" },
+            { name: "Laptop Upgrade SSD - SSD NVMe 256GB", price: 650000, stock: 99, type: "produk" },
+            { name: "Laptop Upgrade SSD - SSD NVMe 512GB", price: 900000, stock: 99, type: "produk" },
+            { name: "Laptop Upgrade SSD - SSD NVMe 1TB", price: 1550000, stock: 99, type: "produk" },
+            { name: "Laptop Ganti LCD - LCD Laptop 14 inch", price: 1100000, stock: 99, type: "produk" },
+            { name: "Laptop Ganti LCD - LCD Laptop 15.6 inch", price: 1300000, stock: 99, type: "produk" },
+            { name: "Laptop Ganti Baterai - Baterai Laptop Ori", price: 650000, stock: 99, type: "produk" },
+            { name: "Laptop Ganti Baterai - Baterai Laptop OEM", price: 400000, stock: 99, type: "produk" },
+            { name: "Laptop Ganti Keyboard - Keyboard Laptop Ori", price: 500000, stock: 99, type: "produk" },
+            { name: "Laptop Ganti Keyboard - Keyboard Laptop OEM", price: 280000, stock: 99, type: "produk" },
+            { name: "Laptop Charger - Charger Laptop Ori", price: 550000, stock: 99, type: "produk" },
+            { name: "Laptop Charger - Charger Laptop OEM", price: 280000, stock: 99, type: "produk" },
+            { name: "Laptop IC Power - IC Power Laptop", price: 850000, stock: 99, type: "produk" },
+            { name: "Laptop IC Charging - IC Charging Laptop", price: 700000, stock: 99, type: "produk" },
+            { name: "Laptop Bersihkan Pasta - Bersihkan + Ganti Pasta", price: 200000, stock: 99, type: "produk" },
+            { name: "Laptop Ganti Kipas - Kipas Laptop Ori", price: 400000, stock: 99, type: "produk" },
+            { name: "Laptop Ganti Kipas - Kipas Laptop OEM", price: 220000, stock: 99, type: "produk" },
+            { name: "Laptop WiFi Card - WiFi Card Laptop", price: 350000, stock: 99, type: "produk" },
+
+            // TABLET
+            { name: "Samsung Tab LCD - LCD Samsung Tab Original", price: 1400000, stock: 99, type: "produk" },
+            { name: "Samsung Tab Baterai - Baterai Samsung Tab", price: 450000, stock: 99, type: "produk" },
+            { name: "iPad LCD - LCD iPad Original", price: 2000000, stock: 99, type: "produk" },
+            { name: "iPad LCD OEM - LCD iPad OEM", price: 1200000, stock: 99, type: "produk" },
+            { name: "iPad Baterai - Baterai iPad Original", price: 650000, stock: 99, type: "produk" },
+            { name: "iPad Baterai OEM - Baterai iPad OEM", price: 400000, stock: 99, type: "produk" },
+            { name: "iPad IC Power - IC Power iPad", price: 1100000, stock: 99, type: "produk" },
+            { name: "iPad Restore - Restore Software iPad", price: 250000, stock: 99, type: "produk" },
+
+            // KONSOLE GAME
+            { name: "PS4 Overheat - Ganti Pasta PS4", price: 350000, stock: 99, type: "produk" },
+            { name: "PS4 HDMI - IC HDMI PS4", price: 800000, stock: 99, type: "produk" },
+            { name: "PS4 IC Power - IC Power PS4", price: 900000, stock: 99, type: "produk" },
+            { name: "PS5 Overheat - Ganti Pasta PS5", price: 500000, stock: 99, type: "produk" },
+            { name: "PS5 HDMI - IC HDMI PS5", price: 1200000, stock: 99, type: "produk" },
+            { name: "Xbox Overheat - Ganti Pasta Xbox", price: 350000, stock: 99, type: "produk" },
+            { name: "Xbox HDMI - IC HDMI Xbox", price: 800000, stock: 99, type: "produk" },
+            { name: "Switch LCD - LCD Switch Original", price: 1400000, stock: 99, type: "produk" },
+            { name: "Switch LCD OEM - LCD Switch OEM", price: 700000, stock: 99, type: "produk" },
+            { name: "Switch Joycon - Joycon Analog", price: 300000, stock: 99, type: "produk" },
+            { name: "Switch Baterai - Baterai Switch", price: 500000, stock: 99, type: "produk" },
+
+            // PRINTER
+            { name: "Printer Service - Servis Mechanism Printer", price: 200000, stock: 99, type: "produk" },
+            { name: "Printer Cartridge - Cartridge Printer Ori", price: 400000, stock: 99, type: "produk" },
+            { name: "Printer Cartridge OEM - Cartridge Printer OEM", price: 250000, stock: 99, type: "produk" },
+            { name: "Printer Bersihkan - Bersihkan Head Printer", price: 150000, stock: 99, type: "produk" },
+            { name: "Printer Epson Head - Printhead Epson", price: 850000, stock: 99, type: "produk" },
+            { name: "Printer Canon Head - Printhead Canon", price: 750000, stock: 99, type: "produk" },
+            { name: "Printer Mainboard - Mainboard Printer", price: 600000, stock: 99, type: "produk" },
+
+            // SMARTPHONE ACCESSORIES
+            { name: "Apple Watch LCD - LCD Apple Watch Original", price: 2200000, stock: 99, type: "produk" },
+            { name: "Apple Watch LCD OEM - LCD Apple Watch OEM", price: 1300000, stock: 99, type: "produk" },
+            { name: "Apple Watch Baterai - Baterai Apple Watch", price: 550000, stock: 99, type: "produk" },
+            { name: "Samsung Watch LCD - LCD Samsung Watch Original", price: 1500000, stock: 99, type: "produk" },
+            { name: "Samsung Watch Baterai - Baterai Samsung Watch", price: 400000, stock: 99, type: "produk" },
+            { name: "Mi Band LCD - LCD Mi Band", price: 250000, stock: 99, type: "produk" },
+            { name: "Mi Band Baterai - Baterai Mi Band", price: 180000, stock: 99, type: "produk" },
+
+            // PC DESKTOP
+            { name: "PC Power Supply - Ganti Power Supply", price: 550000, stock: 99, type: "produk" },
+            { name: "PC Motherboard - Ganti Motherboard", price: 1000000, stock: 99, type: "produk" },
+            { name: "PC RAM - Ganti RAM DDR4 8GB", price: 600000, stock: 99, type: "produk" },
+            { name: "PC RAM - Ganti RAM DDR4 16GB", price: 1000000, stock: 99, type: "produk" },
+            { name: "PC VGA Card - Ganti VGA Card", price: 1800000, stock: 99, type: "produk" },
+            { name: "PC Install Windows - Install Ulang Windows", price: 150000, stock: 99, type: "produk" },
+            { name: "PC Data Recovery - Data Recovery", price: 900000, stock: 99, type: "produk" },
+
+            // JASA
+            { name: "Jasa Pasang Baterai - Pasang Baterai (bawa sendiri)", price: 75000, stock: 9999, type: "jasa" },
+            { name: "Jasa Pasang LCD - Pasang LCD (bawa sendiri)", price: 100000, stock: 9999, type: "jasa" },
+            { name: "Jasa Bongkar Pasang - Bongkar Pasang Cover", price: 50000, stock: 9999, type: "jasa" },
+            { name: "Jasa Bersihkan - Bersihkan Speaker/Mic", price: 45000, stock: 9999, type: "jasa" },
+            { name: "Jasa Setting Ulang - Setting Ulang (tanpa flash)", price: 40000, stock: 9999, type: "jasa" },
+            { name: "Jasa Reset Pabrik - Reset Pabrik (soft)", price: 50000, stock: 9999, type: "jasa" },
+            { name: "Jasa Unlock Pola - Unlock Pola (tanpa flash)", price: 60000, stock: 9999, type: "jasa" },
+            { name: "Jasa Pasang Protector - Pasang Screen Protector", price: 25000, stock: 9999, type: "jasa" },
+            { name: "Jasa Flash OS - Flash/Install Ulang OS", price: 125000, stock: 9999, type: "jasa" },
+            { name: "Jasa Unlock FRP - Unlock FRP / iCloud", price: 150000, stock: 9999, type: "jasa" },
+            { name: "Jasa Ganti Port - Ganti Port Charger (bawa sendiri)", price: 100000, stock: 9999, type: "jasa" },
+            { name: "Jasa Ganti Tombol - Ganti Tombol (bawa sendiri)", price: 90000, stock: 9999, type: "jasa" },
+            { name: "Jasa Custom ROM - Custom ROM / Root", price: 140000, stock: 9999, type: "jasa" },
+            { name: "Jasa Bongkar Total - Bongkar Total (cleaning)", price: 110000, stock: 9999, type: "jasa" },
+            { name: "Jasa Microsoldering - Microsoldering IC Power", price: 300000, stock: 9999, type: "jasa" },
+            { name: "Jasa Microsoldering - Microsoldering IC Charging", price: 280000, stock: 9999, type: "jasa" },
+            { name: "Jasa Microsoldering - Microsoldering IC Audio", price: 250000, stock: 9999, type: "jasa" },
+            { name: "Jasa Ganti IC - Ganti IC EMMC/UFS", price: 400000, stock: 9999, type: "jasa" },
+            { name: "Jasa Ganti IC - Ganti IC Baseband", price: 350000, stock: 9999, type: "jasa" },
+            { name: "Jasa Reballing - Reballing CPU/GPU", price: 400000, stock: 9999, type: "jasa" },
+            { name: "Jasa Board Level - Perbaikan Board Level", price: 300000, stock: 9999, type: "jasa" }
         ];
 
         // ================================================================
@@ -2289,7 +2486,6 @@
                 window._discountType = discountType;
                 window._discountInput = discountNominal;
 
-                // Update kembalian
                 updateChange();
             } catch (e) {
                 console.error('updateCartTotal error:', e);
@@ -2317,7 +2513,6 @@
             const ppn = afterDiscount * (ppnPct / 100);
             const total = afterDiscount + ppn;
 
-            // Cek pembayaran
             if (paymentMethod === 'Tunai' && paidAmount < total) {
                 return showToast('❌ Uang kurang!', 'error');
             }
@@ -2682,17 +2877,14 @@
                 renderHistory();
                 loadSettings();
 
-                // Event listener untuk payment amount
                 document.getElementById('paymentAmount').addEventListener('input', updateChange);
 
-                // Keyboard shortcuts
                 document.addEventListener('keydown', function(e) {
                     if (e.ctrlKey && e.key === 'k') { e.preventDefault();
                         document.getElementById('searchInput').focus(); }
                     if (e.key === 'Escape') closeInvoice();
                 });
 
-                // Modal click outside
                 document.getElementById('invoiceModal').addEventListener('click', function(e) {
                     if (e.target === this) closeInvoice();
                 });
@@ -2700,7 +2892,6 @@
                     if (e.target === this) closeAddProduct();
                 });
 
-                // Cart toggle with swipe
                 let touchStartY = 0;
                 const panel = document.getElementById('cartPanel');
                 panel.addEventListener('touchstart', function(e) { touchStartY = e.touches[0].clientY; });
