@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
     <title>Malik Kasir</title>
     <meta name="theme-color" content="#0f172a" />
-    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIk1hbGlrIEthc2lyIiwKICAic2hvcnRfbmFtZSI6ICJNbEthc2lyIiwKICAiZGVzY3JpcHRpb24iOiAiS2FzaXIgZGFuIE1hbmFnZW1lbiBQcm9kdWsiLAogICJzdGFydF91cmwiOiAiLiIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiIzBmMTcyYSIsCiAgInRoZW1lX2NvbG9yIjogIiMwZjE3MmEiLAogICJpY29ucyI6IFsKICAgIHsKICAgICAgInNyYyI6ICJkYXRhOmltYWdlL3N2Zyt4bWwsPHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA1MTIgNTEyJz48cmVjdCB3aWR0aD0nNTEyJyBoZWlnaHQ9JzUxMicgcng9JzY0JyBmaWxsPScjMGYxNzJhJy8+PHRleHQgeD0nMjU2JyB5PScyODAnIGZvbnQtZmFtaWx5PSdzYW5zLXNlcmlmJyBmb250LXNpemU9JzI1MCcgZmlsbD0nd2hpdGUnIHRleHQtYW5jaG9yPSdtaWRkbGUnIGR5PScuMzUnPuCfkanCrzwvdGV4dD48L3N2Zz4iLAogICAgICAic2l6ZXMiOiAiNTEyeDUxMiIsCiAgICAgICJ0eXBlIjogImltYWdlL3N2Zyt4bWwiLAogICAgICAicHVycG9zZSI6ICJhbnkgbWFzayBhbnlsYW5nIgogICAgfQogIF0KfQ==" />
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' rx='64' fill='%230f172a'/><text x='256' y='280' font-family='sans-serif' font-size='250' fill='white' text-anchor='middle' dy='.35'>🔧</text></svg>" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
         /* ===== RESET ===== */
@@ -61,11 +59,125 @@
             border-radius: 8px;
         }
 
+        /* ===== LOGIN ===== */
+        .login-container {
+            position: fixed;
+            inset: 0;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        .login-container.hidden {
+            display: none;
+        }
+        .login-box {
+            background: #fff;
+            padding: 30px 24px;
+            border-radius: 18px;
+            max-width: 380px;
+            width: 100%;
+            box-shadow: var(--shadow-lg);
+            animation: slideUp 0.4s ease;
+        }
+        .login-box .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .login-box .logo i {
+            font-size: 2.5rem;
+            color: var(--accent);
+            background: #eff6ff;
+            padding: 16px;
+            border-radius: 50%;
+        }
+        .login-box .logo h2 {
+            margin-top: 8px;
+            font-size: 1.2rem;
+        }
+        .login-box .logo p {
+            font-size: 0.75rem;
+            color: var(--gray-400);
+        }
+        .login-box .form-group {
+            margin-bottom: 14px;
+        }
+        .login-box .form-group label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--gray-600);
+            margin-bottom: 4px;
+        }
+        .login-box .form-group input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: var(--transition);
+        }
+        .login-box .form-group input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+        }
+        .login-box .btn-login {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .login-box .btn-login:hover {
+            background: var(--accent-hover);
+            transform: scale(1.02);
+        }
+        .login-box .btn-login:disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .login-box .login-error {
+            color: var(--danger);
+            font-size: 0.75rem;
+            text-align: center;
+            margin-top: 10px;
+            min-height: 20px;
+        }
+        .login-box .login-footer {
+            text-align: center;
+            font-size: 0.65rem;
+            color: var(--gray-400);
+            margin-top: 14px;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
         /* ===== HEADER ===== */
         .app-header {
             background: var(--primary);
             color: #fff;
-            padding: 12px 16px;
+            padding: 10px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -79,7 +191,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 700;
             cursor: pointer;
         }
@@ -110,6 +222,7 @@
             align-items: center;
             justify-content: center;
             position: relative;
+            cursor: pointer;
         }
         .app-header .header-actions button:hover {
             background: rgba(255, 255, 255, 0.16);
@@ -128,6 +241,26 @@
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+        .app-header .user-info {
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .app-header .user-info .logout-btn {
+            background: rgba(239, 68, 68, 0.2);
+            border: none;
+            color: #fca5a5;
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: 0.6rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .app-header .user-info .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.3);
         }
 
         /* ===== TABS ===== */
@@ -148,7 +281,7 @@
             border-radius: 10px;
             background: transparent;
             font-weight: 600;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: var(--gray-500);
             transition: var(--transition);
             cursor: pointer;
@@ -168,16 +301,19 @@
             color: var(--gray-700);
         }
         .app-tabs .tab-btn i {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
 
         /* ===== MAIN CONTENT ===== */
         .app-main {
             flex: 1;
-            padding: 10px 12px 90px 12px;
+            padding: 10px 12px 100px 12px;
             max-width: 800px;
             margin: 0 auto;
             width: 100%;
+        }
+        .app-main.hidden {
+            display: none;
         }
         .tab-content {
             display: none;
@@ -326,36 +462,22 @@
             background: #fee2e2;
             color: var(--danger);
         }
-        .product-card .p-edit-btn {
-            position: absolute;
-            top: 4px;
-            left: 4px;
-            background: rgba(255, 255, 255, 0.8);
-            border: none;
-            border-radius: 6px;
-            width: 22px;
-            height: 22px;
-            font-size: 0.6rem;
-            color: var(--gray-500);
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-        }
-        .product-card:hover .p-edit-btn {
-            opacity: 1;
-        }
-        .product-card .p-edit-btn:hover {
-            background: var(--gray-200);
-            color: var(--gray-700);
-        }
         .no-products {
             grid-column: 1 / -1;
             text-align: center;
             padding: 30px 16px;
             color: var(--gray-400);
             font-size: 0.85rem;
+        }
+        .error-message {
+            grid-column: 1 / -1;
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            border: 2px solid #fca5a5;
         }
 
         /* ===== CART PANEL ===== */
@@ -369,7 +491,7 @@
             box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.1);
             padding: 12px 16px 16px 16px;
             z-index: 50;
-            max-height: 75vh;
+            max-height: 80vh;
             display: flex;
             flex-direction: column;
             transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
@@ -427,7 +549,7 @@
         .cart-panel .cart-items {
             flex: 1;
             overflow-y: auto;
-            max-height: 200px;
+            max-height: 180px;
             padding: 2px 0;
         }
         .cart-panel .cart-items .empty-cart {
@@ -448,7 +570,7 @@
         }
         .cart-item .ci-name {
             flex: 1;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 500;
             line-height: 1.2;
         }
@@ -480,6 +602,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
         }
         .cart-item .ci-qty button:hover {
             background: rgba(0, 0, 0, 0.06);
@@ -497,6 +620,7 @@
             font-size: 0.7rem;
             padding: 4px;
             transition: var(--transition);
+            cursor: pointer;
         }
         .cart-item .ci-remove:hover {
             color: var(--danger);
@@ -558,38 +682,68 @@
             font-weight: 600;
             color: var(--gray-600);
         }
+        .cart-footer .payment-row {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+        .cart-footer .payment-row select {
+            padding: 6px 10px;
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 0.8rem;
+            outline: none;
+            background: #fff;
+            flex: 1;
+            min-width: 80px;
+        }
+        .cart-footer .payment-row input {
+            flex: 1;
+            padding: 6px 10px;
+            border: 2px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 0.8rem;
+            outline: none;
+            min-width: 80px;
+            transition: var(--transition);
+        }
+        .cart-footer .payment-row input:focus {
+            border-color: var(--accent);
+        }
+        .cart-footer .payment-row .change-display {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--success);
+            min-width: 80px;
+            text-align: right;
+        }
+        .cart-footer .payment-row .change-display.negative {
+            color: var(--danger);
+        }
         .cart-footer .checkout-area {
             display: flex;
             gap: 6px;
             margin-top: 6px;
             flex-wrap: wrap;
         }
-        .cart-footer .checkout-area input {
-            flex: 1;
-            padding: 8px 12px;
-            border: 2px solid var(--gray-200);
-            border-radius: 8px;
-            font-size: 0.8rem;
-            outline: none;
-            min-width: 100px;
-            transition: var(--transition);
-        }
-        .cart-footer .checkout-area input:focus {
-            border-color: var(--accent);
-        }
         .cart-footer .checkout-area .btn-checkout {
-            padding: 8px 18px;
+            flex: 1;
+            padding: 10px 18px;
             background: var(--success);
             color: #fff;
             border: none;
             border-radius: 8px;
             font-weight: 700;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             transition: var(--transition);
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
-            white-space: nowrap;
+            min-width: 100px;
+            cursor: pointer;
         }
         .cart-footer .checkout-area .btn-checkout:hover {
             background: var(--success-hover);
@@ -625,6 +779,7 @@
             display: flex;
             align-items: center;
             gap: 4px;
+            cursor: pointer;
         }
         .manage-header .btn-add:hover {
             background: var(--accent-hover);
@@ -824,16 +979,6 @@
             box-shadow: var(--shadow-lg);
             animation: slideUp 0.3s ease;
         }
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px) scale(0.96);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
         .modal .modal-header {
             display: flex;
             justify-content: space-between;
@@ -859,6 +1004,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
         }
         .modal .modal-header .close-modal:hover {
             background: var(--gray-200);
@@ -953,6 +1099,7 @@
             justify-content: center;
             gap: 6px;
             min-width: 80px;
+            cursor: pointer;
         }
         .modal .modal-actions .btn-print {
             background: var(--primary);
@@ -1022,55 +1169,6 @@
             background: var(--gray-200);
         }
 
-        /* ===== TOAST ===== */
-        .toast-container {
-            position: fixed;
-            top: 76px;
-            right: 12px;
-            z-index: 999;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            max-width: 320px;
-            width: 100%;
-            pointer-events: none;
-        }
-        .toast {
-            padding: 10px 16px;
-            border-radius: 10px;
-            background: var(--gray-900);
-            color: #fff;
-            font-size: 0.8rem;
-            box-shadow: var(--shadow-lg);
-            animation: slideInRight 0.3s ease;
-            pointer-events: auto;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .toast-success {
-            background: var(--success);
-        }
-        .toast-error {
-            background: var(--danger);
-        }
-        .toast-warning {
-            background: var(--warning);
-        }
-        .toast-info {
-            background: var(--accent);
-        }
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
         /* ===== HISTORY ===== */
         .history-summary {
             display: grid;
@@ -1123,6 +1221,55 @@
             font-size: 0.85rem;
         }
 
+        /* ===== TOAST ===== */
+        .toast-container {
+            position: fixed;
+            top: 76px;
+            right: 12px;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-width: 320px;
+            width: 100%;
+            pointer-events: none;
+        }
+        .toast {
+            padding: 10px 16px;
+            border-radius: 10px;
+            background: var(--gray-900);
+            color: #fff;
+            font-size: 0.8rem;
+            box-shadow: var(--shadow-lg);
+            animation: slideInRight 0.3s ease;
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .toast-success {
+            background: var(--success);
+        }
+        .toast-error {
+            background: var(--danger);
+        }
+        .toast-warning {
+            background: var(--warning);
+        }
+        .toast-info {
+            background: var(--accent);
+        }
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (min-width: 600px) {
             .product-grid {
@@ -1168,6 +1315,9 @@
             .history-summary {
                 grid-template-columns: repeat(4, 1fr);
             }
+            .login-box {
+                padding: 40px 32px;
+            }
         }
         @media (max-width: 480px) {
             .product-grid {
@@ -1190,12 +1340,16 @@
             .cart-footer .checkout-area {
                 flex-direction: column;
             }
-            .cart-footer .checkout-area input {
-                width: 100%;
-            }
             .cart-footer .checkout-area .btn-checkout {
                 width: 100%;
                 justify-content: center;
+            }
+            .cart-footer .payment-row {
+                flex-direction: column;
+            }
+            .cart-footer .payment-row input,
+            .cart-footer .payment-row select {
+                width: 100%;
             }
             .app-tabs .tab-btn {
                 font-size: 0.65rem;
@@ -1264,24 +1418,17 @@
             }
         }
 
-        /* ===== UTILITY ===== */
         .text-muted {
             color: var(--gray-400);
         }
         .text-sm {
             font-size: 0.7rem;
         }
-        .fw-bold {
-            font-weight: 700;
-        }
         .mt-1 {
             margin-top: 4px;
         }
-        .mb-1 {
-            margin-bottom: 4px;
-        }
-        .gap-1 {
-            gap: 4px;
+        .hidden {
+            display: none !important;
         }
         .flex {
             display: flex;
@@ -1291,28 +1438,55 @@
             align-items: center;
             justify-content: center;
         }
-        .hidden {
-            display: none !important;
+        .gap-1 {
+            gap: 4px;
         }
         .w-full {
             width: 100%;
         }
-        .error-message {
-            grid-column: 1 / -1;
-            background: #fee2e2;
-            color: #dc2626;
-            padding: 20px;
-            border-radius: 12px;
+        .login-hint {
+            font-size: 0.65rem;
+            color: var(--gray-400);
             text-align: center;
-            font-weight: 600;
-            border: 2px solid #fca5a5;
+            margin-top: 10px;
+        }
+        .login-hint i {
+            color: var(--gray-500);
         }
     </style>
 </head>
 <body>
 
+    <!-- ===== LOGIN ===== -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <div class="logo">
+                <i class="fas fa-cash-register"></i>
+                <h2>Malik Kasir</h2>
+                <p>Servis Elektronik</p>
+            </div>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> Username</label>
+                    <input type="text" id="loginUsername" placeholder="Masukkan username" required autofocus />
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-lock"></i> Password</label>
+                    <input type="password" id="loginPassword" placeholder="Masukkan password" required />
+                </div>
+                <button type="submit" class="btn-login" id="loginBtn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <div class="login-error" id="loginError"></div>
+            </form>
+            <div class="login-hint">
+                <i class="fas fa-info-circle"></i> Hubungi admin untuk kredensial login
+            </div>
+        </div>
+    </div>
+
     <!-- ===== HEADER ===== -->
-    <header class="app-header">
+    <header class="app-header" id="appHeader">
         <div class="brand" onclick="switchTab('kasir')">
             <i class="fas fa-cash-register"></i>
             <div>
@@ -1321,12 +1495,14 @@
             </div>
         </div>
         <div class="header-actions">
+            <div class="user-info" id="userInfo">
+                <i class="fas fa-user-circle"></i>
+                <span id="currentUser">admin</span>
+                <button class="logout-btn" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
             <button onclick="toggleCart()" class="cart-badge" id="cartToggleBtn">
                 <i class="fas fa-shopping-cart"></i>
                 <span class="badge-count" id="cartBadgeCount">0</span>
-            </button>
-            <button onclick="resetApp()" title="Reset Aplikasi">
-                <i class="fas fa-sync-alt"></i>
             </button>
         </div>
     </header>
@@ -1340,14 +1516,14 @@
     </div>
 
     <!-- ===== MAIN ===== -->
-    <main class="app-main">
+    <main class="app-main" id="appMain">
 
         <!-- ====== TAB KASIR ====== -->
         <div id="tab-kasir" class="tab-content active">
             <div class="search-bar">
                 <div class="search-input-wrap">
                     <i class="fas fa-search"></i>
-                    <input type="text" id="searchInput" placeholder="Cari produk / jasa..." oninput="filterProducts()" />
+                    <input type="text" id="searchInput" placeholder="Cari produk..." oninput="filterProducts()" />
                 </div>
                 <div class="filter-group">
                     <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">Semua</button>
@@ -1412,15 +1588,28 @@
                 <button class="btn-danger" onclick="resetToDefaultProducts()" style="width:100%;">
                     <i class="fas fa-history"></i> Reset ke Daftar Produk Awal
                 </button>
-                <div class="text-muted text-sm mt-1">Menimpa semua produk dengan daftar default (transaksi tetap tersimpan).</div>
+                <div class="text-muted text-sm mt-1">Menimpa semua produk dengan daftar default.</div>
+            </div>
+
+            <div class="settings-card">
+                <h4><i class="fas fa-user-shield"></i> Keamanan</h4>
+                <div class="form-group">
+                    <label>Username Baru</label>
+                    <input type="text" id="newUsername" placeholder="Username baru" />
+                </div>
+                <div class="form-group">
+                    <label>Password Baru</label>
+                    <input type="password" id="newPassword" placeholder="Password baru" />
+                </div>
+                <button class="btn-save" onclick="changeCredentials()"><i class="fas fa-key"></i> Ubah Kredensial</button>
             </div>
 
             <div class="settings-card">
                 <h4><i class="fas fa-info-circle"></i> Tentang</h4>
                 <div class="text-sm">
-                    <p><strong>Malik Kasir</strong> — Aplikasi kasir & manajemen produk.</p>
+                    <p><strong>Malik Kasir</strong> — Aplikasi kasir sederhana.</p>
                     <p>Data tersimpan di browser (localStorage).</p>
-                    <p class="text-muted">v2.2 · Diskon + Cetak Resi + Auto-Recovery</p>
+                    <p class="text-muted">v3.0 · Login System + Uang Kembalian</p>
                 </div>
             </div>
         </div>
@@ -1449,6 +1638,20 @@
                 </select>
             </div>
             <div class="cf-row total"><span>Total</span><span class="amount" id="cartTotal">Rp 0</span></div>
+
+            <!-- METODE PEMBAYARAN & UANG KEMBALIAN -->
+            <div class="payment-row">
+                <select id="paymentMethod" onchange="updateCartTotal()">
+                    <option value="Tunai">💵 Tunai</option>
+                    <option value="QRIS">📱 QRIS</option>
+                    <option value="Debit">💳 Debit</option>
+                    <option value="Kredit">💳 Kredit</option>
+                    <option value="Transfer">🏦 Transfer</option>
+                </select>
+                <input type="number" id="paymentAmount" placeholder="Uang diterima" value="0" step="1000" min="0" oninput="updateChange()" />
+                <span class="change-display" id="changeDisplay">Kembali: Rp 0</span>
+            </div>
+
             <div class="checkout-area">
                 <input type="text" id="customerName" placeholder="Nama pelanggan (opsional)" />
                 <button class="btn-checkout" id="checkoutBtn" onclick="checkout()">
@@ -1513,414 +1716,255 @@
 
     <script>
         // ================================================================
-        //  DATA LAYER - DAFTAR PRODUK LENGKAP (semua produkmu)
+        //  SHA-256 HASHING (dari Web Crypto API)
         // ================================================================
 
-        const DEFAULT_PRODUCTS = [
-            { name: "Samsung - LCD Pecah - LCD Samsung Ori", price: 2512500, stock: 99, type: "produk" },
-            { name: "Samsung - LCD Pecah - LCD Samsung OEM", price: 862500, stock: 99, type: "produk" },
-            { name: "Samsung - LCD Pecah - LCD Samsung Copy", price: 487500, stock: 99, type: "produk" },
-            { name: "Samsung - Baterai Kembung - Baterai Samsung Ori", price: 675000, stock: 99, type: "produk" },
-            { name: "Samsung - Baterai Kembung - Baterai Samsung OEM", price: 337500, stock: 99, type: "produk" },
-            { name: "Samsung - Port Charger Rusak - Flex Charger Samsung", price: 375000, stock: 99, type: "produk" },
-            { name: "Samsung - Tombol Volume Macet - Flex Tombol Samsung", price: 262500, stock: 99, type: "produk" },
-            { name: "Samsung - Mic Tidak Berfungsi - Flex Mic Samsung", price: 300000, stock: 99, type: "produk" },
-            { name: "Samsung - Speaker Rusak - Speaker Samsung", price: 375000, stock: 99, type: "produk" },
-            { name: "Samsung - Kamera Buram - Kamera Samsung Ori", price: 637500, stock: 99, type: "produk" },
-            { name: "Samsung - Kamera Buram - Kamera Samsung OEM", price: 300000, stock: 99, type: "produk" },
-            { name: "Samsung - Getar Tidak Berfungsi - Motor Vibrator", price: 210000, stock: 99, type: "produk" },
-            { name: "Samsung - IC Power Rusak - IC Power Samsung", price: 825000, stock: 99, type: "produk" },
-            { name: "Samsung - IC Charging Rusak - IC Charging Samsung", price: 712500, stock: 99, type: "produk" },
-            { name: "Samsung - No Service/IMEI - IC RF Samsung", price: 937500, stock: 99, type: "produk" },
-            { name: "Samsung - Bootloop - IC EMMC/UFS", price: 1050000, stock: 99, type: "produk" },
-            { name: "Samsung - Tidak Bisa Charging - IC Charging", price: 712500, stock: 99, type: "produk" },
-            { name: "Samsung - Overheat - IC Power", price: 825000, stock: 99, type: "produk" },
-            { name: "Samsung - Tidak Ada Sinyal - IC RF", price: 937500, stock: 99, type: "produk" },
-            { name: "Samsung - Software Error - Flashing/Update", price: 150000, stock: 99, type: "produk" },
-            { name: "Samsung - Lupa Pola - Unlock Pattern", price: 187500, stock: 99, type: "produk" },
-            { name: "Samsung - FRP Lock - Unlock FRP", price: 262500, stock: 99, type: "produk" },
-            { name: "Samsung - Hang/Lambat - Optimasi System", price: 150000, stock: 99, type: "produk" },
-            { name: "Xiaomi - LCD Pecah - LCD Xiaomi Ori", price: 1950000, stock: 99, type: "produk" },
-            { name: "Xiaomi - LCD Pecah - LCD Xiaomi OEM", price: 750000, stock: 99, type: "produk" },
-            { name: "Xiaomi - LCD Pecah - LCD Xiaomi Copy", price: 450000, stock: 99, type: "produk" },
-            { name: "Xiaomi - Baterai Drop - Baterai Xiaomi Ori", price: 525000, stock: 99, type: "produk" },
-            { name: "Xiaomi - Baterai Drop - Baterai Xiaomi OEM", price: 277500, stock: 99, type: "produk" },
-            { name: "Xiaomi - Port Charger Rusak - Flex Charger Xiaomi", price: 315000, stock: 99, type: "produk" },
-            { name: "Xiaomi - USB Port Rusak - USB Board Xiaomi", price: 262500, stock: 99, type: "produk" },
-            { name: "Xiaomi - Tombol Power Macet - Flex Tombol Xiaomi", price: 232500, stock: 99, type: "produk" },
-            { name: "Xiaomi - Mic Tidak Berfungsi - Flex Mic Xiaomi", price: 262500, stock: 99, type: "produk" },
-            { name: "Xiaomi - Speaker Rusak - Speaker Xiaomi", price: 322500, stock: 99, type: "produk" },
-            { name: "Xiaomi - Kamera Rusak - Kamera Xiaomi Ori", price: 525000, stock: 99, type: "produk" },
-            { name: "Xiaomi - Kamera Rusak - Kamera Xiaomi OEM", price: 262500, stock: 99, type: "produk" },
-            { name: "Xiaomi - IC Power Rusak - IC Power Xiaomi", price: 750000, stock: 99, type: "produk" },
-            { name: "Xiaomi - IC BMS Rusak - IC BMS Xiaomi", price: 660000, stock: 99, type: "produk" },
-            { name: "Xiaomi - IC Charging Rusak - IC Charging Xiaomi", price: 675000, stock: 99, type: "produk" },
-            { name: "Xiaomi - Tidak Bisa Flashing - Test Point EDL", price: 487500, stock: 99, type: "produk" },
-            { name: "Xiaomi - Software Error - Mi Flash/TWRP", price: 150000, stock: 99, type: "produk" },
-            { name: "Xiaomi - Bootloop - Unbrick", price: 600000, stock: 99, type: "produk" },
-            { name: "OPPO - LCD Pecah - LCD OPPO Ori", price: 2175000, stock: 99, type: "produk" },
-            { name: "OPPO - LCD Pecah - LCD OPPO OEM", price: 802500, stock: 99, type: "produk" },
-            { name: "OPPO - LCD Pecah - LCD OPPO Copy", price: 480000, stock: 99, type: "produk" },
-            { name: "OPPO - Baterai Kembung - Baterai OPPO Ori", price: 607500, stock: 99, type: "produk" },
-            { name: "OPPO - Baterai Kembung - Baterai OPPO OEM", price: 315000, stock: 99, type: "produk" },
-            { name: "OPPO - Port Charger Rusak - Flex Charger OPPO", price: 345000, stock: 99, type: "produk" },
-            { name: "OPPO - IC Power Rusak - IC Power OPPO", price: 780000, stock: 99, type: "produk" },
-            { name: "OPPO - IC Charging Rusak - IC Charging OPPO", price: 712500, stock: 99, type: "produk" },
-            { name: "OPPO - Software Error - Flashing OPPO", price: 172500, stock: 99, type: "produk" },
-            { name: "OPPO - Lupa Password - Unlock Tool", price: 202500, stock: 99, type: "produk" },
-            { name: "Vivo - LCD Pecah - LCD Vivo Ori", price: 2062500, stock: 99, type: "produk" },
-            { name: "Vivo - LCD Pecah - LCD Vivo OEM", price: 750000, stock: 99, type: "produk" },
-            { name: "Vivo - LCD Pecah - LCD Vivo Copy", price: 457500, stock: 99, type: "produk" },
-            { name: "Vivo - Baterai Drop - Baterai Vivo Ori", price: 577500, stock: 99, type: "produk" },
-            { name: "Vivo - Baterai Drop - Baterai Vivo OEM", price: 300000, stock: 99, type: "produk" },
-            { name: "Vivo - Port Charger Rusak - Flex Charger Vivo", price: 322500, stock: 99, type: "produk" },
-            { name: "Vivo - IC Power Rusak - IC Power Vivo", price: 757500, stock: 99, type: "produk" },
-            { name: "Vivo - Software Error - Flashing Vivo", price: 165000, stock: 99, type: "produk" },
-            { name: "Realme - LCD Pecah - LCD Realme Ori", price: 1875000, stock: 99, type: "produk" },
-            { name: "Realme - LCD Pecah - LCD Realme OEM", price: 697500, stock: 99, type: "produk" },
-            { name: "Realme - LCD Pecah - LCD Realme Copy", price: 435000, stock: 99, type: "produk" },
-            { name: "Realme - Baterai Drop - Baterai Realme Ori", price: 540000, stock: 99, type: "produk" },
-            { name: "Realme - Port Charger Rusak - Flex Charger Realme", price: 300000, stock: 99, type: "produk" },
-            { name: "Realme - IC Power Rusak - IC Power Realme", price: 727500, stock: 99, type: "produk" },
-            { name: "Realme - Software Error - Flashing Realme", price: 150000, stock: 99, type: "produk" },
-            { name: "Infinix - LCD Pecah - LCD Infinix Ori", price: 1500000, stock: 99, type: "produk" },
-            { name: "Infinix - LCD Pecah - LCD Infinix OEM", price: 600000, stock: 99, type: "produk" },
-            { name: "Infinix - LCD Pecah - LCD Infinix Copy", price: 397500, stock: 99, type: "produk" },
-            { name: "Infinix - Baterai Drop - Baterai Infinix Ori", price: 472500, stock: 99, type: "produk" },
-            { name: "Infinix - Port Charger Rusak - Flex Charger Infinix", price: 277500, stock: 99, type: "produk" },
-            { name: "Infinix - IC Power Rusak - IC Power Infinix", price: 652500, stock: 99, type: "produk" },
-            { name: "Infinix - Software Error - Flashing Infinix", price: 142500, stock: 99, type: "produk" },
-            { name: "Tecno - LCD Pecah - LCD Tecno Ori", price: 1387500, stock: 99, type: "produk" },
-            { name: "Tecno - LCD Pecah - LCD Tecno OEM", price: 547500, stock: 99, type: "produk" },
-            { name: "Tecno - Baterai Drop - Baterai Tecno Ori", price: 442500, stock: 99, type: "produk" },
-            { name: "Tecno - Port Charger Rusak - Flex Charger Tecno", price: 262500, stock: 99, type: "produk" },
-            { name: "Tecno - Software Error - Flashing Tecno", price: 135000, stock: 99, type: "produk" },
-            { name: "Itel - LCD Pecah - LCD Itel Ori", price: 1275000, stock: 99, type: "produk" },
-            { name: "Itel - LCD Pecah - LCD Itel OEM", price: 487500, stock: 99, type: "produk" },
-            { name: "Itel - Baterai Drop - Baterai Itel Ori", price: 397500, stock: 99, type: "produk" },
-            { name: "Itel - Port Charger Rusak - Flex Charger Itel", price: 232500, stock: 99, type: "produk" },
-            { name: "Itel - Software Error - Flashing Itel", price: 123750, stock: 99, type: "produk" },
-            { name: "iPhone X - LCD Pecah - LCD iPhone X Ori", price: 3450000, stock: 99, type: "produk" },
-            { name: "iPhone X - LCD Pecah - LCD iPhone X OEM", price: 1800000, stock: 99, type: "produk" },
-            { name: "iPhone X - LCD Pecah - LCD iPhone X Copy", price: 1012500, stock: 99, type: "produk" },
-            { name: "iPhone 11 - LCD Pecah - LCD iPhone 11 Ori", price: 4275000, stock: 99, type: "produk" },
-            { name: "iPhone 11 - LCD Pecah - LCD iPhone 11 OEM", price: 2175000, stock: 99, type: "produk" },
-            { name: "iPhone 11 - LCD Pecah - LCD iPhone 11 Copy", price: 1200000, stock: 99, type: "produk" },
-            { name: "iPhone 12 - LCD Pecah - LCD iPhone 12 Ori", price: 5250000, stock: 99, type: "produk" },
-            { name: "iPhone 12 - LCD Pecah - LCD iPhone 12 OEM", price: 2850000, stock: 99, type: "produk" },
-            { name: "iPhone 12 - LCD Pecah - LCD iPhone 12 Copy", price: 1575000, stock: 99, type: "produk" },
-            { name: "iPhone 13 - LCD Pecah - LCD iPhone 13 Ori", price: 6000000, stock: 99, type: "produk" },
-            { name: "iPhone 13 - LCD Pecah - LCD iPhone 13 OEM", price: 3225000, stock: 99, type: "produk" },
-            { name: "iPhone 13 - LCD Pecah - LCD iPhone 13 Copy", price: 1837500, stock: 99, type: "produk" },
-            { name: "iPhone 14 - LCD Pecah - LCD iPhone 14 Ori", price: 6975000, stock: 99, type: "produk" },
-            { name: "iPhone 14 - LCD Pecah - LCD iPhone 14 OEM", price: 3750000, stock: 99, type: "produk" },
-            { name: "iPhone 14 - LCD Pecah - LCD iPhone 14 Copy", price: 2250000, stock: 99, type: "produk" },
-            { name: "iPhone X - Baterai - Baterai iPhone X Ori", price: 750000, stock: 99, type: "produk" },
-            { name: "iPhone X - Baterai - Baterai iPhone X OEM", price: 435000, stock: 99, type: "produk" },
-            { name: "iPhone 11 - Baterai - Baterai iPhone 11 Ori", price: 937500, stock: 99, type: "produk" },
-            { name: "iPhone 11 - Baterai - Baterai iPhone 11 OEM", price: 525000, stock: 99, type: "produk" },
-            { name: "iPhone 12 - Baterai - Baterai iPhone 12 Ori", price: 1125000, stock: 99, type: "produk" },
-            { name: "iPhone 12 - Baterai - Baterai iPhone 12 OEM", price: 637500, stock: 99, type: "produk" },
-            { name: "iPhone 13 - Baterai - Baterai iPhone 13 Ori", price: 1312500, stock: 99, type: "produk" },
-            { name: "iPhone 13 - Baterai - Baterai iPhone 13 OEM", price: 772500, stock: 99, type: "produk" },
-            { name: "iPhone 14 - Baterai - Baterai iPhone 14 Ori", price: 1537500, stock: 99, type: "produk" },
-            { name: "iPhone 14 - Baterai - Baterai iPhone 14 OEM", price: 900000, stock: 99, type: "produk" },
-            { name: "iPhone - Port Charger Rusak - Flex Charger iPhone", price: 525000, stock: 99, type: "produk" },
-            { name: "iPhone - Tidak Bisa Charging - IC Charging iPhone", price: 1350000, stock: 99, type: "produk" },
-            { name: "iPhone - No Service/IMEI - IC Baseband iPhone", price: 1950000, stock: 99, type: "produk" },
-            { name: "iPhone - Bootloop - IC NAND iPhone", price: 2400000, stock: 99, type: "produk" },
-            { name: "iPhone - Tidak Bisa Hidup - IC Power iPhone", price: 1650000, stock: 99, type: "produk" },
-            { name: "iPhone - Face ID Rusak - Face ID Component", price: 2175000, stock: 99, type: "produk" },
-            { name: "iPhone - Speaker Rusak - Speaker iPhone", price: 562500, stock: 99, type: "produk" },
-            { name: "iPhone - Mic Rusak - Flex Mic iPhone", price: 502500, stock: 99, type: "produk" },
-            { name: "iPhone - Tombol Rusak - Flex Tombol iPhone", price: 450000, stock: 99, type: "produk" },
-            { name: "iPhone - Software Error - Restore iTunes", price: 262500, stock: 99, type: "produk" },
-            { name: "iPhone - Lupa Password - Unlock iCloud", price: 525000, stock: 99, type: "produk" },
-            { name: "iPhone - Error 4013/4014 - Recovery Mode", price: 375000, stock: 99, type: "produk" },
-            { name: "Google Pixel - LCD Pecah - LCD Google Pixel Ori", price: 4125000, stock: 99, type: "produk" },
-            { name: "Google Pixel - LCD Pecah - LCD Google Pixel OEM", price: 1875000, stock: 99, type: "produk" },
-            { name: "Google Pixel - Baterai Drop - Baterai Google Pixel Ori", price: 1050000, stock: 99, type: "produk" },
-            { name: "Google Pixel - Port Charger Rusak - Flex Charger Pixel", price: 450000, stock: 99, type: "produk" },
-            { name: "Google Pixel - IC Power Rusak - IC Power Google", price: 1425000, stock: 99, type: "produk" },
-            { name: "Huawei - LCD Pecah - LCD Huawei Ori", price: 1950000, stock: 99, type: "produk" },
-            { name: "Huawei - LCD Pecah - LCD Huawei OEM", price: 787500, stock: 99, type: "produk" },
-            { name: "Huawei - Baterai Drop - Baterai Huawei Ori", price: 615000, stock: 99, type: "produk" },
-            { name: "Huawei - Port Charger Rusak - Flex Charger Huawei", price: 337500, stock: 99, type: "produk" },
-            { name: "Huawei - IC Power Rusak - IC Power Huawei", price: 862500, stock: 99, type: "produk" },
-            { name: "Huawei - Software Error - Flashing Huawei", price: 180000, stock: 99, type: "produk" },
-            { name: "Huawei - No Service - IC RF Huawei", price: 975000, stock: 99, type: "produk" },
-            { name: "Asus - LCD Pecah - LCD Asus Ori", price: 1762500, stock: 99, type: "produk" },
-            { name: "Asus - LCD Pecah - LCD Asus OEM", price: 697500, stock: 99, type: "produk" },
-            { name: "Asus - Baterai Drop - Baterai Asus Ori", price: 562500, stock: 99, type: "produk" },
-            { name: "Asus - Port Charger Rusak - Flex Charger Asus", price: 315000, stock: 99, type: "produk" },
-            { name: "Asus - IC Power Rusak - IC Power Asus", price: 802500, stock: 99, type: "produk" },
-            { name: "Asus - Software Error - Flashing Asus", price: 172500, stock: 99, type: "produk" },
-            { name: "Lenovo - LCD Pecah - LCD Lenovo Ori", price: 1575000, stock: 99, type: "produk" },
-            { name: "Lenovo - LCD Pecah - LCD Lenovo OEM", price: 637500, stock: 99, type: "produk" },
-            { name: "Lenovo - Baterai Drop - Baterai Lenovo Ori", price: 510000, stock: 99, type: "produk" },
-            { name: "Lenovo - Port Charger Rusak - Flex Charger Lenovo", price: 292500, stock: 99, type: "produk" },
-            { name: "Lenovo - IC Power Rusak - IC Power Lenovo", price: 750000, stock: 99, type: "produk" },
-            { name: "Motorola - LCD Pecah - LCD Motorola Ori", price: 1687500, stock: 99, type: "produk" },
-            { name: "Motorola - LCD Pecah - LCD Motorola OEM", price: 667500, stock: 99, type: "produk" },
-            { name: "Motorola - Baterai Drop - Baterai Motorola Ori", price: 532500, stock: 99, type: "produk" },
-            { name: "Motorola - Port Charger Rusak - Flex Charger Motorola", price: 307500, stock: 99, type: "produk" },
-            { name: "Motorola - IC Power Rusak - IC Power Motorola", price: 772500, stock: 99, type: "produk" },
-            { name: "Sony - LCD Pecah - LCD Sony Ori", price: 1875000, stock: 99, type: "produk" },
-            { name: "Sony - LCD Pecah - LCD Sony OEM", price: 750000, stock: 99, type: "produk" },
-            { name: "Sony - Baterai Drop - Baterai Sony Ori", price: 600000, stock: 99, type: "produk" },
-            { name: "Sony - Port Charger Rusak - Flex Charger Sony", price: 330000, stock: 99, type: "produk" },
-            { name: "Sony - IC Power Rusak - IC Power Sony", price: 832500, stock: 99, type: "produk" },
-            { name: "Nokia - LCD Pecah - LCD Nokia Ori", price: 1387500, stock: 99, type: "produk" },
-            { name: "Nokia - LCD Pecah - LCD Nokia OEM", price: 540000, stock: 99, type: "produk" },
-            { name: "Nokia - Baterai Drop - Baterai Nokia Ori", price: 465000, stock: 99, type: "produk" },
-            { name: "Nokia - Port Charger Rusak - Flex Charger Nokia", price: 262500, stock: 99, type: "produk" },
-            { name: "Nokia - IC Power Rusak - IC Power Nokia", price: 697500, stock: 99, type: "produk" },
-            { name: "Laptop - Install Ulang Windows - Tidak Ada", price: 168750, stock: 99, type: "produk" },
-            { name: "Laptop - Install Ulang MacOS - Tidak Ada", price: 337500, stock: 99, type: "produk" },
-            { name: "Laptop - Install Ulang Linux - Tidak Ada", price: 225000, stock: 99, type: "produk" },
-            { name: "Laptop - Upgrade RAM - RAM DDR3", price: 525000, stock: 99, type: "produk" },
-            { name: "Laptop - Upgrade RAM - RAM DDR4", price: 937500, stock: 99, type: "produk" },
-            { name: "Laptop - Upgrade RAM - RAM DDR5", price: 1575000, stock: 99, type: "produk" },
-            { name: "Laptop - Upgrade SSD - SSD SATA 120GB", price: 412500, stock: 99, type: "produk" },
-            { name: "Laptop - Upgrade SSD - SSD SATA 240GB", price: 600000, stock: 99, type: "produk" },
-            { name: "Laptop - Upgrade SSD - SSD SATA 480GB", price: 900000, stock: 99, type: "produk" },
-            { name: "Laptop - Upgrade SSD - SSD NVMe 256GB", price: 787500, stock: 99, type: "produk" },
-            { name: "Laptop - Upgrade SSD - SSD NVMe 512GB", price: 1087500, stock: 99, type: "produk" },
-            { name: "Laptop - Upgrade SSD - SSD NVMe 1TB", price: 1875000, stock: 99, type: "produk" },
-            { name: "Laptop - Ganti LCD - LCD Laptop 14 inch", price: 1350000, stock: 99, type: "produk" },
-            { name: "Laptop - Ganti LCD - LCD Laptop 15.6 inch", price: 1575000, stock: 99, type: "produk" },
-            { name: "Laptop - Ganti Baterai - Baterai Laptop Ori", price: 975000, stock: 99, type: "produk" },
-            { name: "Laptop - Ganti Baterai - Baterai Laptop OEM", price: 562500, stock: 99, type: "produk" },
-            { name: "Laptop - Keyboard Rusak - Keyboard Laptop Ori", price: 712500, stock: 99, type: "produk" },
-            { name: "Laptop - Keyboard Rusak - Keyboard Laptop OEM", price: 375000, stock: 99, type: "produk" },
-            { name: "Laptop - Charger Rusak - Charger Laptop Ori", price: 787500, stock: 99, type: "produk" },
-            { name: "Laptop - Charger Rusak - Charger Laptop OEM", price: 375000, stock: 99, type: "produk" },
-            { name: "Laptop - DC Jack Rusak - DC Jack Laptop", price: 450000, stock: 99, type: "produk" },
-            { name: "Laptop - Fan Rusak - Kipas Laptop Ori", price: 562500, stock: 99, type: "produk" },
-            { name: "Laptop - Fan Rusak - Kipas Laptop OEM", price: 300000, stock: 99, type: "produk" },
-            { name: "Laptop - Overheat - Bersihkan Kipas + Ganti Pasta", price: 262500, stock: 99, type: "produk" },
-            { name: "Laptop - Tidak Bisa Charging - IC Charging Laptop", price: 975000, stock: 99, type: "produk" },
-            { name: "Laptop - Tidak Bisa Hidup - IC Power Laptop", price: 1275000, stock: 99, type: "produk" },
-            { name: "Laptop - Tidak Ada Display - IC VGA/Graphic", price: 1575000, stock: 99, type: "produk" },
-            { name: "Laptop - Tidak Ada Display - IC PCH/Chipset", price: 2100000, stock: 99, type: "produk" },
-            { name: "Laptop - LCD Berkedip - Flex LCD Laptop", price: 562500, stock: 99, type: "produk" },
-            { name: "Laptop - Port USB Rusak - Port USB Laptop", price: 375000, stock: 99, type: "produk" },
-            { name: "Laptop - Port HDMI Rusak - Port HDMI Laptop", price: 435000, stock: 99, type: "produk" },
-            { name: "Laptop - Tidak Ada Suara - IC Audio Laptop", price: 750000, stock: 99, type: "produk" },
-            { name: "Laptop - Tidak Baca WiFi - Card WiFi Laptop", price: 487500, stock: 99, type: "produk" },
-            { name: "Laptop - Tidak Baca WiFi - IC WiFi Laptop", price: 825000, stock: 99, type: "produk" },
-            { name: "Asus Laptop - Ganti LCD - LCD Asus Ori", price: 1950000, stock: 99, type: "produk" },
-            { name: "Asus Laptop - Ganti Baterai - Baterai Asus Ori", price: 1125000, stock: 99, type: "produk" },
-            { name: "Asus Laptop - Ganti Keyboard - Keyboard Asus Ori", price: 900000, stock: 99, type: "produk" },
-            { name: "Asus Laptop - IC Power Rusak - IC Power Asus Laptop", price: 1500000, stock: 99, type: "produk" },
-            { name: "Acer Laptop - Ganti LCD - LCD Acer Ori", price: 1725000, stock: 99, type: "produk" },
-            { name: "Acer Laptop - Ganti Baterai - Baterai Acer Ori", price: 1012500, stock: 99, type: "produk" },
-            { name: "Acer Laptop - Ganti Keyboard - Keyboard Acer Ori", price: 787500, stock: 99, type: "produk" },
-            { name: "Acer Laptop - IC Power Rusak - IC Power Acer Laptop", price: 1387500, stock: 99, type: "produk" },
-            { name: "Lenovo Laptop - Ganti LCD - LCD Lenovo Ori", price: 1800000, stock: 99, type: "produk" },
-            { name: "Lenovo Laptop - Ganti Baterai - Baterai Lenovo Ori", price: 1050000, stock: 99, type: "produk" },
-            { name: "Lenovo Laptop - Ganti Keyboard - Keyboard Lenovo Ori", price: 825000, stock: 99, type: "produk" },
-            { name: "Lenovo Laptop - IC Power Rusak - IC Power Lenovo Laptop", price: 1425000, stock: 99, type: "produk" },
-            { name: "HP Laptop - Ganti LCD - LCD HP Ori", price: 1875000, stock: 99, type: "produk" },
-            { name: "HP Laptop - Ganti Baterai - Baterai HP Ori", price: 1095000, stock: 99, type: "produk" },
-            { name: "HP Laptop - Ganti Keyboard - Keyboard HP Ori", price: 870000, stock: 99, type: "produk" },
-            { name: "HP Laptop - IC Power Rusak - IC Power HP Laptop", price: 1470000, stock: 99, type: "produk" },
-            { name: "Dell Laptop - Ganti LCD - LCD Dell Ori", price: 1950000, stock: 99, type: "produk" },
-            { name: "Dell Laptop - Ganti Baterai - Baterai Dell Ori", price: 1125000, stock: 99, type: "produk" },
-            { name: "Dell Laptop - Ganti Keyboard - Keyboard Dell Ori", price: 900000, stock: 99, type: "produk" },
-            { name: "Dell Laptop - IC Power Rusak - IC Power Dell Laptop", price: 1500000, stock: 99, type: "produk" },
-            { name: "Toshiba Laptop - Ganti LCD - LCD Toshiba Ori", price: 1612500, stock: 99, type: "produk" },
-            { name: "Toshiba Laptop - Ganti Baterai - Baterai Toshiba Ori", price: 952500, stock: 99, type: "produk" },
-            { name: "Toshiba Laptop - Ganti Keyboard - Keyboard Toshiba Ori", price: 727500, stock: 99, type: "produk" },
-            { name: "Toshiba Laptop - IC Power Rusak - IC Power Toshiba Laptop", price: 1327500, stock: 99, type: "produk" },
-            { name: "Samsung Laptop - Ganti LCD - LCD Samsung Laptop Ori", price: 1800000, stock: 99, type: "produk" },
-            { name: "Samsung Laptop - Ganti Baterai - Baterai Samsung Laptop Ori", price: 1065000, stock: 99, type: "produk" },
-            { name: "Samsung Laptop - Ganti Keyboard - Keyboard Samsung Laptop Ori", price: 817500, stock: 99, type: "produk" },
-            { name: "Samsung Laptop - IC Power Rusak - IC Power Samsung Laptop", price: 1410000, stock: 99, type: "produk" },
-            { name: "MacBook - Ganti LCD - LCD MacBook Air", price: 5250000, stock: 99, type: "produk" },
-            { name: "MacBook - Ganti LCD - LCD MacBook Pro", price: 7125000, stock: 99, type: "produk" },
-            { name: "MacBook - Ganti Baterai - Baterai MacBook Air", price: 2025000, stock: 99, type: "produk" },
-            { name: "MacBook - Ganti Baterai - Baterai MacBook Pro", price: 2775000, stock: 99, type: "produk" },
-            { name: "MacBook - Ganti Keyboard - Keyboard MacBook", price: 1875000, stock: 99, type: "produk" },
-            { name: "MacBook - Ganti Charger - Charger MacBook Ori", price: 1350000, stock: 99, type: "produk" },
-            { name: "MacBook - Ganti Charger - Charger MacBook OEM", price: 562500, stock: 99, type: "produk" },
-            { name: "MacBook - IC Power Rusak - IC Power MacBook", price: 3375000, stock: 99, type: "produk" },
-            { name: "MacBook - No Backlight - IC Backlight MacBook", price: 2775000, stock: 99, type: "produk" },
-            { name: "MacBook - Tidak Bisa Charging - IC Charging MacBook", price: 3075000, stock: 99, type: "produk" },
-            { name: "MacBook - MacBook Lambat - Upgrade SSD MacBook", price: 2100000, stock: 99, type: "produk" },
-            { name: "MacBook - Software Error - Install Ulang MacOS", price: 450000, stock: 99, type: "produk" },
-            { name: "Tablet Samsung - LCD Pecah - LCD Samsung Tab Ori", price: 2175000, stock: 99, type: "produk" },
-            { name: "Tablet Samsung - LCD Pecah - LCD Samsung Tab OEM", price: 937500, stock: 99, type: "produk" },
-            { name: "Tablet Samsung - Baterai Kembung - Baterai Samsung Tab Ori", price: 750000, stock: 99, type: "produk" },
-            { name: "Tablet Samsung - Port Charger Rusak - Flex Charger Samsung Tab", price: 435000, stock: 99,
-                type: "produk" },
-            { name: "Tablet Samsung - IC Power Rusak - IC Power Samsung Tab", price: 975000, stock: 99, type: "produk" },
-            { name: "iPad Mini - LCD Pecah - LCD iPad Mini Ori", price: 2550000, stock: 99, type: "produk" },
-            { name: "iPad Mini - LCD Pecah - LCD iPad Mini OEM", price: 1275000, stock: 99, type: "produk" },
-            { name: "iPad Air - LCD Pecah - LCD iPad Air Ori", price: 3225000, stock: 99, type: "produk" },
-            { name: "iPad Air - LCD Pecah - LCD iPad Air OEM", price: 1612500, stock: 99, type: "produk" },
-            { name: "iPad Pro - LCD Pecah - LCD iPad Pro Ori", price: 5250000, stock: 99, type: "produk" },
-            { name: "iPad Pro - LCD Pecah - LCD iPad Pro OEM", price: 2625000, stock: 99, type: "produk" },
-            { name: "iPad - Baterai Kembung - Baterai iPad Ori", price: 1125000, stock: 99, type: "produk" },
-            { name: "iPad - Baterai Kembung - Baterai iPad OEM", price: 622500, stock: 99, type: "produk" },
-            { name: "iPad - Tombol Home Rusak - Flex Tombol iPad", price: 562500, stock: 99, type: "produk" },
-            { name: "iPad - IC Power Rusak - IC Power iPad", price: 1800000, stock: 99, type: "produk" },
-            { name: "iPad - Tidak Bisa Charging - IC Charging iPad", price: 1650000, stock: 99, type: "produk" },
-            { name: "iPad - Software Error - Restore iPad", price: 337500, stock: 99, type: "produk" },
-            { name: "Tablet Lenovo - LCD Pecah - LCD Lenovo Tab Ori", price: 1500000, stock: 99, type: "produk" },
-            { name: "Tablet Lenovo - LCD Pecah - LCD Lenovo Tab OEM", price: 675000, stock: 99, type: "produk" },
-            { name: "Tablet Lenovo - Baterai Drop - Baterai Lenovo Tab Ori", price: 577500, stock: 99, type: "produk" },
-            { name: "Tablet Lenovo - Port Charger Rusak - Flex Charger Lenovo Tab", price: 337500, stock: 99,
-                type: "produk" },
-            { name: "PS4 - Tidak Baca Disk - Optical Lens PS4", price: 750000, stock: 99, type: "produk" },
-            { name: "PS4 - Overheat - Ganti Pasta PS4", price: 450000, stock: 99, type: "produk" },
-            { name: "PS4 - Tidak Bisa Hidup - IC Power PS4", price: 1125000, stock: 99, type: "produk" },
-            { name: "PS4 - HDMI Rusak - IC HDMI PS4", price: 1012500, stock: 99, type: "produk" },
-            { name: "PS4 - Eject Error - Flex Eject PS4", price: 375000, stock: 99, type: "produk" },
-            { name: "PS5 - Tidak Baca Disk - Optical Lens PS5", price: 1200000, stock: 99, type: "produk" },
-            { name: "PS5 - Overheat - Ganti Pasta PS5", price: 637500, stock: 99, type: "produk" },
-            { name: "PS5 - HDMI Rusak - IC HDMI PS5", price: 1575000, stock: 99, type: "produk" },
-            { name: "Xbox One - Tidak Baca Disk - Optical Lens Xbox", price: 750000, stock: 99, type: "produk" },
-            { name: "Xbox One - Overheat - Ganti Pasta Xbox", price: 450000, stock: 99, type: "produk" },
-            { name: "Xbox One - HDMI Rusak - IC HDMI Xbox", price: 1012500, stock: 99, type: "produk" },
-            { name: "Nintendo Switch - LCD Pecah - LCD Switch Ori", price: 1725000, stock: 99, type: "produk" },
-            { name: "Nintendo Switch - LCD Pecah - LCD Switch OEM", price: 862500, stock: 99, type: "produk" },
-            { name: "Nintendo Switch - Joycon Drift - Analog Joycon", price: 375000, stock: 99, type: "produk" },
-            { name: "Nintendo Switch - Baterai Drop - Baterai Switch", price: 675000, stock: 99, type: "produk" },
-            { name: "Nintendo Switch - Tidak Bisa Charging - IC Charging Switch", price: 1125000, stock: 99,
-                type: "produk" },
-            { name: "Printer - Tidak Bisa Ngeprint - Servicemechanism Printer", price: 262500, stock: 99, type: "produk" },
-            { name: "Printer - Tidak Bisa Ngeprint - Ganti Cartridge", price: 487500, stock: 99, type: "produk" },
-            { name: "Printer - Printer Macet - Bersihkan Printer", price: 210000, stock: 99, type: "produk" },
-            { name: "Printer - Printer Error - Reset Printer", price: 150000, stock: 99, type: "produk" },
-            { name: "Printer - Tidak Baca Kertas - Sensor Kertas", price: 262500, stock: 99, type: "produk" },
-            { name: "Printer Epson - Tinta Tidak Keluar - Flushing Head", price: 375000, stock: 99, type: "produk" },
-            { name: "Printer Epson - Ganti Mainboard - Mainboard Printer Epson", price: 900000, stock: 99,
-                type: "produk" },
-            { name: "Printer Epson - Ganti Printhead - Printhead Epson", price: 1275000, stock: 99, type: "produk" },
-            { name: "Printer Canon - Tinta Tidak Keluar - Flushing Head", price: 375000, stock: 99, type: "produk" },
-            { name: "Printer Canon - Ganti Mainboard - Mainboard Printer Canon", price: 825000, stock: 99,
-                type: "produk" },
-            { name: "Printer Canon - Ganti Printhead - Printhead Canon", price: 1087500, stock: 99, type: "produk" },
-            { name: "Printer HP - Tinta Tidak Keluar - Flushing Head", price: 375000, stock: 99, type: "produk" },
-            { name: "Printer HP - Ganti Mainboard - Mainboard Printer HP", price: 825000, stock: 99, type: "produk" },
-            { name: "Printer HP - Ganti Cartridge - Cartridge HP Ori", price: 637500, stock: 99, type: "produk" },
-            { name: "Apple Watch - LCD Pecah - LCD Apple Watch Ori", price: 3375000, stock: 99, type: "produk" },
-            { name: "Apple Watch - LCD Pecah - LCD Apple Watch OEM", price: 1575000, stock: 99, type: "produk" },
-            { name: "Apple Watch - Baterai Drop - Baterai Apple Watch Ori", price: 900000, stock: 99, type: "produk" },
-            { name: "Apple Watch - Baterai Drop - Baterai Apple Watch OEM", price: 487500, stock: 99, type: "produk" },
-            { name: "Apple Watch - Tidak Bisa Charging - Flex Charger Apple Watch", price: 787500, stock: 99,
-                type: "produk" },
-            { name: "Apple Watch - IC Power Rusak - IC Power Apple Watch", price: 1425000, stock: 99, type: "produk" },
-            { name: "Samsung Watch - LCD Pecah - LCD Samsung Watch Ori", price: 2025000, stock: 99, type: "produk" },
-            { name: "Samsung Watch - LCD Pecah - LCD Samsung Watch OEM", price: 937500, stock: 99, type: "produk" },
-            { name: "Samsung Watch - Baterai Drop - Baterai Samsung Watch", price: 600000, stock: 99, type: "produk" },
-            { name: "Mi Band - Ganti Baterai - Baterai Mi Band", price: 262500, stock: 99, type: "produk" },
-            { name: "Mi Band - Ganti LCD - LCD Mi Band", price: 375000, stock: 99, type: "produk" },
-            { name: "Desktop PC - Tidak Bisa Hidup - Ganti Power Supply", price: 750000, stock: 99, type: "produk" },
-            { name: "Desktop PC - Tidak Bisa Hidup - Ganti Motherboard", price: 1500000, stock: 99, type: "produk" },
-            { name: "Desktop PC - Tidak Bisa Hidup - Ganti RAM", price: 525000, stock: 99, type: "produk" },
-            { name: "Desktop PC - Tidak Bisa Hidup - Ganti Prosesor", price: 2625000, stock: 99, type: "produk" },
-            { name: "Desktop PC - Tidak Ada Display - Ganti VGA Card", price: 2550000, stock: 99, type: "produk" },
-            { name: "Desktop PC - Lambat - Upgrade RAM", price: 525000, stock: 99, type: "produk" },
-            { name: "Desktop PC - Lambat - Upgrade SSD", price: 900000, stock: 99, type: "produk" },
-            { name: "Desktop PC - Panas - Ganti Cooler Prosesor", price: 487500, stock: 99, type: "produk" },
-            { name: "Desktop PC - Blue Screen - Flashing BIOS", price: 262500, stock: 99, type: "produk" },
-            { name: "Desktop PC - Blue Screen - Cek Hardware", price: 262500, stock: 99, type: "produk" },
-            { name: "Desktop PC - Install Ulang Windows - Tidak Ada", price: 168750, stock: 99, type: "produk" },
-            { name: "Desktop PC - Install Ulang Windows + Software - Tidak Ada", price: 337500, stock: 99,
-                type: "produk" },
-            { name: "Desktop PC - Jaringan Internet Putus - Setting Jaringan", price: 150000, stock: 99,
-                type: "produk" },
-            { name: "Desktop PC - Data Hilang - Data Recovery", price: 1350000, stock: 9999, type: "produk" },
-            { name: "Jasa Ringan - Pasang Baterai (bawa sendiri)", price: 75000, stock: 9999, type: "jasa" },
-            { name: "Jasa Ringan - Pasang LCD (bawa sendiri)", price: 112500, stock: 9999, type: "jasa" },
-            { name: "Jasa Ringan - Bongkar Pasang Cover", price: 60000, stock: 9999, type: "jasa" },
-            { name: "Jasa Ringan - Bersihkan Speaker/Mic", price: 52500, stock: 9999, type: "jasa" },
-            { name: "Jasa Ringan - Setting Ulang (tanpa flash)", price: 45000, stock: 9999, type: "jasa" },
-            { name: "Jasa Ringan - Ganti Sim Card Tray", price: 37500, stock: 9999, type: "jasa" },
-            { name: "Jasa Ringan - Ganti Flex Kabel", price: 75000, stock: 9999, type: "jasa" },
-            { name: "Jasa Ringan - Reset Pabrik (soft)", price: 60000, stock: 9999, type: "jasa" },
-            { name: "Jasa Ringan - Unlock Pola (tanpa flash)", price: 67500, stock: 9999, type: "jasa" },
-            { name: "Jasa Ringan - Pasang Screen Protector", price: 30000, stock: 9999, type: "jasa" },
-            { name: "Jasa Sedang - Flash/Install Ulang OS", price: 150000, stock: 9999, type: "jasa" },
-            { name: "Jasa Sedang - Unlock FRP / iCloud", price: 180000, stock: 9999, type: "jasa" },
-            { name: "Jasa Sedang - Ganti Port Charger (bawa sendiri)", price: 120000, stock: 9999, type: "jasa" },
-            { name: "Jasa Sedang - Ganti Tombol (bawa sendiri)", price: 112500, stock: 9999, type: "jasa" },
-            { name: "Jasa Sedang - Perbaikan Software (root/custom rom)", price: 165000, stock: 9999, type: "jasa" },
-            { name: "Jasa Sedang - Bongkar Total (cleaning)", price: 135000, stock: 9999, type: "jasa" },
-            { name: "Jasa Sedang - Ganti Motor Vibrator", price: 127500, stock: 9999, type: "jasa" },
-            { name: "Jasa Sedang - Ganti Flex LCD (bawa sendiri)", price: 150000, stock: 9999, type: "jasa" },
-            { name: "Jasa Berat - Microsoldering (IC Power)", price: 375000, stock: 9999, type: "jasa" },
-            { name: "Jasa Berat - Microsoldering (IC Charging)", price: 345000, stock: 9999, type: "jasa" },
-            { name: "Jasa Berat - Microsoldering (IC Audio)", price: 300000, stock: 9999, type: "jasa" },
-            { name: "Jasa Berat - Ganti IC EMMC/UFS", price: 525000, stock: 9999, type: "jasa" },
-            { name: "Jasa Berat - Ganti IC Baseband", price: 450000, stock: 9999, type: "jasa" },
-            { name: "Jasa Berat - Ganti IC VGA/Graphic", price: 600000, stock: 9999, type: "jasa" },
-            { name: "Jasa Berat - Ganti Chipset/PCH", price: 750000, stock: 9999, type: "jasa" },
-            { name: "Jasa Berat - Perbaikan Board Level (konsultasi)", price: 375000, stock: 9999, type: "jasa" },
-            { name: "Jasa Berat - Reballing CPU/GPU", price: 525000, stock: 9999, type: "jasa" },
-            { name: "Jasa Berat - Ganti Connector BGA", price: 420000, stock: 9999, type: "jasa" }
-        ];
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hash = await crypto.subtle.digest('SHA-256', data);
+            return Array.from(new Uint8Array(hash))
+                .map(b => b.toString(16).padStart(2, '0'))
+                .join('');
+        }
 
         // ================================================================
-        //  APP STATE & HELPERS (dengan try-catch untuk keamanan)
+        //  AUTH SYSTEM
         // ================================================================
+
+        const STORAGE_KEY = 'malik_kasir_db_v3';
 
         function getDb() {
             try {
-                const raw = localStorage.getItem('malik_kasir_db');
+                const raw = localStorage.getItem(STORAGE_KEY);
                 if (raw) {
                     const data = JSON.parse(raw);
-                    if (data && typeof data === 'object' && Array.isArray(data.products)) {
+                    if (data && typeof data === 'object') {
                         return data;
                     }
                 }
-            } catch (_) { /* ignore */ }
-            // fallback: buat struktur default
-            return { products: [], transactions: [], settings: { ppn: 11 } };
+            } catch (_) {}
+            return {
+                products: [],
+                transactions: [],
+                settings: { ppn: 11 },
+                users: [
+                    { username: 'admin', passwordHash: null } // akan diisi saat init
+                ],
+                currentUser: 'admin',
+                lastInvoiceNumber: 0
+            };
         }
 
         function saveDb(db) {
             try {
-                localStorage.setItem('malik_kasir_db', JSON.stringify(db));
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
             } catch (e) {
                 console.error('Gagal menyimpan data:', e);
-                showToast('❌ Gagal menyimpan data! localStorage mungkin penuh.', 'error');
+                showToast('❌ Gagal menyimpan data!', 'error');
             }
         }
 
-        function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+        // ================================================================
+        //  INIT AUTH (hash password default saat pertama kali)
+        // ================================================================
 
-        function fmtIdr(n) { const num = Number(n) || 0; return 'Rp ' + num.toLocaleString('id-ID'); }
+        let isAuthenticated = false;
 
-        function nowStr() { return new Date().toISOString(); }
-
-        function formatDate(d) { if (!d) return '-'; try { return new Date(d).toLocaleString('id-ID'); } catch (_) { return d; } }
-
-        function generateInvoiceNumber() {
-            const now = new Date();
-            const date = now.toISOString().slice(0, 10).replace(/-/g, '');
-            const seq = String(Math.floor(Math.random() * 10000)).padStart(4, '0');
-            return 'INV' + date + seq;
+        async function initAuth() {
+            const db = getDb();
+            // Cek apakah user admin sudah punya hash
+            const adminUser = db.users.find(u => u.username === 'admin');
+            if (adminUser && !adminUser.passwordHash) {
+                // Hash default password 'admin123'
+                adminUser.passwordHash = await hashPassword('admin123');
+                saveDb(db);
+            }
+            // Cek apakah sudah login sebelumnya
+            const session = sessionStorage.getItem('malik_kasir_session');
+            if (session) {
+                try {
+                    const data = JSON.parse(session);
+                    const user = db.users.find(u => u.username === data.username);
+                    if (user && data.timestamp > Date.now() - 3600000) { // session 1 jam
+                        isAuthenticated = true;
+                        document.getElementById('currentUser').textContent = data.username;
+                        document.getElementById('loginContainer').classList.add('hidden');
+                        document.getElementById('appMain').classList.remove('hidden');
+                        document.getElementById('appHeader').style.display = 'flex';
+                        document.getElementById('appTabs').style.display = 'flex';
+                        return;
+                    }
+                } catch (_) {}
+            }
+            // Tampilkan login
+            document.getElementById('loginContainer').classList.remove('hidden');
+            document.getElementById('appMain').classList.add('hidden');
+            document.getElementById('appHeader').style.display = 'none';
+            document.getElementById('appTabs').style.display = 'none';
         }
 
         // ================================================================
-        //  GET PRODUCTS — dengan jaminan data default jika kosong/error
+        //  LOGIN HANDLER
+        // ================================================================
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const errorEl = document.getElementById('loginError');
+            const btn = document.getElementById('loginBtn');
+
+            if (!username || !password) {
+                errorEl.textContent = '⚠️ Username dan password wajib diisi!';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memproses...';
+
+            try {
+                const db = getDb();
+                const user = db.users.find(u => u.username === username);
+                if (!user) {
+                    errorEl.textContent = '❌ Username tidak ditemukan!';
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+                    return;
+                }
+
+                const hashed = await hashPassword(password);
+                if (hashed === user.passwordHash) {
+                    // Login sukses
+                    errorEl.textContent = '';
+                    isAuthenticated = true;
+                    sessionStorage.setItem('malik_kasir_session', JSON.stringify({
+                        username: username,
+                        timestamp: Date.now()
+                    }));
+                    document.getElementById('currentUser').textContent = username;
+                    document.getElementById('loginContainer').classList.add('hidden');
+                    document.getElementById('appMain').classList.remove('hidden');
+                    document.getElementById('appHeader').style.display = 'flex';
+                    document.getElementById('appTabs').style.display = 'flex';
+                    showToast('✅ Selamat datang, ' + username + '!', 'success');
+                    // Load data
+                    refreshProductCache();
+                    filterProducts();
+                    updateCartTotal();
+                    renderManageList();
+                    renderHistory();
+                    loadSettings();
+                } else {
+                    errorEl.textContent = '❌ Password salah!';
+                }
+            } catch (err) {
+                errorEl.textContent = '❌ Error: ' + err.message;
+            }
+
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+        }
+
+        // ================================================================
+        //  LOGOUT
+        // ================================================================
+
+        function handleLogout() {
+            if (confirm('Yakin ingin logout?')) {
+                sessionStorage.removeItem('malik_kasir_session');
+                isAuthenticated = false;
+                document.getElementById('loginContainer').classList.remove('hidden');
+                document.getElementById('appMain').classList.add('hidden');
+                document.getElementById('appHeader').style.display = 'none';
+                document.getElementById('appTabs').style.display = 'none';
+                document.getElementById('loginPassword').value = '';
+                document.getElementById('loginError').textContent = '';
+                showToast('👋 Logout berhasil', 'info');
+            }
+        }
+
+        // ================================================================
+        //  CHANGE CREDENTIALS
+        // ================================================================
+
+        async function changeCredentials() {
+            const newUsername = document.getElementById('newUsername').value.trim();
+            const newPassword = document.getElementById('newPassword').value.trim();
+
+            if (!newUsername && !newPassword) {
+                return showToast('Isi username atau password baru', 'warning');
+            }
+
+            try {
+                const db = getDb();
+                const currentUser = db.currentUser || 'admin';
+                const user = db.users.find(u => u.username === currentUser);
+
+                if (!user) {
+                    return showToast('User tidak ditemukan', 'error');
+                }
+
+                if (newUsername) {
+                    // Cek apakah username sudah ada
+                    if (db.users.some(u => u.username === newUsername && u.username !== currentUser)) {
+                        return showToast('Username sudah digunakan!', 'error');
+                    }
+                    // Hapus user lama, tambahkan user baru
+                    db.users = db.users.filter(u => u.username !== currentUser);
+                    user.username = newUsername;
+                    db.users.push(user);
+                    db.currentUser = newUsername;
+                    document.getElementById('currentUser').textContent = newUsername;
+                    // Update session
+                    sessionStorage.setItem('malik_kasir_session', JSON.stringify({
+                        username: newUsername,
+                        timestamp: Date.now()
+                    }));
+                }
+
+                if (newPassword) {
+                    user.passwordHash = await hashPassword(newPassword);
+                }
+
+                saveDb(db);
+                document.getElementById('newUsername').value = '';
+                document.getElementById('newPassword').value = '';
+                showToast('✅ Kredensial berhasil diubah!', 'success');
+            } catch (err) {
+                showToast('❌ Error: ' + err.message, 'error');
+            }
+        }
+
+        // ================================================================
+        //  DEFAULT PRODUCTS
+        // ================================================================
+
+        const DEFAULT_PRODUCTS = [
+            { name: "Samsung - LCD Ori - LCD Samsung Original", price: 2512500, stock: 99, type: "produk" },
+            { name: "Samsung - Baterai Ori - Baterai Samsung", price: 675000, stock: 99, type: "produk" },
+            { name: "iPhone 12 - LCD Ori - LCD iPhone 12 Original", price: 5250000, stock: 99, type: "produk" },
+            { name: "iPhone 12 - Baterai Ori - Baterai iPhone", price: 1125000, stock: 99, type: "produk" },
+            { name: "Xiaomi - LCD Ori - LCD Xiaomi Original", price: 1950000, stock: 99, type: "produk" },
+            { name: "Jasa Ringan - Pasang Baterai", price: 75000, stock: 9999, type: "jasa" },
+            { name: "Jasa Ringan - Pasang LCD", price: 112500, stock: 9999, type: "jasa" },
+            { name: "Jasa Sedang - Flash/Install Ulang OS", price: 150000, stock: 9999, type: "jasa" },
+            { name: "Jasa Berat - Microsoldering IC Power", price: 375000, stock: 9999, type: "jasa" },
+        ];
+
+        // ================================================================
+        //  PRODUCT HELPERS
         // ================================================================
 
         function getProducts() {
             try {
                 const db = getDb();
                 if (!db.products || !Array.isArray(db.products) || db.products.length === 0) {
-                    // Isi dengan DEFAULT_PRODUCTS + beri id unik
                     db.products = DEFAULT_PRODUCTS.map(p => ({ ...p, id: genId() }));
                     saveDb(db);
                 }
                 return db.products;
             } catch (e) {
-                console.error('getProducts error:', e);
-                // fallback emergency: return default tanpa simpan
                 return DEFAULT_PRODUCTS.map(p => ({ ...p, id: genId() }));
             }
         }
@@ -1942,24 +1986,21 @@
             } catch (e) { console.error(e); }
         }
 
-        // ================================================================
-        //  RESET KE PRODUK DEFAULT (tanpa menghapus transaksi)
-        // ================================================================
+        function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
 
-        function resetToDefaultProducts() {
-            if (!confirm('⚠️ Semua produk akan ditimpa dengan daftar awal. Transaksi tetap tersimpan. Lanjutkan?'))
-            return;
-            try {
-                const db = getDb();
-                db.products = DEFAULT_PRODUCTS.map(p => ({ ...p, id: genId() }));
-                saveDb(db);
-                refreshProductCache();
-                renderManageList();
-                filterProducts();
-                showToast('✅ Produk berhasil direset ke default.', 'success');
-            } catch (e) {
-                showToast('❌ Gagal reset: ' + e.message, 'error');
-            }
+        function fmtIdr(n) { const num = Number(n) || 0; return 'Rp ' + num.toLocaleString('id-ID'); }
+
+        function nowStr() { return new Date().toISOString(); }
+
+        function formatDate(d) { if (!d) return '-'; try { return new Date(d).toLocaleString('id-ID'); } catch (_) { return d; } }
+
+        function getNextInvoiceNumber() {
+            const db = getDb();
+            const last = db.lastInvoiceNumber || 0;
+            const next = last + 1;
+            db.lastInvoiceNumber = next;
+            saveDb(db);
+            return 'INV-' + String(next).padStart(6, '0');
         }
 
         // ================================================================
@@ -1997,7 +2038,7 @@
         }
 
         // ================================================================
-        //  KASIR - PRODUCT GRID (dengan try-catch)
+        //  KASIR - PRODUCT GRID
         // ================================================================
 
         let currentFilter = 'all';
@@ -2008,7 +2049,6 @@
             try {
                 productCache = getProducts().map(p => ({ ...p }));
             } catch (e) {
-                console.error('refreshProductCache error:', e);
                 productCache = [];
             }
         }
@@ -2061,14 +2101,7 @@
                     `;
                 }).join('');
             } catch (e) {
-                console.error('filterProducts error:', e);
-                grid.innerHTML = `
-                    <div class="error-message">
-                        <i class="fas fa-exclamation-triangle"></i> Gagal memuat produk. 
-                        <br><span class="text-sm">Coba refresh halaman atau reset produk di tab Atur.</span>
-                        <br><span class="text-sm" style="color:#6b7280;">Error: ${e.message}</span>
-                    </div>
-                `;
+                grid.innerHTML = `<div class="error-message">❌ Gagal memuat produk: ${e.message}</div>`;
                 empty.classList.add('hidden');
             }
         }
@@ -2082,7 +2115,7 @@
         }
 
         // ================================================================
-        //  CART (sama seperti sebelumnya, tetap aman)
+        //  CART
         // ================================================================
 
         let cart = [];
@@ -2096,7 +2129,7 @@
                 const existing = cart.find(c => c.id === productId);
                 if (existing) {
                     if (prod.type === 'produk' && existing.qty >= prod.stock) return showToast('Stok tidak mencukupi',
-                    'warning');
+                        'warning');
                     existing.qty += 1;
                 } else {
                     cart.push({ id: productId, name: prod.name, price: prod.price, qty: 1, type: prod.type, stock: prod
@@ -2112,7 +2145,7 @@
                 }
 
                 updateCartTotal();
-                showToast(prod.name + ' ditambahkan', 'success');
+                showToast('✅ ' + prod.name + ' ditambahkan', 'success');
                 if (!document.getElementById('cartPanel').classList.contains('open')) toggleCart();
             } catch (e) {
                 showToast('Error: ' + e.message, 'error');
@@ -2182,8 +2215,23 @@
         function toggleCart() { document.getElementById('cartPanel').classList.toggle('open'); }
 
         // ================================================================
-        //  CART TOTAL (dengan diskon)
+        //  CART TOTAL & UANG KEMBALIAN
         // ================================================================
+
+        function updateChange() {
+            const totalText = document.getElementById('cartTotal').textContent;
+            const total = Number(totalText.replace(/[^0-9]/g, '')) || 0;
+            const paid = Number(document.getElementById('paymentAmount').value) || 0;
+            const change = paid - total;
+            const display = document.getElementById('changeDisplay');
+            if (change >= 0) {
+                display.textContent = 'Kembali: ' + fmtIdr(change);
+                display.className = 'change-display';
+            } else {
+                display.textContent = 'Kurang: ' + fmtIdr(Math.abs(change));
+                display.className = 'change-display negative';
+            }
+        }
 
         function updateCartTotal() {
             try {
@@ -2198,6 +2246,7 @@
                     document.getElementById('cartPpn').textContent = 'Rp 0';
                     document.getElementById('cartTotal').textContent = 'Rp 0';
                     document.getElementById('checkoutBtn').disabled = true;
+                    document.getElementById('changeDisplay').textContent = 'Kembali: Rp 0';
                     return;
                 }
 
@@ -2239,21 +2288,27 @@
                 window._discountAmount = discountAmount;
                 window._discountType = discountType;
                 window._discountInput = discountNominal;
+
+                // Update kembalian
+                updateChange();
             } catch (e) {
                 console.error('updateCartTotal error:', e);
             }
         }
 
         // ================================================================
-        //  CHECKOUT & INVOICE (sama)
+        //  CHECKOUT
         // ================================================================
 
         function checkout() {
             if (cart.length === 0) return showToast('Keranjang kosong!', 'warning');
+
             const customerName = document.getElementById('customerName').value.trim() || 'Umum';
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            const paidAmount = Number(document.getElementById('paymentAmount').value) || 0;
+
             const subtotal = cart.reduce((s, c) => s + c.price * c.qty, 0);
             const ppnPct = getPpn();
-
             const discountAmount = window._discountAmount || 0;
             const discountType = window._discountType || 'nominal';
             const discountInput = window._discountInput || 0;
@@ -2261,7 +2316,14 @@
             const afterDiscount = subtotal - discountAmount;
             const ppn = afterDiscount * (ppnPct / 100);
             const total = afterDiscount + ppn;
-            const invoiceNumber = generateInvoiceNumber();
+
+            // Cek pembayaran
+            if (paymentMethod === 'Tunai' && paidAmount < total) {
+                return showToast('❌ Uang kurang!', 'error');
+            }
+
+            const change = paidAmount - total;
+            const invoiceNumber = getNextInvoiceNumber();
             const now = nowStr();
 
             const transaction = {
@@ -2277,7 +2339,9 @@
                 ppn: ppn,
                 ppnPct: ppnPct,
                 total: total,
-                payment: 'tunai'
+                payment: paymentMethod,
+                paid: paidAmount,
+                change: change >= 0 ? change : 0
             };
 
             const db = getDb();
@@ -2292,12 +2356,18 @@
             updateCartTotal();
             filterProducts();
             document.getElementById('customerName').value = '';
+            document.getElementById('paymentAmount').value = '0';
             document.getElementById('discountInput').value = '0';
             window._discountAmount = 0;
+            document.getElementById('changeDisplay').textContent = 'Kembali: Rp 0';
             if (document.getElementById('cartPanel').classList.contains('open')) toggleCart();
 
             showToast('✅ Transaksi ' + invoiceNumber + ' berhasil!', 'success');
         }
+
+        // ================================================================
+        //  INVOICE
+        // ================================================================
 
         function renderInvoice(data) {
             const container = document.getElementById('invoiceContent');
@@ -2315,6 +2385,12 @@
                     `<div class="inv-row discount-line"><span class="label">${label}</span><span>- ${fmtIdr(data.discountAmount)}</span></div>`;
             }
 
+            let changeLine = '';
+            if (data.payment === 'Tunai' && data.change > 0) {
+                changeLine =
+                    `<div class="inv-row"><span class="label">Kembalian</span><span>${fmtIdr(data.change)}</span></div>`;
+            }
+
             container.innerHTML = `
                 <div class="inv-header">
                     <h3>🔧 Malik Kasir</h3>
@@ -2323,6 +2399,7 @@
                 </div>
                 <div class="inv-row"><span class="label">Tanggal</span><span class="value">${formatDate(data.date)}</span></div>
                 <div class="inv-row"><span class="label">Pelanggan</span><span class="value">${data.customer}</span></div>
+                <div class="inv-row"><span class="label">Metode</span><span class="value">${data.payment}</span></div>
                 <hr class="inv-divider" />
                 <div class="inv-items">${itemsHtml}</div>
                 <hr class="inv-divider" />
@@ -2333,7 +2410,7 @@
                     <span>TOTAL</span>
                     <span class="amount">${fmtIdr(data.total)}</span>
                 </div>
-                <div class="inv-row" style="margin-top:4px;"><span class="label">Metode</span><span>${data.payment}</span></div>
+                ${changeLine}
                 <div class="inv-footer">Terima kasih telah berbelanja.<br/>Garansi 7 hari berlaku.</div>
             `;
         }
@@ -2379,7 +2456,6 @@
                     </div>
                 `).join('');
             } catch (e) {
-                console.error(e);
                 document.getElementById('manageList').innerHTML =
                     '<div class="error-message">Error memuat daftar produk.</div>';
             }
@@ -2458,6 +2534,25 @@
         }
 
         // ================================================================
+        //  RESET DEFAULT PRODUCTS
+        // ================================================================
+
+        function resetToDefaultProducts() {
+            if (!confirm('⚠️ Semua produk akan ditimpa dengan daftar awal. Lanjutkan?')) return;
+            try {
+                const db = getDb();
+                db.products = DEFAULT_PRODUCTS.map(p => ({ ...p, id: genId() }));
+                saveDb(db);
+                refreshProductCache();
+                renderManageList();
+                filterProducts();
+                showToast('✅ Produk berhasil direset ke default.', 'success');
+            } catch (e) {
+                showToast('❌ Gagal reset: ' + e.message, 'error');
+            }
+        }
+
+        // ================================================================
         //  HISTORY
         // ================================================================
 
@@ -2500,6 +2595,7 @@
                             <span>${t.customer || 'Umum'}</span>
                             <span>${formatDate(t.date)}</span>
                             <span>${(t.items||[]).length} item</span>
+                            <span>${t.payment || 'Tunai'}</span>
                             ${t.discountAmount > 0 ? `<span>Diskon ${fmtIdr(t.discountAmount)}</span>` : ''}
                         </div>
                     </div>
@@ -2550,7 +2646,7 @@
                         return showToast('Format file tidak valid.', 'error');
                     }
                     if (!confirm('Restore akan mengganti semua data saat ini. Lanjutkan?')) return;
-                    localStorage.setItem('malik_kasir_db', JSON.stringify(data));
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
                     refreshProductCache();
                     renderManageList();
                     filterProducts();
@@ -2567,52 +2663,10 @@
         }
 
         function clearAllData() {
-            localStorage.removeItem('malik_kasir_db');
+            localStorage.removeItem(STORAGE_KEY);
+            sessionStorage.removeItem('malik_kasir_session');
             showToast('Semua data dihapus.', 'warning');
             setTimeout(() => location.reload(), 400);
-        }
-
-        // ================================================================
-        //  RESET APP (kosongkan keranjang)
-        // ================================================================
-
-        function resetApp() {
-            if (cart.length > 0) {
-                if (!confirm('Reset akan mengosongkan keranjang. Lanjutkan?')) return;
-                cart.forEach(item => {
-                    if (item.type === 'produk') {
-                        const prod = productCache.find(p => p.id === item.id);
-                        if (prod) prod.stock += item.qty;
-                        const db = getDb();
-                        const dbProd = db.products.find(p => p.id === item.id);
-                        if (dbProd) dbProd.stock = prod ? prod.stock : dbProd.stock;
-                        saveDb(db);
-                    }
-                });
-                cart = [];
-                updateCartTotal();
-                filterProducts();
-            }
-            document.getElementById('searchInput').value = '';
-            setFilter('all');
-            document.getElementById('customerName').value = '';
-            document.getElementById('discountInput').value = '0';
-            window._discountAmount = 0;
-            closeInvoice();
-            showToast('Aplikasi direset', 'info');
-        }
-
-        // ================================================================
-        //  PWA - SERVICE WORKER
-        // ================================================================
-
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('data:application/javascript;base64,' + btoa(`
-                const CACHE = 'malik-kasir-v2';
-                self.addEventListener('install', e => e.waitUntil(caches.open(CACHE).then(c => c.addAll(['/'])).then(() => self.skipWaiting())));
-                self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
-                self.addEventListener('fetch', e => e.respondWith(caches.match(e.request).then(r => r || fetch(e.request))));
-            `)).then(() => console.log('✅ SW registered')).catch(() => console.log('⚠️ SW failed'));
         }
 
         // ================================================================
@@ -2620,37 +2674,45 @@
         // ================================================================
 
         document.addEventListener('DOMContentLoaded', function() {
-            refreshProductCache();
-            filterProducts();
-            updateCartTotal();
-            renderManageList();
-            renderHistory();
-            loadSettings();
+            initAuth().then(() => {
+                refreshProductCache();
+                filterProducts();
+                updateCartTotal();
+                renderManageList();
+                renderHistory();
+                loadSettings();
 
-            document.addEventListener('keydown', function(e) {
-                if (e.ctrlKey && e.key === 'k') { e.preventDefault();
-                    document.getElementById('searchInput').focus(); }
-                if (e.key === 'Escape') closeInvoice();
-            });
+                // Event listener untuk payment amount
+                document.getElementById('paymentAmount').addEventListener('input', updateChange);
 
-            document.getElementById('invoiceModal').addEventListener('click', function(e) {
-                if (e.target === this) closeInvoice();
-            });
-            document.getElementById('addProductModal').addEventListener('click', function(e) {
-                if (e.target === this) closeAddProduct();
-            });
+                // Keyboard shortcuts
+                document.addEventListener('keydown', function(e) {
+                    if (e.ctrlKey && e.key === 'k') { e.preventDefault();
+                        document.getElementById('searchInput').focus(); }
+                    if (e.key === 'Escape') closeInvoice();
+                });
 
-            let touchStartY = 0;
-            const panel = document.getElementById('cartPanel');
-            panel.addEventListener('touchstart', function(e) { touchStartY = e.touches[0].clientY; });
-            panel.addEventListener('touchmove', function(e) {
-                if (!this.classList.contains('open')) return;
-                const delta = e.touches[0].clientY - touchStartY;
-                if (delta > 50) this.classList.remove('open');
-            });
+                // Modal click outside
+                document.getElementById('invoiceModal').addEventListener('click', function(e) {
+                    if (e.target === this) closeInvoice();
+                });
+                document.getElementById('addProductModal').addEventListener('click', function(e) {
+                    if (e.target === this) closeAddProduct();
+                });
 
-            console.log('🔧 Malik Kasir siap!');
-            console.log('📦 ' + getProducts().length + ' produk tersedia.');
+                // Cart toggle with swipe
+                let touchStartY = 0;
+                const panel = document.getElementById('cartPanel');
+                panel.addEventListener('touchstart', function(e) { touchStartY = e.touches[0].clientY; });
+                panel.addEventListener('touchmove', function(e) {
+                    if (!this.classList.contains('open')) return;
+                    const delta = e.touches[0].clientY - touchStartY;
+                    if (delta > 50) this.classList.remove('open');
+                });
+
+                console.log('🔧 Malik Kasir v3.0 siap!');
+                console.log('📦 ' + getProducts().length + ' produk tersedia.');
+            });
         });
     </script>
 </body>
