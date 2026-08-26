@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Malik Servis Universal — Manajemen Servis Elektronik</title>
+    <title>Malik Servis Pro — Nota Cepat</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js">
     </script>
+    <link rel="manifest" href="manifest.json">
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
     <style>
-        /* ============================================================
-           ROOT & RESET — same as before, keep it clean
-           ============================================================ */
+        /* ===== SAME STYLES AS BEFORE (keep all styles) ===== */
         :root {
             --primary: #0f3b5e;
             --primary-light: #1a5a8a;
@@ -266,7 +270,7 @@
             background: var(--gray-50);
         }
 
-        /* ===== BOTTOM NAV (Mobile) ===== */
+        /* ===== BOTTOM NAV ===== */
         #bottom-nav {
             display: none;
             position: fixed;
@@ -894,83 +898,42 @@
             margin-top: 0.2rem;
         }
 
-        /* ===== MASTER DATA TABS ===== */
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.3rem;
-            border-bottom: 2px solid var(--gray-200);
-            margin-bottom: 1rem;
-            padding-bottom: 0;
+        /* ===== SERVICE GRID ===== */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 0.5rem;
+            margin-top: 0.5rem;
         }
-        .tab-btn {
-            padding: 0.4rem 1rem;
-            border: none;
-            background: transparent;
-            font-weight: 600;
-            font-size: 0.78rem;
-            color: var(--gray-500);
+        .service-card {
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 0.5rem 0.6rem;
+            text-align: center;
             cursor: pointer;
-            border-bottom: 2px solid transparent;
-            margin-bottom: -2px;
             transition: var(--transition);
         }
-        .tab-btn.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
+        .service-card:hover {
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: var(--shadow-sm);
         }
-        .tab-btn:hover {
-            color: var(--gray-700);
-        }
-        .tab-pane {
-            display: none;
-            animation: fadeIn 0.2s ease;
-        }
-        .tab-pane.active {
+        .service-card .name {
+            font-size: 0.75rem;
+            font-weight: 600;
             display: block;
         }
-
-        /* ===== SEARCH BOX ===== */
-        .search-box {
-            position: relative;
-        }
-        .search-box i {
-            position: absolute;
-            left: 0.7rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray-400);
-            font-size: 0.8rem;
-        }
-        .search-box input {
-            padding-left: 2.2rem;
-        }
-
-        /* ===== FILTER CHIPS ===== */
-        .filter-chips {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.3rem;
-            margin-bottom: 0.6rem;
-        }
-        .filter-chip {
-            padding: 0.15rem 0.6rem;
-            border-radius: 16px;
-            font-size: 0.65rem;
-            font-weight: 500;
-            background: var(--gray-100);
+        .service-card .price {
+            font-size: 0.7rem;
             color: var(--gray-600);
-            cursor: pointer;
-            border: 1px solid transparent;
-            transition: var(--transition);
+            display: block;
+            margin-top: 0.1rem;
         }
-        .filter-chip.active {
-            background: var(--primary);
-            color: #fff;
-            border-color: var(--primary);
-        }
-        .filter-chip:hover:not(.active) {
-            background: var(--gray-200);
+        .service-card .cat {
+            font-size: 0.6rem;
+            color: var(--gray-400);
+            display: block;
         }
 
         /* ===== PRINT ===== */
@@ -1216,12 +1179,8 @@
             .nav-links .nav-label {
                 display: none;
             }
-            .tabs {
-                gap: 0.1rem;
-            }
-            .tab-btn {
-                font-size: 0.7rem;
-                padding: 0.3rem 0.6rem;
+            .service-grid {
+                grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
             }
         }
         @media (max-width: 480px) {
@@ -1253,6 +1212,15 @@
             }
             .payment-summary .row.total {
                 font-size: 0.85rem;
+            }
+            .service-grid {
+                grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            }
+            .service-card .name {
+                font-size: 0.65rem;
+            }
+            .service-card .price {
+                font-size: 0.6rem;
             }
         }
 
@@ -1526,20 +1494,13 @@
             <a class="nav-item" data-view="history"><i class="fas fa-list-check"></i> Data Servis</a>
             <a class="nav-item" data-view="customers"><i class="fas fa-users"></i> Pelanggan</a>
 
-            <div class="nav-label">Master Data</div>
-            <a class="nav-item" data-view="master"><i class="fas fa-database"></i> Master Data</a>
-
-            <div class="nav-label">Inventory</div>
-            <a class="nav-item" data-view="inventory"><i class="fas fa-boxes-stacked"></i> Sparepart</a>
-            <a class="nav-item" data-view="technicians"><i class="fas fa-user-cog"></i> Teknisi</a>
-
             <div class="nav-label">Laporan &amp; Sistem</div>
             <a class="nav-item" data-view="reports"><i class="fas fa-file-invoice-dollar"></i> Laporan</a>
             <a class="nav-item" data-view="settings"><i class="fas fa-gear"></i> Pengaturan</a>
             <a class="nav-item" data-view="backup"><i class="fas fa-database"></i> Backup &amp; Restore</a>
         </nav>
         <div style="padding:0.5rem 1.5rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.6rem;color:rgba(255,255,255,0.25);">
-            v3.0 — Universal
+            v3.0 — Nota Cepat
         </div>
     </aside>
 
@@ -1568,9 +1529,6 @@
             <div id="view-pos" class="view-section hidden"></div>
             <div id="view-history" class="view-section hidden"></div>
             <div id="view-customers" class="view-section hidden"></div>
-            <div id="view-master" class="view-section hidden"></div>
-            <div id="view-inventory" class="view-section hidden"></div>
-            <div id="view-technicians" class="view-section hidden"></div>
             <div id="view-reports" class="view-section hidden"></div>
             <div id="view-settings" class="view-section hidden"></div>
             <div id="view-backup" class="view-section hidden"></div>
@@ -1583,7 +1541,7 @@
             <button class="bottom-nav-item active" data-view="dashboard"><i class="fas fa-home"></i> Home</button>
             <button class="bottom-nav-item" data-view="pos"><i class="fas fa-plus-circle"></i> Servis</button>
             <button class="bottom-nav-item" data-view="history"><i class="fas fa-list"></i> Riwayat</button>
-            <button class="bottom-nav-item" data-view="master"><i class="fas fa-database"></i> Master</button>
+            <button class="bottom-nav-item" data-view="customers"><i class="fas fa-users"></i> Pelanggan</button>
             <button class="bottom-nav-item" data-view="settings"><i class="fas fa-sliders-h"></i> Menu</button>
         </div>
     </nav>
@@ -1608,7 +1566,7 @@
 
     <script>
         // ================================================================
-        //  1. DATABASE LAYER — extended for universal categories & brands
+        //  1. DATABASE LAYER — simplified (no master data)
         // ================================================================
         const DB = {
             _prefix: 'ms_',
@@ -1618,36 +1576,15 @@
             },
             _set(key, data) { localStorage.setItem(this._prefix + key, JSON.stringify(data)); },
 
-            // --- Core collections ---
             getCustomers() { return this._get('customers') || []; },
             setCustomers(v) { this._set('customers', v); },
-
-            getServices() { return this._get('services') || []; },
-            setServices(v) { this._set('services', v); },
-
-            getServiceItems() { return this._get('service_items') || []; },
-            setServiceItems(v) { this._set('service_items', v); },
-
-            getParts() { return this._get('parts') || []; },
-            setParts(v) { this._set('parts', v); },
 
             getTechnicians() { return this._get('technicians') || []; },
             setTechnicians(v) { this._set('technicians', v); },
 
-            getSuppliers() { return this._get('suppliers') || []; },
-            setSuppliers(v) { this._set('suppliers', v); },
-
             getTransactions() { return this._get('transactions') || []; },
             setTransactions(v) { this._set('transactions', v); },
 
-            // --- NEW: Device Categories & Brands ---
-            getDeviceCategories() { return this._get('device_categories') || []; },
-            setDeviceCategories(v) { this._set('device_categories', v); },
-
-            getBrands() { return this._get('brands') || []; },
-            setBrands(v) { this._set('brands', v); },
-
-            // --- Settings ---
             getSettings() {
                 const def = {
                     shopName: 'Malik Servis',
@@ -1682,150 +1619,46 @@
 
             genId(prefix) { return prefix + Date.now().toString(36).toUpperCase(); },
 
-            // --- Init defaults with universal categories ---
+            // --- Default data ---
             init() {
                 if (!this._get('customers')) {
                     this.setCustomers([]);
-                    this.setServices([]);
-                    this.setServiceItems([
-                        { id: 'SVC001', name: 'Instal Ulang Windows + Office', category: 'Laptop', price: 100000,
-                            duration: 120, warranty: 7 },
-                        { id: 'SVC002', name: 'Cleaning & Repaste Laptop/PC', category: 'Laptop', price: 150000,
-                            duration: 90, warranty: 3 },
-                        { id: 'SVC003', name: 'Ganti LCD HP', category: 'HP', price: 100000, duration: 60,
-                            warranty: 7 },
-                        { id: 'SVC004', name: 'Ganti Baterai HP', category: 'HP', price: 80000, duration: 45,
-                            warranty: 30 },
-                        { id: 'SVC005', name: 'Flash Software HP', category: 'HP', price: 75000, duration: 60,
-                            warranty: 3 },
-                        { id: 'SVC006', name: 'Ganti Keyboard Laptop', category: 'Laptop', price: 150000, duration: 90,
-                            warranty: 7 },
-                        { id: 'SVC007', name: 'Cuci AC Split', category: 'AC', price: 120000, duration: 120,
-                            warranty: 3 },
-                        { id: 'SVC008', name: 'Tambah Freon AC', category: 'AC', price: 200000, duration: 60,
-                            warranty: 7 },
-                        { id: 'SVC009', name: 'Service Printer (Cleaning)', category: 'Printer', price: 80000,
-                            duration: 60, warranty: 3 },
-                        { id: 'SVC010', name: 'Diagnosa Perangkat', category: 'Umum', price: 50000, duration: 30,
-                            warranty: 0 },
-                        { id: 'SVC011', name: 'Pemeriksaan Kerusakan', category: 'Umum', price: 75000, duration: 45,
-                            warranty: 0 },
-                    ]);
-                    this.setParts([
-                        { id: 'P001', name: 'Keyboard Laptop Lenovo', category: 'Laptop', brand: 'Lenovo',
-                            model: 'IdeaPad 3', cost: 250000, price: 350000, stock: 5, minStock: 2,
-                            supplier: 'Supplier A', location: 'Rak 1' },
-                        { id: 'P002', name: 'LCD HP Samsung A50', category: 'HP', brand: 'Samsung', model: 'A50',
-                            cost: 400000, price: 550000, stock: 2, minStock: 1, supplier: 'Supplier B',
-                            location: 'Rak 2' },
-                        { id: 'P003', name: 'Thermal Paste Deepcool', category: 'PC', brand: 'Deepcool', model: 'Z3',
-                            cost: 30000, price: 75000, stock: 10, minStock: 3, supplier: 'Supplier C',
-                            location: 'Rak 3' },
-                        { id: 'P004', name: 'Baterai Laptop Asus', category: 'Laptop', brand: 'Asus', model: 'A455L',
-                            cost: 350000, price: 500000, stock: 3, minStock: 1, supplier: 'Supplier A',
-                            location: 'Rak 1' },
-                        { id: 'P005', name: 'Kabel Charger Type-C', category: 'HP', brand: 'Generic', model: 'PD 20W',
-                            cost: 45000, price: 85000, stock: 8, minStock: 2, supplier: 'Supplier C',
-                            location: 'Rak 4' },
-                    ]);
                     this.setTechnicians([
                         { id: 'T001', name: 'Ahmad', phone: '081234567891', skills: ['Laptop', 'HP'], active: true,
                             servicesCount: 0, totalJasa: 0 },
                         { id: 'T002', name: 'Budi', phone: '081234567892', skills: ['AC', 'Printer'], active: true,
                             servicesCount: 0, totalJasa: 0 },
                     ]);
-                    this.setSuppliers([
-                        { id: 'SPL001', name: 'Supplier A', phone: '081234567893', address: 'Jakarta', notes: '',
-                            totalPurchase: 0 },
-                        { id: 'SPL002', name: 'Supplier B', phone: '081234567894', address: 'Bandung', notes: '',
-                            totalPurchase: 0 },
-                        { id: 'SPL003', name: 'Supplier C', phone: '081234567895', address: 'Semarang', notes: '',
-                            totalPurchase: 0 },
-                    ]);
                     this.setTransactions([]);
-
-                    // --- Universal categories ---
-                    this.setDeviceCategories([
-                        { id: 'DC001', name: 'HP / Smartphone', icon: 'fa-mobile-screen', description: '',
-                            active: true },
-                        { id: 'DC002', name: 'Tablet', icon: 'fa-tablet', description: '', active: true },
-                        { id: 'DC003', name: 'Laptop', icon: 'fa-laptop', description: '', active: true },
-                        { id: 'DC004', name: 'PC / Komputer', icon: 'fa-desktop', description: '', active: true },
-                        { id: 'DC005', name: 'Printer', icon: 'fa-print', description: '', active: true },
-                        { id: 'DC006', name: 'Monitor', icon: 'fa-display', description: '', active: true },
-                        { id: 'DC007', name: 'TV', icon: 'fa-tv', description: '', active: true },
-                        { id: 'DC008', name: 'Kamera', icon: 'fa-camera', description: '', active: true },
-                        { id: 'DC009', name: 'CCTV / DVR / NVR', icon: 'fa-video', description: '', active: true },
-                        { id: 'DC010', name: 'Proyektor', icon: 'fa-projector', description: '', active: true },
-                        { id: 'DC011', name: 'Speaker / Amplifier', icon: 'fa-volume-high', description: '',
-                            active: true },
-                        { id: 'DC012', name: 'Power Supply / UPS', icon: 'fa-bolt', description: '', active: true },
-                        { id: 'DC013', name: 'Router / Modem / WiFi', icon: 'fa-wifi', description: '',
-                        active: true },
-                        { id: 'DC014', name: 'Set Top Box', icon: 'fa-box', description: '', active: true },
-                        { id: 'DC015', name: 'Game Console / Controller', icon: 'fa-gamepad', description: '',
-                            active: true },
-                        { id: 'DC016', name: 'Drone', icon: 'fa-helicopter', description: '', active: true },
-                        { id: 'DC017', name: 'Smartwatch', icon: 'fa-clock', description: '', active: true },
-                        { id: 'DC018', name: 'Earphone / Headset', icon: 'fa-headphones', description: '',
-                            active: true },
-                        { id: 'DC019', name: 'Mesin Kasir / POS', icon: 'fa-cash-register', description: '',
-                            active: true },
-                        { id: 'DC020', name: 'Scanner', icon: 'fa-scanner', description: '', active: true },
-                        { id: 'DC021', name: 'Mesin Fotokopi', icon: 'fa-copy', description: '', active: true },
-                        { id: 'DC022', name: 'AC', icon: 'fa-snowflake', description: '', active: true },
-                        { id: 'DC023', name: 'Kulkas', icon: 'fa-fridge', description: '', active: true },
-                        { id: 'DC024', name: 'Mesin Cuci', icon: 'fa-water', description: '', active: true },
-                        { id: 'DC025', name: 'Microwave', icon: 'fa-micro', description: '', active: true },
-                        { id: 'DC026', name: 'Elektronik Rumah Tangga', icon: 'fa-house', description: '',
-                            active: true },
-                        { id: 'DC027', name: 'Elektronik Kantor', icon: 'fa-building', description: '',
-                        active: true },
-                        { id: 'DC028', name: 'Elektronik Kendaraan', icon: 'fa-car', description: '', active: true },
-                        { id: 'DC029', name: 'PCB / Modul Elektronik', icon: 'fa-microchip', description: '',
-                            active: true },
-                        { id: 'DC030', name: 'Lainnya / Custom', icon: 'fa-ellipsis', description: '',
-                        active: true },
-                    ]);
-                    this.setBrands([
-                        { id: 'BR001', name: 'Samsung', category: 'HP' },
-                        { id: 'BR002', name: 'Apple', category: 'HP' },
-                        { id: 'BR003', name: 'Xiaomi', category: 'HP' },
-                        { id: 'BR004', name: 'Asus', category: 'Laptop' },
-                        { id: 'BR005', name: 'Lenovo', category: 'Laptop' },
-                        { id: 'BR006', name: 'Dell', category: 'Laptop' },
-                        { id: 'BR007', name: 'HP', category: 'Laptop' },
-                        { id: 'BR008', name: 'Acer', category: 'Laptop' },
-                        { id: 'BR009', name: 'LG', category: 'TV' },
-                        { id: 'BR010', name: 'Sony', category: 'TV' },
-                        { id: 'BR011', name: 'Panasonic', category: 'AC' },
-                        { id: 'BR012', name: 'Daikin', category: 'AC' },
-                        { id: 'BR013', name: 'Canon', category: 'Printer' },
-                        { id: 'BR014', name: 'Epson', category: 'Printer' },
-                        { id: 'BR015', name: 'Brother', category: 'Printer' },
+                    // Default spareparts (for optional add-on)
+                    this._set('parts', [
+                        { id: 'P001', name: 'Keyboard Laptop Lenovo', category: 'Laptop', brand: 'Lenovo',
+                            cost: 250000, price: 350000, stock: 5 },
+                        { id: 'P002', name: 'LCD HP Samsung A50', category: 'HP', brand: 'Samsung', cost: 400000,
+                            price: 550000, stock: 2 },
+                        { id: 'P003', name: 'Thermal Paste Deepcool', category: 'PC', brand: 'Deepcool', cost: 30000,
+                            price: 75000, stock: 10 },
+                        { id: 'P004', name: 'Baterai Laptop Asus', category: 'Laptop', brand: 'Asus', cost: 350000,
+                            price: 500000, stock: 3 },
+                        { id: 'P005', name: 'Kabel Charger Type-C', category: 'HP', brand: 'Generic', cost: 45000,
+                            price: 85000, stock: 8 },
                     ]);
                     this.setSettings(this.getSettings());
                 }
-                // Ensure categories exist even if upgrading
-                if (!this._get('device_categories')) {
-                    this.setDeviceCategories([
-                        { id: 'DC001', name: 'HP / Smartphone', icon: 'fa-mobile-screen', description: '',
-                            active: true },
-                        { id: 'DC002', name: 'Laptop', icon: 'fa-laptop', description: '', active: true },
-                        { id: 'DC003', name: 'PC / Komputer', icon: 'fa-desktop', description: '', active: true },
-                        { id: 'DC004', name: 'AC', icon: 'fa-snowflake', description: '', active: true },
-                        { id: 'DC005', name: 'TV', icon: 'fa-tv', description: '', active: true },
-                        { id: 'DC006', name: 'Printer', icon: 'fa-print', description: '', active: true },
-                        { id: 'DC007', name: 'Kulkas', icon: 'fa-fridge', description: '', active: true },
-                        { id: 'DC008', name: 'Mesin Cuci', icon: 'fa-water', description: '', active: true },
-                        { id: 'DC009', name: 'Lainnya / Custom', icon: 'fa-ellipsis', description: '',
-                        active: true },
+                // Ensure technicians exist
+                if (this.getTechnicians().length === 0) {
+                    this.setTechnicians([
+                        { id: 'T001', name: 'Ahmad', phone: '081234567891', skills: ['Laptop', 'HP'], active: true,
+                            servicesCount: 0, totalJasa: 0 },
+                        { id: 'T002', name: 'Budi', phone: '081234567892', skills: ['AC', 'Printer'], active: true,
+                            servicesCount: 0, totalJasa: 0 },
                     ]);
                 }
-                if (!this._get('brands')) {
-                    this.setBrands([]);
-                }
-            }
+            },
+
+            // --- Get parts (for add-on) ---
+            getParts() { return this._get('parts') || []; },
+            setParts(v) { this._set('parts', v); }
         };
 
         // ================================================================
@@ -1920,7 +1753,6 @@
                 customerWA: '',
                 customerAddress: '',
                 deviceCategory: 'Laptop',
-                deviceCategoryCustom: '',
                 deviceBrand: '',
                 deviceModel: '',
                 deviceSerial: '',
@@ -1928,8 +1760,8 @@
                 deviceCondition: '',
                 issue: '',
                 diagnosis: '',
-                services: [],
-                parts: [],
+                services: [], // { name, price, category, isCustom? }
+                parts: [], // { name, cost, price, qty, isCustom? }
                 discount: 0,
                 dp: 0,
                 status: 'Menunggu pemeriksaan',
@@ -1938,10 +1770,91 @@
                 warranty: 7,
             },
             editingTxId: null,
+            // Service catalog (hardcoded)
+            serviceCatalog: [],
         };
 
         // ================================================================
-        //  4. UI RENDER ENGINE
+        //  4. SERVICE CATALOG (Lengkap)
+        // ================================================================
+        const SERVICE_CATALOG = [
+            // === HP / SMARTPHONE ===
+            { id: 'S001', name: 'Ganti LCD (include part)', category: 'HP', price: 350000 },
+            { id: 'S002', name: 'Ganti Baterai (include part)', category: 'HP', price: 200000 },
+            { id: 'S003', name: 'Ganti Charging Port (include part)', category: 'HP', price: 150000 },
+            { id: 'S004', name: 'Perbaikan IC (include part)', category: 'HP', price: 250000 },
+            { id: 'S005', name: 'Flash / Instal Ulang Software', category: 'HP', price: 100000 },
+            { id: 'S006', name: 'Cleaning Internal (jasa)', category: 'HP', price: 75000 },
+            { id: 'S007', name: 'Ganti Speaker (include part)', category: 'HP', price: 180000 },
+            { id: 'S008', name: 'Ganti Kamera (include part)', category: 'HP', price: 220000 },
+            { id: 'S009', name: 'Ganti Microphone (include part)', category: 'HP', price: 130000 },
+            { id: 'S010', name: 'Perbaikan Water Damage (jasa+part)', category: 'HP', price: 300000 },
+
+            // === LAPTOP ===
+            { id: 'S011', name: 'Instal Windows + Office (jasa)', category: 'Laptop', price: 150000 },
+            { id: 'S012', name: 'Cleaning & Repaste (jasa)', category: 'Laptop', price: 200000 },
+            { id: 'S013', name: 'Ganti Keyboard (include part)', category: 'Laptop', price: 450000 },
+            { id: 'S014', name: 'Ganti LCD (include part)', category: 'Laptop', price: 800000 },
+            { id: 'S015', name: 'Ganti SSD/HDD (include part)', category: 'Laptop', price: 600000 },
+            { id: 'S016', name: 'Ganti RAM (include part)', category: 'Laptop', price: 500000 },
+            { id: 'S017', name: 'Perbaikan Motherboard (jasa+part)', category: 'Laptop', price: 400000 },
+            { id: 'S018', name: 'Ganti Fan / Kipas (include part)', category: 'Laptop', price: 300000 },
+            { id: 'S019', name: 'Ganti Touchpad (include part)', category: 'Laptop', price: 350000 },
+            { id: 'S020', name: 'Ganti Port Charging (include part)', category: 'Laptop', price: 250000 },
+
+            // === PC / KOMPUTER ===
+            { id: 'S021', name: 'Rakit PC (jasa)', category: 'PC', price: 250000 },
+            { id: 'S022', name: 'Instal Windows (jasa)', category: 'PC', price: 100000 },
+            { id: 'S023', name: 'Ganti PSU (include part)', category: 'PC', price: 350000 },
+            { id: 'S024', name: 'Ganti RAM (include part)', category: 'PC', price: 500000 },
+            { id: 'S025', name: 'Ganti VGA (include part)', category: 'PC', price: 1200000 },
+            { id: 'S026', name: 'Cleaning PC (jasa)', category: 'PC', price: 150000 },
+            { id: 'S027', name: 'Ganti Motherboard (include part)', category: 'PC', price: 800000 },
+            { id: 'S028', name: 'Ganti Processor (include part)', category: 'PC', price: 1500000 },
+
+            // === PRINTER ===
+            { id: 'S029', name: 'Cleaning Head (jasa)', category: 'Printer', price: 100000 },
+            { id: 'S030', name: 'Service Mekanik (jasa)', category: 'Printer', price: 150000 },
+            { id: 'S031', name: 'Ganti Roller (include part)', category: 'Printer', price: 250000 },
+            { id: 'S032', name: 'Ganti Cartridge (include part)', category: 'Printer', price: 300000 },
+            { id: 'S033', name: 'Perbaikan Mainboard (jasa+part)', category: 'Printer', price: 400000 },
+            { id: 'S034', name: 'Ganti Fuser (include part)', category: 'Printer', price: 500000 },
+
+            // === AC ===
+            { id: 'S035', name: 'Cuci AC (jasa)', category: 'AC', price: 150000 },
+            { id: 'S036', name: 'Isi Freon (include gas)', category: 'AC', price: 250000 },
+            { id: 'S037', name: 'Perbaikan Kebocoran (jasa+part)', category: 'AC', price: 350000 },
+            { id: 'S038', name: 'Ganti Kompresor (include part)', category: 'AC', price: 1500000 },
+            { id: 'S039', name: 'Ganti Kapasitor (include part)', category: 'AC', price: 300000 },
+            { id: 'S040', name: 'Service Elektronik AC (jasa+part)', category: 'AC', price: 400000 },
+
+            // === TV ===
+            { id: 'S041', name: 'Perbaikan Power Supply (jasa+part)', category: 'TV', price: 300000 },
+            { id: 'S042', name: 'Ganti Panel LCD (include part)', category: 'TV', price: 1200000 },
+            { id: 'S043', name: 'Perbaikan Mainboard (jasa+part)', category: 'TV', price: 400000 },
+            { id: 'S044', name: 'Ganti Inverter (include part)', category: 'TV', price: 350000 },
+            { id: 'S045', name: 'Ganti Backlight (include part)', category: 'TV', price: 500000 },
+
+            // === KULKAS ===
+            { id: 'S046', name: 'Service Kompresor (jasa+part)', category: 'Kulkas', price: 600000 },
+            { id: 'S047', name: 'Isi Freon Kulkas (include gas)', category: 'Kulkas', price: 300000 },
+            { id: 'S048', name: 'Ganti Thermostat (include part)', category: 'Kulkas', price: 250000 },
+            { id: 'S049', name: 'Perbaikan Kebocoran (jasa+part)', category: 'Kulkas', price: 350000 },
+
+            // === MESIN CUCI ===
+            { id: 'S050', name: 'Service Mesin Cuci (jasa)', category: 'Mesin Cuci', price: 200000 },
+            { id: 'S051', name: 'Ganti Motor (include part)', category: 'Mesin Cuci', price: 700000 },
+            { id: 'S052', name: 'Ganti Pompa Air (include part)', category: 'Mesin Cuci', price: 350000 },
+            { id: 'S053', name: 'Perbaikan Board (jasa+part)', category: 'Mesin Cuci', price: 400000 },
+
+            // === LAINNYA (Umum) ===
+            { id: 'S054', name: 'Diagnosa Kerusakan (jasa)', category: 'Umum', price: 75000 },
+            { id: 'S055', name: 'Konsultasi Teknis (jasa)', category: 'Umum', price: 50000 },
+            { id: 'S056', name: 'Jasa Teknisi per Jam (jasa)', category: 'Umum', price: 100000 },
+        ];
+
+        // ================================================================
+        //  5. UI RENDER ENGINE
         // ================================================================
         const UI = {
             openModal(title, bodyHTML, footerHTML = '') {
@@ -1975,9 +1888,6 @@
                     pos: 'Transaksi Baru',
                     history: 'Data Servis',
                     customers: 'Pelanggan',
-                    master: 'Master Data',
-                    inventory: 'Sparepart',
-                    technicians: 'Teknisi',
                     reports: 'Laporan',
                     settings: 'Pengaturan',
                     backup: 'Backup & Restore'
@@ -1997,15 +1907,6 @@
                         break;
                     case 'customers':
                         Views.customers();
-                        break;
-                    case 'master':
-                        Views.master();
-                        break;
-                    case 'inventory':
-                        Views.inventory();
-                        break;
-                    case 'technicians':
-                        Views.technicians();
                         break;
                     case 'reports':
                         Views.reports();
@@ -2028,13 +1929,13 @@
                 if (sList) {
                     if (state.services.length === 0) {
                         sList.innerHTML =
-                            `<div class="empty-state"><i class="fas fa-wrench"></i> Belum ada jasa</div>`;
+                            `<div class="empty-state"><i class="fas fa-wrench"></i> Belum ada layanan dipilih</div>`;
                     } else {
                         sList.innerHTML = state.services.map((s, i) => `
                             <div class="item-row">
                                 <div class="item-info">
                                     <div class="name">${s.name}</div>
-                                    <div class="sub">${s.duration ? s.duration+' menit' : ''} ${s.warranty ? '• Garansi '+s.warranty+' hari' : ''}</div>
+                                    <div class="sub">${s.category || ''} ${s.isCustom ? '• Custom' : ''}</div>
                                 </div>
                                 <div class="item-actions">
                                     <span class="price-tag">${Utils.rupiah(s.price)}</span>
@@ -2047,13 +1948,13 @@
                 if (pList) {
                     if (state.parts.length === 0) {
                         pList.innerHTML =
-                            `<div class="empty-state"><i class="fas fa-box"></i> Belum ada sparepart</div>`;
+                            `<div class="empty-state"><i class="fas fa-box"></i> Belum ada sparepart tambahan</div>`;
                     } else {
                         pList.innerHTML = state.parts.map((p, i) => `
                             <div class="item-row">
                                 <div class="item-info">
                                     <div class="name">${p.name}</div>
-                                    <div class="sub">${p.qty}x @ ${Utils.rupiah(p.price)}</div>
+                                    <div class="sub">${p.qty}x @ ${Utils.rupiah(p.price)} ${p.isCustom ? '• Custom' : ''}</div>
                                 </div>
                                 <div class="item-actions">
                                     <span class="price-tag">${Utils.rupiah(p.price * p.qty)}</span>
@@ -2097,13 +1998,13 @@
                 if (tx.services && tx.services.length) {
                     tx.services.forEach(s => {
                         detailHtml +=
-                            `<div class="flex-between"><span>JASA: ${s.name}</span><span>${Utils.rupiah(s.price)}</span></div>`;
+                            `<div class="flex-between"><span>LAYANAN: ${s.name}</span><span>${Utils.rupiah(s.price)}</span></div>`;
                     });
                 }
                 if (tx.parts && tx.parts.length) {
                     tx.parts.forEach(p => {
                         detailHtml +=
-                            `<div class="flex-between"><span>PART: ${p.name} (${p.qty}x)</span><span>${Utils.rupiah(p.price * p.qty)}</span></div>`;
+                            `<div class="flex-between"><span>SPAREPART: ${p.name} (${p.qty}x)</span><span>${Utils.rupiah(p.price * p.qty)}</span></div>`;
                     });
                 }
                 const isLunas = (tx.dp || 0) >= tx.total;
@@ -2152,8 +2053,8 @@
                         <table class="table">
                             <thead><tr><th>Deskripsi</th><th style="text-align:right;">Qty</th><th style="text-align:right;">Harga</th><th style="text-align:right;">Total</th></tr></thead>
                             <tbody>
-                                ${(tx.services || []).map(s => `<tr><td>JASA: ${s.name}</td><td style="text-align:right;">1</td><td style="text-align:right;">${Utils.rupiah(s.price)}</td><td style="text-align:right;">${Utils.rupiah(s.price)}</td></tr>`).join('')}
-                                ${(tx.parts || []).map(p => `<tr><td>PART: ${p.name}</td><td style="text-align:right;">${p.qty}</td><td style="text-align:right;">${Utils.rupiah(p.price)}</td><td style="text-align:right;">${Utils.rupiah(p.price * p.qty)}</td></tr>`).join('')}
+                                ${(tx.services || []).map(s => `<tr><td>LAYANAN: ${s.name}</td><td style="text-align:right;">1</td><td style="text-align:right;">${Utils.rupiah(s.price)}</td><td style="text-align:right;">${Utils.rupiah(s.price)}</td></tr>`).join('')}
+                                ${(tx.parts || []).map(p => `<tr><td>SPAREPART: ${p.name}</td><td style="text-align:right;">${p.qty}</td><td style="text-align:right;">${Utils.rupiah(p.price)}</td><td style="text-align:right;">${Utils.rupiah(p.price * p.qty)}</td></tr>`).join('')}
                             </tbody>
                         </table>
                         <div class="total-box" style="text-align:right;">
@@ -2229,7 +2130,7 @@
         };
 
         // ================================================================
-        //  5. VIEW RENDERERS
+        //  6. VIEW RENDERERS
         // ================================================================
         const Views = {
 
@@ -2269,8 +2170,6 @@
                         piutangTotal += sisa;
                     }
                 });
-                const categories = DB.getDeviceCategories();
-                const parts = DB.getParts();
                 const html = `
                     <div class="stat-grid">
                         <div class="stat-card"><div class="stat-label"><i class="fas fa-coins" style="color:var(--success);"></i> Omzet Hari Ini</div>
@@ -2288,9 +2187,9 @@
                         <div class="stat-card"><div class="stat-label"><i class="fas fa-hand-holding-usd" style="color:var(--danger);"></i> Piutang</div>
                             <div class="stat-value" style="color:var(--danger);">${Utils.rupiah(piutangTotal)}</div>
                             <div class="stat-change">${txs.filter(t => (t.total - (t.dp||0)) > 0 && t.status !== 'Dibatalkan' && t.status !== 'Sudah diambil').length} tagihan</div></div>
-                        <div class="stat-card"><div class="stat-label"><i class="fas fa-boxes" style="color:var(--purple);"></i> Kategori Perangkat</div>
-                            <div class="stat-value">${categories.filter(c => c.active !== false).length}</div>
-                            <div class="stat-change">${parts.length} sparepart</div></div>
+                        <div class="stat-card"><div class="stat-label"><i class="fas fa-boxes" style="color:var(--purple);"></i> Katalog Layanan</div>
+                            <div class="stat-value">${SERVICE_CATALOG.length}</div>
+                            <div class="stat-change">siap pakai</div></div>
                     </div>
                     <div class="card">
                         <div class="card-header">
@@ -2313,7 +2212,7 @@
                 document.getElementById('view-dashboard').innerHTML = html;
             },
 
-            // ---------- POS ----------
+            // ---------- POS (Transaksi Baru) ----------
             pos() {
                 if (!AppState.editingTxId) {
                     AppState.pos = {
@@ -2322,7 +2221,6 @@
                         customerWA: '',
                         customerAddress: '',
                         deviceCategory: 'Laptop',
-                        deviceCategoryCustom: '',
                         deviceBrand: '',
                         deviceModel: '',
                         deviceSerial: '',
@@ -2341,13 +2239,25 @@
                     };
                 }
                 const state = AppState.pos;
-                const categories = DB.getDeviceCategories().filter(c => c.active !== false);
-                const catOpts = categories.map(c =>
-                    `<option value="${c.name}" ${c.name === state.deviceCategory ? 'selected' : ''}>${c.name}</option>`
-                ).join('');
                 const technicians = DB.getTechnicians();
                 const techOpts = technicians.map(t =>
                     `<option value="${t.id}" ${t.id === state.technicianId ? 'selected' : ''}>${t.name}</option>`).join('');
+                // Get unique categories from catalog
+                const categories = [...new Set(SERVICE_CATALOG.map(s => s.category))];
+                const catOpts = categories.map(c =>
+                    `<option value="${c}" ${c === state.deviceCategory ? 'selected' : ''}>${c}</option>`
+                ).join('');
+                // Service grid by selected category
+                const selectedCat = state.deviceCategory;
+                const servicesInCat = SERVICE_CATALOG.filter(s => s.category === selectedCat);
+                const gridHtml = servicesInCat.map(s => `
+                    <div class="service-card" onclick="App.posAddServiceFromCatalog('${s.id}')">
+                        <span class="name">${s.name}</span>
+                        <span class="price">${Utils.rupiah(s.price)}</span>
+                        <span class="cat">${s.category}</span>
+                    </div>
+                `).join('');
+
                 const html = `
                     <div class="pos-grid">
                         <div>
@@ -2368,16 +2278,12 @@
 
                             <!-- Device -->
                             <div class="card mb-4">
-                                <div class="card-header"><span class="card-title"><i class="fas fa-laptop"></i> Data Perangkat</span>
-                                    <button class="btn btn-sm btn-primary" onclick="App.posAddCategory()"><i class="fas fa-plus"></i> Kategori</button>
-                                </div>
+                                <div class="card-header"><span class="card-title"><i class="fas fa-laptop"></i> Data Perangkat</span></div>
                                 <div class="form-row-3">
                                     <div class="form-group"><label>Kategori <span class="required">*</span></label>
                                         <select class="form-control" id="pos-dev-cat" onchange="App.posCategoryChange(this.value)">
                                             ${catOpts}
-                                            <option value="__custom__" ${state.deviceCategory === '__custom__' ? 'selected' : ''}>＋ Tambah Kategori...</option>
                                         </select>
-                                        <input class="form-control mt-1" id="pos-dev-cat-custom" value="${state.deviceCategoryCustom}" placeholder="Nama kategori custom..." style="${state.deviceCategory !== '__custom__' ? 'display:none;' : ''}" onchange="App.posUpdateField('deviceCategoryCustom', this.value); App.posUpdateField('deviceCategory', this.value || 'Lainnya')">
                                     </div>
                                     <div class="form-group"><label>Merk</label>
                                         <input class="form-control" id="pos-dev-brand" value="${state.deviceBrand}" placeholder="Merk..." onchange="App.posUpdateField('deviceBrand', this.value)"></div>
@@ -2398,27 +2304,28 @@
                                     <textarea class="form-control" id="pos-diagnosis" rows="2" placeholder="Diagnosa awal..." onchange="App.posUpdateField('diagnosis', this.value)">${state.diagnosis}</textarea></div>
                             </div>
 
-                            <!-- Services -->
+                            <!-- Layanan -->
                             <div class="card mb-4">
                                 <div class="card-header">
-                                    <span class="card-title"><i class="fas fa-wrench"></i> Jasa Servis</span>
+                                    <span class="card-title"><i class="fas fa-list"></i> Pilih Layanan</span>
                                     <div class="flex gap-2">
                                         <button class="btn btn-sm btn-outline" onclick="App.posAddCustomService()"><i class="fas fa-plus"></i> Custom</button>
-                                        <button class="btn btn-sm btn-primary" onclick="App.posAddService()"><i class="fas fa-list"></i> Pilih</button>
+                                        <button class="btn btn-sm btn-primary" onclick="App.posAddSparepartOnly()"><i class="fas fa-box"></i> Sparepart</button>
                                     </div>
                                 </div>
-                                <div id="pos-services-list" class="item-list"></div>
+                                <div class="service-grid" id="service-grid">
+                                    ${gridHtml || '<div class="empty-state">Tidak ada layanan untuk kategori ini</div>'}
+                                </div>
                             </div>
 
-                            <!-- Parts -->
+                            <!-- Daftar Item -->
                             <div class="card mb-4">
                                 <div class="card-header">
-                                    <span class="card-title"><i class="fas fa-box"></i> Sparepart</span>
-                                    <div class="flex gap-2">
-                                        <button class="btn btn-sm btn-outline" onclick="App.posAddCustomPart()"><i class="fas fa-plus"></i> Custom</button>
-                                        <button class="btn btn-sm btn-primary" onclick="App.posAddPart()"><i class="fas fa-list"></i> Pilih</button>
-                                    </div>
+                                    <span class="card-title"><i class="fas fa-cart-plus"></i> Item Transaksi</span>
                                 </div>
+                                <div><strong>Layanan</strong></div>
+                                <div id="pos-services-list" class="item-list"></div>
+                                <div class="mt-2"><strong>Sparepart Tambahan</strong></div>
                                 <div id="pos-parts-list" class="item-list"></div>
                             </div>
                         </div>
@@ -2426,9 +2333,9 @@
                         <!-- Right: Summary -->
                         <div>
                             <div class="card sticky-side">
-                                <div class="card-header"><span class="card-title"><i class="fas fa-calculator"></i> Estimasi</span></div>
+                                <div class="card-header"><span class="card-title"><i class="fas fa-calculator"></i> Ringkasan</span></div>
                                 <div class="payment-summary">
-                                    <div class="row"><span>Total Jasa</span><span id="pos-sum-jasa">Rp 0</span></div>
+                                    <div class="row"><span>Total Layanan</span><span id="pos-sum-jasa">Rp 0</span></div>
                                     <div class="row"><span>Total Sparepart</span><span id="pos-sum-part">Rp 0</span></div>
                                     <div class="row"><span>Subtotal</span><span id="pos-sum-subtotal">Rp 0</span></div>
                                     <div class="row"><span>Diskon</span><span id="pos-sum-discount">Rp 0</span></div>
@@ -2480,29 +2387,6 @@
                 `;
                 document.getElementById('view-pos').innerHTML = html;
                 UI.renderPOSItems();
-                // Handle custom category visibility
-                const catSelect = document.getElementById('pos-dev-cat');
-                const customInput = document.getElementById('pos-dev-cat-custom');
-                if (catSelect && customInput) {
-                    if (catSelect.value === '__custom__') {
-                        customInput.style.display = 'block';
-                    } else {
-                        customInput.style.display = 'none';
-                        AppState.pos.deviceCategory = catSelect.value;
-                    }
-                }
-            },
-
-            posCategoryChange(val) {
-                const customInput = document.getElementById('pos-dev-cat-custom');
-                if (val === '__custom__') {
-                    customInput.style.display = 'block';
-                    customInput.focus();
-                } else {
-                    customInput.style.display = 'none';
-                    AppState.pos.deviceCategory = val;
-                    AppState.pos.deviceCategoryCustom = '';
-                }
             },
 
             // ---------- HISTORY ----------
@@ -2587,221 +2471,6 @@
                     </div>
                 `;
                 document.getElementById('view-customers').innerHTML = html;
-            },
-
-            // ---------- MASTER DATA (Universal) ----------
-            master() {
-                const html = `
-                    <div class="card">
-                        <div class="card-header"><span class="card-title"><i class="fas fa-database"></i> Master Data Universal</span></div>
-                        <div class="tabs" id="master-tabs">
-                            <button class="tab-btn active" data-tab="categories">Kategori Perangkat</button>
-                            <button class="tab-btn" data-tab="brands">Merek</button>
-                            <button class="tab-btn" data-tab="services">Jasa Servis</button>
-                            <button class="tab-btn" data-tab="parts">Sparepart</button>
-                            <button class="tab-btn" data-tab="suppliers">Supplier</button>
-                        </div>
-                        <div id="master-categories" class="tab-pane active">${Views._masterCategories()}</div>
-                        <div id="master-brands" class="tab-pane">${Views._masterBrands()}</div>
-                        <div id="master-services" class="tab-pane">${Views._masterServices()}</div>
-                        <div id="master-parts" class="tab-pane">${Views._masterParts()}</div>
-                        <div id="master-suppliers" class="tab-pane">${Views._masterSuppliers()}</div>
-                    </div>
-                `;
-                document.getElementById('view-master').innerHTML = html;
-                // Tab switching
-                document.querySelectorAll('#master-tabs .tab-btn').forEach(btn => {
-                    btn.addEventListener('click', function() {
-                        document.querySelectorAll('#master-tabs .tab-btn').forEach(b => b.classList.remove('active'));
-                        this.classList.add('active');
-                        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-                        const target = document.getElementById('master-' + this.dataset.tab);
-                        if (target) target.classList.add('active');
-                    });
-                });
-            },
-
-            _masterCategories() {
-                const cats = DB.getDeviceCategories();
-                return `
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-sm text-muted">${cats.length} kategori terdaftar</span>
-                        <button class="btn btn-sm btn-primary" onclick="App.masterAddCategory()"><i class="fas fa-plus"></i> Tambah Kategori</button>
-                    </div>
-                    <div class="table-wrap">
-                        <table>
-                            <thead><tr><th>Nama</th><th>Ikon</th><th>Status</th><th>Aksi</th></tr></thead>
-                            <tbody>
-                                ${cats.map(c => `
-                                    <tr><td><strong>${c.name}</strong></td><td><i class="fas ${c.icon || 'fa-tag'}"></i></td>
-                                        <td><span class="badge ${c.active !== false ? 'badge-success' : 'badge-danger'}">${c.active !== false ? 'Aktif' : 'Nonaktif'}</span></td>
-                                        <td><button class="btn btn-sm btn-outline" onclick="App.masterEditCategory('${c.id}')"><i class="fas fa-pen"></i></button>
-                                        <button class="btn btn-sm btn-danger" onclick="App.masterDeleteCategory('${c.id}')"><i class="fas fa-trash"></i></button></td></tr>
-                                `).join('')}
-                                ${cats.length === 0 ? '<tr><td colspan="4" class="text-center text-muted" style="padding:1rem;">Belum ada kategori</td></tr>' : ''}
-                            </tbody>
-                        </table>
-                    </div>
-                `;
-            },
-
-            _masterBrands() {
-                const brands = DB.getBrands();
-                return `
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-sm text-muted">${brands.length} merek terdaftar</span>
-                        <button class="btn btn-sm btn-primary" onclick="App.masterAddBrand()"><i class="fas fa-plus"></i> Tambah Merek</button>
-                    </div>
-                    <div class="table-wrap">
-                        <table>
-                            <thead><tr><th>Nama Merek</th><th>Kategori</th><th>Aksi</th></tr></thead>
-                            <tbody>
-                                ${brands.map(b => `
-                                    <tr><td><strong>${b.name}</strong></td><td>${b.category || '-'}</td>
-                                        <td><button class="btn btn-sm btn-outline" onclick="App.masterEditBrand('${b.id}')"><i class="fas fa-pen"></i></button>
-                                        <button class="btn btn-sm btn-danger" onclick="App.masterDeleteBrand('${b.id}')"><i class="fas fa-trash"></i></button></td></tr>
-                                `).join('')}
-                                ${brands.length === 0 ? '<tr><td colspan="3" class="text-center text-muted" style="padding:1rem;">Belum ada merek</td></tr>' : ''}
-                            </tbody>
-                        </table>
-                    </div>
-                `;
-            },
-
-            _masterServices() {
-                const items = DB.getServiceItems();
-                return `
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-sm text-muted">${items.length} jasa terdaftar</span>
-                        <button class="btn btn-sm btn-primary" onclick="App.masterAddService()"><i class="fas fa-plus"></i> Tambah Jasa</button>
-                    </div>
-                    <div class="table-wrap">
-                        <table>
-                            <thead><tr><th>Nama Jasa</th><th>Kategori</th><th>Harga</th><th>Durasi</th><th>Garansi</th><th>Aksi</th></tr></thead>
-                            <tbody>
-                                ${items.map(s => `
-                                    <tr><td><strong>${s.name}</strong></td><td>${s.category || '-'}</td>
-                                        <td>${Utils.rupiah(s.price)}</td><td>${s.duration || 0} mnt</td><td>${s.warranty || 0} hr</td>
-                                        <td><button class="btn btn-sm btn-outline" onclick="App.masterEditService('${s.id}')"><i class="fas fa-pen"></i></button>
-                                        <button class="btn btn-sm btn-danger" onclick="App.masterDeleteService('${s.id}')"><i class="fas fa-trash"></i></button></td></tr>
-                                `).join('')}
-                                ${items.length === 0 ? '<tr><td colspan="6" class="text-center text-muted" style="padding:1rem;">Belum ada jasa</td></tr>' : ''}
-                            </tbody>
-                        </table>
-                    </div>
-                `;
-            },
-
-            _masterParts() {
-                const parts = DB.getParts();
-                return `
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-sm text-muted">${parts.length} sparepart terdaftar</span>
-                        <button class="btn btn-sm btn-primary" onclick="App.masterAddPart()"><i class="fas fa-plus"></i> Tambah Sparepart</button>
-                    </div>
-                    <div class="table-wrap">
-                        <table>
-                            <thead><tr><th>Kode</th><th>Nama</th><th>Kategori</th><th>Modal</th><th>Jual</th><th>Stok</th><th>Aksi</th></tr></thead>
-                            <tbody>
-                                ${parts.map(p => `
-                                    <tr><td>${p.id}</td><td><strong>${p.name}</strong></td><td>${p.category || '-'}</td>
-                                        <td>${Utils.rupiah(p.cost)}</td><td>${Utils.rupiah(p.price)}</td>
-                                        <td><span class="badge ${p.stock <= p.minStock ? 'badge-danger' : p.stock <= p.minStock * 2 ? 'badge-warning' : 'badge-success'}">${p.stock}</span></td>
-                                        <td><button class="btn btn-sm btn-outline" onclick="App.masterEditPart('${p.id}')"><i class="fas fa-pen"></i></button>
-                                        <button class="btn btn-sm btn-danger" onclick="App.masterDeletePart('${p.id}')"><i class="fas fa-trash"></i></button></td></tr>
-                                `).join('')}
-                                ${parts.length === 0 ? '<tr><td colspan="7" class="text-center text-muted" style="padding:1rem;">Belum ada sparepart</td></tr>' : ''}
-                            </tbody>
-                        </table>
-                    </div>
-                `;
-            },
-
-            _masterSuppliers() {
-                const suppliers = DB.getSuppliers();
-                return `
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-sm text-muted">${suppliers.length} supplier terdaftar</span>
-                        <button class="btn btn-sm btn-primary" onclick="App.masterAddSupplier()"><i class="fas fa-plus"></i> Tambah Supplier</button>
-                    </div>
-                    <div class="table-wrap">
-                        <table>
-                            <thead><tr><th>Nama</th><th>WA</th><th>Alamat</th><th>Total Belanja</th><th>Aksi</th></tr></thead>
-                            <tbody>
-                                ${suppliers.map(s => `
-                                    <tr><td><strong>${s.name}</strong></td><td>${s.phone || '-'}</td><td>${s.address || '-'}</td>
-                                        <td>${Utils.rupiah(s.totalPurchase || 0)}</td>
-                                        <td><button class="btn btn-sm btn-outline" onclick="App.masterEditSupplier('${s.id}')"><i class="fas fa-pen"></i></button>
-                                        <button class="btn btn-sm btn-danger" onclick="App.masterDeleteSupplier('${s.id}')"><i class="fas fa-trash"></i></button></td></tr>
-                                `).join('')}
-                                ${suppliers.length === 0 ? '<tr><td colspan="5" class="text-center text-muted" style="padding:1rem;">Belum ada supplier</td></tr>' : ''}
-                            </tbody>
-                        </table>
-                    </div>
-                `;
-            },
-
-            // ---------- INVENTORY ----------
-            inventory() {
-                const parts = DB.getParts();
-                let html = `
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="card-title"><i class="fas fa-boxes-stacked"></i> Sparepart</span>
-                            <button class="btn btn-sm btn-primary" onclick="App.invAdd()"><i class="fas fa-plus"></i> Tambah</button>
-                        </div>
-                        <div class="search-box mb-3">
-                            <i class="fas fa-search"></i>
-                            <input class="form-control" style="padding-left:2.2rem;" placeholder="Cari sparepart..." oninput="App.searchParts(this.value)">
-                        </div>
-                        <div class="table-wrap">
-                            <table>
-                                <thead><tr><th>Kode</th><th>Nama</th><th>Kategori</th><th>Modal</th><th>Jual</th><th>Stok</th><th>Aksi</th></tr></thead>
-                                <tbody id="inventory-tbody">
-                                    ${parts.map(p => `
-                                        <tr><td>${p.id}</td><td><strong>${p.name}</strong></td><td>${p.category}</td>
-                                            <td>${Utils.rupiah(p.cost)}</td><td>${Utils.rupiah(p.price)}</td>
-                                            <td><span class="badge ${p.stock <= p.minStock ? 'badge-danger' : p.stock <= p.minStock * 2 ? 'badge-warning' : 'badge-success'}">${p.stock}</span></td>
-                                            <td><button class="btn btn-sm btn-outline" onclick="App.invEdit('${p.id}')"><i class="fas fa-pen"></i></button>
-                                            <button class="btn btn-sm btn-danger" onclick="App.invDelete('${p.id}')"><i class="fas fa-trash"></i></button></td></tr>
-                                    `).join('')}
-                                    ${parts.length === 0 ? '<tr><td colspan="7" class="text-center text-muted" style="padding:1.5rem;">Belum ada sparepart</td></tr>' : ''}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                `;
-                document.getElementById('view-inventory').innerHTML = html;
-            },
-
-            // ---------- TECHNICIANS ----------
-            technicians() {
-                const techs = DB.getTechnicians();
-                let html = `
-                    <div class="card">
-                        <div class="card-header">
-                            <span class="card-title"><i class="fas fa-user-cog"></i> Teknisi</span>
-                            <button class="btn btn-sm btn-primary" onclick="App.techAdd()"><i class="fas fa-plus"></i> Tambah</button>
-                        </div>
-                        <div class="table-wrap">
-                            <table>
-                                <thead><tr><th>Nama</th><th>HP</th><th>Keahlian</th><th>Status</th><th>Servis</th><th>Aksi</th></tr></thead>
-                                <tbody>
-                                    ${techs.map(t => `
-                                        <tr><td><strong>${t.name}</strong></td><td>${t.phone || '-'}</td>
-                                            <td>${(t.skills || []).join(', ')}</td>
-                                            <td><span class="badge ${t.active ? 'badge-success' : 'badge-danger'}">${t.active ? 'Aktif' : 'Nonaktif'}</span></td>
-                                            <td>${t.servicesCount || 0}</td>
-                                            <td><button class="btn btn-sm btn-outline" onclick="App.techEdit('${t.id}')"><i class="fas fa-pen"></i></button>
-                                            <button class="btn btn-sm btn-danger" onclick="App.techDelete('${t.id}')"><i class="fas fa-trash"></i></button></td></tr>
-                                    `).join('')}
-                                    ${techs.length === 0 ? '<tr><td colspan="6" class="text-center text-muted" style="padding:1.5rem;">Belum ada teknisi</td></tr>' : ''}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                `;
-                document.getElementById('view-technicians').innerHTML = html;
             },
 
             // ---------- REPORTS ----------
@@ -2944,7 +2613,7 @@
         };
 
         // ================================================================
-        //  6. APPLICATION CONTROLLER
+        //  7. APPLICATION CONTROLLER
         // ================================================================
         const App = {
 
@@ -2989,15 +2658,33 @@
             },
 
             posCategoryChange(val) {
-                const customInput = document.getElementById('pos-dev-cat-custom');
-                if (val === '__custom__') {
-                    customInput.style.display = 'block';
-                    customInput.focus();
-                } else {
-                    customInput.style.display = 'none';
-                    AppState.pos.deviceCategory = val;
-                    AppState.pos.deviceCategoryCustom = '';
+                AppState.pos.deviceCategory = val;
+                // Re-render service grid
+                const grid = document.getElementById('service-grid');
+                if (grid) {
+                    const services = SERVICE_CATALOG.filter(s => s.category === val);
+                    grid.innerHTML = services.map(s => `
+                        <div class="service-card" onclick="App.posAddServiceFromCatalog('${s.id}')">
+                            <span class="name">${s.name}</span>
+                            <span class="price">${Utils.rupiah(s.price)}</span>
+                            <span class="cat">${s.category}</span>
+                        </div>
+                    `).join('') || '<div class="empty-state">Tidak ada layanan untuk kategori ini</div>';
                 }
+            },
+
+            posAddServiceFromCatalog(id) {
+                const service = SERVICE_CATALOG.find(s => s.id === id);
+                if (!service) return;
+                // Check if already added (optional)
+                AppState.pos.services.push({
+                    name: service.name,
+                    price: service.price,
+                    category: service.category,
+                    isCustom: false
+                });
+                UI.renderPOSItems();
+                UI.toast('Layanan ditambahkan: ' + service.name);
             },
 
             posSelectCustomer() {
@@ -3025,105 +2712,76 @@
                 App.closeModal();
             },
 
-            // --- Add category from POS ---
-            posAddCategory() {
-                const html = `
-                    <div class="form-group"><label>Nama Kategori <span class="required">*</span></label>
-                        <input class="form-control" id="cat-name" placeholder="Contoh: Mesin Fotokopi"></div>
-                    <div class="form-group"><label>Ikon (Font Awesome)</label>
-                        <input class="form-control" id="cat-icon" value="fa-tag" placeholder="fa-tag"></div>
-                    <div class="form-group"><label>Deskripsi</label>
-                        <input class="form-control" id="cat-desc" placeholder="Deskripsi singkat..."></div>
-                `;
-                const footer =
-                    `<button class="btn btn-outline" onclick="App.closeModal()">Batal</button><button class="btn btn-primary" onclick="App.posSaveCategory()">Simpan</button>`;
-                UI.openModal('Tambah Kategori Perangkat', html, footer);
-            },
-
-            posSaveCategory() {
-                const name = document.getElementById('cat-name').value.trim();
-                if (!name) { UI.toast('Nama kategori wajib diisi', 'error'); return; }
-                const cats = DB.getDeviceCategories();
-                cats.push({
-                    id: Utils.generateId('DC'),
-                    name: name,
-                    icon: document.getElementById('cat-icon').value.trim() || 'fa-tag',
-                    description: document.getElementById('cat-desc').value.trim(),
-                    active: true
-                });
-                DB.setDeviceCategories(cats);
-                UI.toast('Kategori ditambahkan: ' + name);
-                App.closeModal();
-                // Refresh POS category dropdown
-                Views.pos();
-            },
-
-            // --- Add custom service from POS ---
+            // --- Custom Service ---
             posAddCustomService() {
-                const categories = DB.getDeviceCategories().filter(c => c.active !== false);
-                const catOpts = categories.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
                 const html = `
-                    <div class="form-group"><label>Nama Jasa <span class="required">*</span></label>
+                    <div class="form-group"><label>Nama Layanan <span class="required">*</span></label>
                         <input class="form-control" id="cs-name" placeholder="Contoh: Ganti IC Power"></div>
                     <div class="form-group"><label>Kategori</label>
-                        <select class="form-control" id="cs-cat">${catOpts}<option value="Umum">Umum</option></select></div>
+                        <input class="form-control" id="cs-cat" placeholder="Kategori (opsional)"></div>
                     <div class="form-group"><label>Harga (Rp) <span class="required">*</span></label>
                         <input class="form-control" type="number" id="cs-price" value="0"></div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Estimasi (menit)</label><input class="form-control" type="number" id="cs-duration" value="60"></div>
-                        <div class="form-group"><label>Garansi (hari)</label><input class="form-control" type="number" id="cs-warranty" value="7"></div>
-                    </div>
                 `;
                 const footer =
-                    `<button class="btn btn-outline" onclick="App.closeModal()">Batal</button><button class="btn btn-primary" onclick="App.posConfirmCustomService()">Tambah ke Transaksi</button>`;
-                UI.openModal('Tambah Jasa Custom', html, footer);
+                    `<button class="btn btn-outline" onclick="App.closeModal()">Batal</button><button class="btn btn-primary" onclick="App.posConfirmCustomService()">Tambah</button>`;
+                UI.openModal('Tambah Layanan Custom', html, footer);
             },
 
             posConfirmCustomService() {
                 const name = document.getElementById('cs-name').value.trim();
                 const price = parseFloat(document.getElementById('cs-price').value) || 0;
                 if (!name || price <= 0) { UI.toast('Nama dan harga wajib diisi', 'error'); return; }
+                const category = document.getElementById('cs-cat').value.trim() || 'Custom';
                 AppState.pos.services.push({
-                    serviceId: 'CUSTOM-' + Date.now().toString(36).toUpperCase(),
                     name: name,
                     price: price,
-                    duration: parseInt(document.getElementById('cs-duration').value) || 0,
-                    warranty: parseInt(document.getElementById('cs-warranty').value) || 0,
+                    category: category,
                     isCustom: true
                 });
                 App.closeModal();
-                Views.pos();
-                UI.toast('Jasa custom ditambahkan: ' + name);
+                UI.renderPOSItems();
+                UI.toast('Layanan custom ditambahkan');
             },
 
-            // --- Add service from master ---
-            posAddService() {
-                const items = DB.getServiceItems();
-                let opts = items.map(s =>
-                    `<option value="${s.id}">${s.name} - ${Utils.rupiah(s.price)} (${s.category})</option>`).join('');
+            // --- Add Sparepart Only ---
+            posAddSparepartOnly() {
+                const parts = DB.getParts();
+                let opts = parts.map(p =>
+                    `<option value="${p.id}">${p.name} (Stok: ${p.stock}) - ${Utils.rupiah(p.price)}</option>`).join('');
                 const html = `
-                    <div class="form-group"><label>Pilih Jasa</label><select class="form-control" id="modal-svc-select">${opts}</select></div>
-                    <div class="form-group"><label>Harga (bisa diubah)</label><input class="form-control" type="number" id="modal-svc-price" value="0"></div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Estimasi (menit)</label><input class="form-control" type="number" id="modal-svc-duration" value="60"></div>
-                        <div class="form-group"><label>Garansi (hari)</label><input class="form-control" type="number" id="modal-svc-warranty" value="7"></div>
+                    <div class="form-group"><label>Pilih Sparepart (atau custom)</label>
+                        <select class="form-control" id="modal-part-select">${opts}<option value="__custom__">＋ Buat Baru</option></select>
                     </div>
+                    <div class="form-group"><label>Qty</label><input class="form-control" type="number" id="modal-part-qty" value="1" min="1"></div>
+                    <div class="form-group"><label>Harga Jual (bisa diubah)</label><input class="form-control" type="number" id="modal-part-price" value="0"></div>
+                    <div class="divider"></div>
+                    <div class="text-sm text-muted">Atau isi manual jika pilih "Buat Baru":</div>
+                    <div class="form-group"><label>Nama Sparepart</label><input class="form-control" id="modal-part-name" placeholder="Nama..."></div>
+                    <div class="form-group"><label>Harga Modal</label><input class="form-control" type="number" id="modal-part-cost" value="0"></div>
                 `;
                 const footer =
-                    `<button class="btn btn-outline" onclick="App.closeModal()">Batal</button><button class="btn btn-primary" onclick="App.posConfirmAddService()">Tambah</button>`;
-                UI.openModal('Tambah Jasa Servis', html, footer);
+                    `<button class="btn btn-outline" onclick="App.closeModal()">Batal</button><button class="btn btn-primary" onclick="App.posConfirmSparepart()">Tambah</button>`;
+                UI.openModal('Tambah Sparepart', html, footer);
                 setTimeout(() => {
-                    const sel = document.getElementById('modal-svc-select');
-                    const priceInp = document.getElementById('modal-svc-price');
-                    const durInp = document.getElementById('modal-svc-duration');
-                    const warInp = document.getElementById('modal-svc-warranty');
+                    const sel = document.getElementById('modal-part-select');
+                    const priceInp = document.getElementById('modal-part-price');
+                    const nameInp = document.getElementById('modal-part-name');
+                    const costInp = document.getElementById('modal-part-cost');
                     if (sel && priceInp) {
                         sel.onchange = function() {
-                            const item = DB.getServiceItems().find(s => s.id === this.value);
-                            if (item) {
-                                priceInp.value = item.price || 0;
-                                durInp.value = item.duration || 60;
-                                warInp.value = item.warranty || 7;
+                            if (this.value === '__custom__') {
+                                nameInp.style.display = 'block';
+                                costInp.style.display = 'block';
+                                priceInp.value = 0;
+                            } else {
+                                nameInp.style.display = 'none';
+                                costInp.style.display = 'none';
+                                const p = DB.getParts().find(x => x.id === this.value);
+                                if (p) {
+                                    priceInp.value = p.price || 0;
+                                    nameInp.value = p.name;
+                                    costInp.value = p.cost || 0;
+                                }
                             }
                         };
                         sel.onchange();
@@ -3131,153 +2789,53 @@
                 }, 100);
             },
 
-            posConfirmAddService() {
-                const sel = document.getElementById('modal-svc-select');
-                const price = parseFloat(document.getElementById('modal-svc-price').value) || 0;
-                const duration = parseInt(document.getElementById('modal-svc-duration').value) || 0;
-                const warranty = parseInt(document.getElementById('modal-svc-warranty').value) || 0;
-                const item = DB.getServiceItems().find(s => s.id === sel.value);
-                if (!item) { UI.toast('Pilih jasa yang valid', 'error'); return; }
-                if (price <= 0) { UI.toast('Harga harus lebih dari 0', 'error'); return; }
-                AppState.pos.services.push({
-                    serviceId: item.id,
-                    name: item.name,
-                    price: price,
-                    duration: duration,
-                    warranty: warranty,
-                    isCustom: false
-                });
-                App.closeModal();
-                Views.pos();
-                UI.toast('Jasa ditambahkan: ' + item.name);
-            },
+            posConfirmSparepart() {
+                const sel = document.getElementById('modal-part-select');
+                const qty = parseInt(document.getElementById('modal-part-qty').value) || 1;
+                let price = parseFloat(document.getElementById('modal-part-price').value) || 0;
+                let name = document.getElementById('modal-part-name').value.trim();
+                let cost = parseFloat(document.getElementById('modal-part-cost').value) || 0;
+                let isCustom = false;
 
-            posRemoveService(index) { AppState.pos.services.splice(index, 1);
-                Views.pos(); },
+                if (sel.value === '__custom__') {
+                    if (!name || price <= 0) { UI.toast('Nama dan harga wajib diisi', 'error'); return; }
+                    isCustom = true;
+                } else {
+                    const part = DB.getParts().find(p => p.id === sel.value);
+                    if (!part) { UI.toast('Pilih sparepart yang valid', 'error'); return; }
+                    if (qty > part.stock) { UI.toast('Stok tidak mencukupi! Tersedia: ' + part.stock, 'error'); return; }
+                    name = part.name;
+                    cost = part.cost;
+                    // Deduct stock
+                    const partsDb = DB.getParts();
+                    const idx = partsDb.findIndex(p => p.id === part.id);
+                    if (idx !== -1) partsDb[idx].stock = Math.max(0, partsDb[idx].stock - qty);
+                    DB.setParts(partsDb);
+                }
 
-            // --- Add custom part from POS ---
-            posAddCustomPart() {
-                const categories = DB.getDeviceCategories().filter(c => c.active !== false);
-                const catOpts = categories.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
-                const html = `
-                    <div class="form-row">
-                        <div class="form-group"><label>Nama Sparepart <span class="required">*</span></label>
-                            <input class="form-control" id="cp-name" placeholder="Nama..."></div>
-                        <div class="form-group"><label>Kategori</label>
-                            <select class="form-control" id="cp-cat">${catOpts}<option value="Umum">Umum</option></select></div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Harga Modal (Rp)</label><input class="form-control" type="number" id="cp-cost" value="0"></div>
-                        <div class="form-group"><label>Harga Jual (Rp) <span class="required">*</span></label>
-                            <input class="form-control" type="number" id="cp-price" value="0"></div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group"><label>Qty</label><input class="form-control" type="number" id="cp-qty" value="1" min="1"></div>
-                        <div class="form-group"><label>Stok (untuk inventory)</label><input class="form-control" type="number" id="cp-stock" value="1"></div>
-                    </div>
-                `;
-                const footer =
-                    `<button class="btn btn-outline" onclick="App.closeModal()">Batal</button><button class="btn btn-primary" onclick="App.posConfirmCustomPart()">Tambah ke Transaksi</button>`;
-                UI.openModal('Tambah Sparepart Custom', html, footer);
-            },
-
-            posConfirmCustomPart() {
-                const name = document.getElementById('cp-name').value.trim();
-                const price = parseFloat(document.getElementById('cp-price').value) || 0;
-                const cost = parseFloat(document.getElementById('cp-cost').value) || 0;
-                const qty = parseInt(document.getElementById('cp-qty').value) || 1;
-                if (!name || price <= 0) { UI.toast('Nama dan harga jual wajib diisi', 'error'); return; }
-                const partId = 'CUST-' + Date.now().toString(36).toUpperCase();
                 AppState.pos.parts.push({
-                    partId: partId,
                     name: name,
                     cost: cost,
                     price: price,
                     qty: qty,
-                    isCustom: true
-                });
-                // Also save to master parts if stock > 0
-                const stock = parseInt(document.getElementById('cp-stock').value) || 0;
-                if (stock > 0) {
-                    const parts = DB.getParts();
-                    parts.push({
-                        id: partId,
-                        name: name,
-                        category: document.getElementById('cp-cat').value || 'Umum',
-                        brand: '',
-                        model: '',
-                        cost: cost,
-                        price: price,
-                        stock: stock,
-                        minStock: 1,
-                        supplier: '',
-                        location: ''
-                    });
-                    DB.setParts(parts);
-                }
-                App.closeModal();
-                Views.pos();
-                UI.toast('Sparepart custom ditambahkan: ' + name);
-            },
-
-            // --- Add part from master ---
-            posAddPart() {
-                const parts = DB.getParts().filter(p => p.stock > 0);
-                if (parts.length === 0) { UI.toast('Tidak ada sparepart tersedia', 'warning'); return; }
-                let opts = parts.map(p =>
-                    `<option value="${p.id}">${p.name} (Stok: ${p.stock}) - ${Utils.rupiah(p.price)}</option>`).join('');
-                const html = `
-                    <div class="form-group"><label>Pilih Sparepart</label><select class="form-control" id="modal-part-select">${opts}</select></div>
-                    <div class="form-group"><label>Qty</label><input class="form-control" type="number" id="modal-part-qty" value="1" min="1"></div>
-                    <div class="form-group"><label>Harga Jual (bisa diubah)</label><input class="form-control" type="number" id="modal-part-price" value="0"></div>
-                `;
-                const footer =
-                    `<button class="btn btn-outline" onclick="App.closeModal()">Batal</button><button class="btn btn-primary" onclick="App.posConfirmAddPart()">Tambah</button>`;
-                UI.openModal('Tambah Sparepart', html, footer);
-                setTimeout(() => {
-                    const sel = document.getElementById('modal-part-select');
-                    const priceInp = document.getElementById('modal-part-price');
-                    if (sel && priceInp) {
-                        sel.onchange = function() {
-                            const p = DB.getParts().find(x => x.id === this.value);
-                            if (p) priceInp.value = p.price || 0;
-                        };
-                        sel.onchange();
-                    }
-                }, 100);
-            },
-
-            posConfirmAddPart() {
-                const sel = document.getElementById('modal-part-select');
-                const qty = parseInt(document.getElementById('modal-part-qty').value) || 1;
-                const price = parseFloat(document.getElementById('modal-part-price').value) || 0;
-                const part = DB.getParts().find(p => p.id === sel.value);
-                if (!part) { UI.toast('Pilih sparepart yang valid', 'error'); return; }
-                if (qty <= 0) { UI.toast('Qty harus lebih dari 0', 'error'); return; }
-                if (qty > part.stock) { UI.toast('Stok tidak mencukupi! Tersedia: ' + part.stock, 'error'); return; }
-                if (price <= 0) { UI.toast('Harga harus lebih dari 0', 'error'); return; }
-                AppState.pos.parts.push({
-                    partId: part.id,
-                    name: part.name,
-                    cost: part.cost,
-                    price: price,
-                    qty: qty,
-                    isCustom: false
+                    isCustom: isCustom
                 });
                 App.closeModal();
-                Views.pos();
-                UI.toast('Sparepart ditambahkan: ' + part.name + ' x' + qty);
+                UI.renderPOSItems();
+                UI.toast('Sparepart ditambahkan: ' + name);
             },
 
+            posRemoveService(index) { AppState.pos.services.splice(index, 1);
+                UI.renderPOSItems(); },
             posRemovePart(index) { AppState.pos.parts.splice(index, 1);
-                Views.pos(); },
+                UI.renderPOSItems(); },
 
             posSaveTransaction() {
                 const state = AppState.pos;
                 if (!state.customerName.trim()) { UI.toast('Nama pelanggan wajib diisi', 'error'); return; }
                 if (!state.issue.trim()) { UI.toast('Keluhan wajib diisi', 'error'); return; }
                 if (state.services.length === 0 && state.parts.length === 0) {
-                    UI.toast('Tambahkan minimal 1 jasa atau sparepart', 'error');
+                    UI.toast('Tambahkan minimal 1 layanan atau sparepart', 'error');
                     return;
                 }
                 const totalJasa = state.services.reduce((s, i) => s + i.price, 0);
@@ -3292,10 +2850,6 @@
 
                 const wo = DB.generateWO();
                 const tech = DB.getTechnicians().find(t => t.id === state.technicianId);
-                let deviceCategory = state.deviceCategory;
-                if (deviceCategory === '__custom__' && state.deviceCategoryCustom) {
-                    deviceCategory = state.deviceCategoryCustom;
-                }
 
                 const tx = {
                     wo: wo,
@@ -3304,7 +2858,7 @@
                     customerWA: state.customerWA,
                     customerAddress: state.customerAddress,
                     customerId: state.customerId || null,
-                    deviceCategory: deviceCategory,
+                    deviceCategory: state.deviceCategory,
                     deviceBrand: state.deviceBrand,
                     deviceModel: state.deviceModel,
                     deviceSerial: state.deviceSerial,
@@ -3323,16 +2877,6 @@
                     notes: state.notes,
                     warranty: state.warranty || 0,
                 };
-
-                // Deduct stock for non-custom parts
-                const partsDb = DB.getParts();
-                state.parts.forEach(sp => {
-                    if (!sp.isCustom) {
-                        const idx = partsDb.findIndex(p => p.id === sp.partId);
-                        if (idx !== -1) partsDb[idx].stock = Math.max(0, partsDb[idx].stock - sp.qty);
-                    }
-                });
-                DB.setParts(partsDb);
 
                 // Update customer
                 let customers = DB.getCustomers();
@@ -3358,11 +2902,6 @@
                 }
                 DB.setCustomers(customers);
 
-                // Save transaction
-                const txs = DB.getTransactions();
-                txs.push(tx);
-                DB.setTransactions(txs);
-
                 // Update technician stats
                 if (state.technicianId) {
                     const techs = DB.getTechnicians();
@@ -3374,6 +2913,11 @@
                     }
                 }
 
+                // Save transaction
+                const txs = DB.getTransactions();
+                txs.push(tx);
+                DB.setTransactions(txs);
+
                 UI.toast('Servis ' + wo + ' berhasil dibuat!');
                 AppState.pos = {
                     customerId: null,
@@ -3381,7 +2925,6 @@
                     customerWA: '',
                     customerAddress: '',
                     deviceCategory: 'Laptop',
-                    deviceCategoryCustom: '',
                     deviceBrand: '',
                     deviceModel: '',
                     deviceSerial: '',
@@ -3414,7 +2957,6 @@
                     customerWA: tx.customerWA || '',
                     customerAddress: tx.customerAddress || '',
                     deviceCategory: tx.deviceCategory || 'Laptop',
-                    deviceCategoryCustom: '',
                     deviceBrand: tx.deviceBrand || '',
                     deviceModel: tx.deviceModel || '',
                     deviceSerial: tx.deviceSerial || '',
@@ -3450,16 +2992,12 @@
                 const grandTotal = subtotal - discount;
                 if (grandTotal <= 0) { UI.toast('Total harus lebih dari 0', 'error'); return; }
                 const tech = DB.getTechnicians().find(t => t.id === state.technicianId);
-                let deviceCategory = state.deviceCategory;
-                if (deviceCategory === '__custom__' && state.deviceCategoryCustom) {
-                    deviceCategory = state.deviceCategoryCustom;
-                }
                 txs[idx] = {
                     ...txs[idx],
                     customerName: state.customerName,
                     customerWA: state.customerWA,
                     customerAddress: state.customerAddress,
-                    deviceCategory: deviceCategory,
+                    deviceCategory: state.deviceCategory,
                     deviceBrand: state.deviceBrand,
                     deviceModel: state.deviceModel,
                     deviceSerial: state.deviceSerial,
@@ -3493,7 +3031,6 @@
                     customerWA: '',
                     customerAddress: '',
                     deviceCategory: 'Laptop',
-                    deviceCategoryCustom: '',
                     deviceBrand: '',
                     deviceModel: '',
                     deviceSerial: '',
@@ -3616,495 +3153,6 @@
                 Views.customers();
             },
 
-            // ---- Master Data ----
-            masterAddCategory() {
-                const html =
-                    `
-                    <div class="form-group"><label>Nama Kategori <span class="required">*</span></label><input class="form-control" id="cat-name" placeholder="Contoh: Mesin Fotokopi"></div>
-                    <div class="form-group"><label>Ikon (Font Awesome)</label><input class="form-control" id="cat-icon" value="fa-tag" placeholder="fa-tag"></div>
-                    <div class="form-group"><label>Deskripsi</label><input class="form-control" id="cat-desc" placeholder="Deskripsi..."></div>
-                    <div class="form-group"><label>Status</label><select class="form-control" id="cat-active"><option value="1">Aktif</option><option value="0">Nonaktif</option></select></div>`;
-                const footer =
-                    `<button class="btn btn-outline" onclick="App.closeModal()">Batal</button><button class="btn btn-primary" onclick="App.masterSaveCategory()">Simpan</button>`;
-                UI.openModal('Tambah Kategori Perangkat', html, footer);
-            },
-
-            masterSaveCategory(editId) {
-                const name = document.getElementById('cat-name').value.trim();
-                if (!name) { UI.toast('Nama kategori wajib diisi', 'error'); return; }
-                const cats = DB.getDeviceCategories();
-                const data = {
-                    id: editId || Utils.generateId('DC'),
-                    name: name,
-                    icon: document.getElementById('cat-icon').value.trim() || 'fa-tag',
-                    description: document.getElementById('cat-desc').value.trim(),
-                    active: document.getElementById('cat-active').value === '1'
-                };
-                if (editId) {
-                    const idx = cats.findIndex(c => c.id === editId);
-                    if (idx !== -1) cats[idx] = { ...cats[idx], ...data };
-                } else {
-                    cats.push(data);
-                }
-                DB.setDeviceCategories(cats);
-                UI.toast(editId ? 'Kategori diupdate' : 'Kategori ditambahkan');
-                App.closeModal();
-                Views.master();
-            },
-
-            masterEditCategory(id) {
-                const c = DB.getDeviceCategories().find(x => x.id === id);
-                if (!c) { UI.toast('Kategori tidak ditemukan', 'error'); return; }
-                const html =
-                    `
-                    <div class="form-group"><label>Nama Kategori <span class="required">*</span></label><input class="form-control" id="cat-name" value="${c.name}"></div>
-                    <div class="form-group"><label>Ikon (Font Awesome)</label><input class="form-control" id="cat-icon" value="${c.icon || 'fa-tag'}"></div>
-                    <div class="form-group"><label>Deskripsi</label><input class="form-control" id="cat-desc" value="${c.description || ''}"></div>
-                    <div class="form-group"><label>Status</label><select class="form-control" id="cat-active"><option value="1" ${c.active !== false ? 'selected' : ''}>Aktif</option><option value="0" ${c.active === false ? 'selected' : ''}>Nonaktif</option></select></div>`;
-                const footer =
-                    `<button class="btn btn-outline" onclick="App.closeModal()">Batal</button><button class="btn btn-primary" onclick="App.masterSaveCategory('${id}')">Update</button>`;
-                UI.openModal('Edit Kategori', html, footer);
-            },
-
-            masterDeleteCategory(id) {
-                if (!confirm('Hapus kategori ini?')) return;
-                let cats = DB.getDeviceCategories();
-                cats = cats.filter(c => c.id !== id);
-                DB.setDeviceCategories(cats);
-                UI.toast('Kategori dihapus');
-                Views.master();
-            },
-
-            // Brands
-            masterAddBrand() {
-                const cats = DB.getDeviceCategories().filter(c => c.active !== false);
-                const catOpts = cats.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
-                const html =
-                    `
-                    <div class="form-group"><label>Nama Merek <span class="required">*</span></label><input class="form-control" id="brand-name" placeholder="Contoh: Samsung"></div>
-                    <div class="form-group"><label>Kategori</label><select class="form-control" id="brand-cat">${catOpts}<option value="">Umum</option></select></div>`;
-                const footer =
-                    `<button class="btn btn-outline" onclick="App.closeModal()">Batal</button><button class="btn btn-primary" onclick="App.masterSaveBrand()">Simpan</button>`;
-                UI.openModal('Tambah Merek', html, footer);
-            },
-
-            masterSaveBrand(editId) {
-                const name = document.getElementById('brand-name').value.trim();
-                if (!name) { UI.toast('Nama merek wajib diisi', 'error'); return; }
-                const brands = DB.getBrands();
-                const data = {
-                    id: editId || Utils.generateId('BR'),
-                    name: name,
-                    category: document.getElementById('brand-cat').value || ''
-                };
-                if (editId) {
-                    const idx = brands.findIndex(b => b.id === editId);
-                    if (idx !== -1) brands[idx] = { ...brands[idx], ...data };
-                } else {
-                    brands.push(data);
-                }
-                DB.setBrands(brands);
-                UI.toast(editId ? 'Merek diupdate' : 'Merek ditambahkan');
-                App.closeModal();
-                Views.master();
-            },
-
-            masterEditBrand(id) {
-                const b = DB.getBrands().find(x => x.id === id);
-                if (!b) { UI.toast('Merek tidak ditemukan', 'error'); return; }
-                const cats = DB.getDeviceCategories().filter(c => c.active !== false);
-                const catOpts = cats.map(c => `<option value="${c.name}" ${c.name === b.category ? 'selected' : ''}>${c.name}</option>`)
-                    .join('');
-                const html =
-                    `
-                    <div class="form-group"><label>Nama Merek <span class="required">*</span></label><input class="form-control" id="brand-name" value="${b.name}"></div>
-                    <div class="form-group"><label>Kategori</label><select class="form-control" id="brand-cat">${catOpts}<option value="">Umum</option></select></div>`;
-                const footer =
-                    `<button class="btn btn-outline" onclick="App.closeModal()">Batal</button><button class="btn btn-primary" onclick="App.masterSaveBrand('${id}')">Update</button>`;
-                UI.openModal('Edit Merek', html, footer);
-            },
-
-            masterDeleteBrand(id) {
-                if (!confirm('Hapus merek ini?')) return;
-                let brands = DB.getBrands();
-                brands = brands.filter(b => b.id !== id);
-                DB.setBrands(brands);
-                UI.toast('Merek dihapus');
-                Views.master();
-            },
-
-            // Services
-            masterAddService() {
-                const cats = DB.getDeviceCategories().filter(c => c.active !== false);
-                const catOpts = cats.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
-                const html =
-                    `
-                    <div class="form-group"><label>Nama Jasa <span class="required">*</span></label><input class="form-control" id="svc-name" placeholder="Contoh: Ganti LCD"></div>
-                    <div class="form-group"><label>Kategori</label><select class="form-control" id="svc-cat">${catOpts}<option value="Umum">Umum</option></select></div>
-                    <div class="form-group"><label>Harga (Rp) <span class="required">*</span></label><input class="form-control" type="number" id="svc-price" value="0"></div>
-                    <div class="form-row"><div class="form-group"><label>Estimasi (menit)</label><input class="form-control" type="number" id="svc-duration" value="60"></div>
-                    <div class="form-group"><label>Garansi (hari)</label><input class="form-control" type="number" id="svc-warranty" value="7"></div></div>`;
-                const footer =
-                    `<button class="btn btn-outline" onclick="App.closeModal()">Batal</button><button class="btn btn-primary" onclick="App.masterSaveService()">Simpan</button>`;
-                UI.openModal('Tambah Jasa Servis', html, footer);
-            },
-
-            masterSaveService(editId) {
-                const name = document.getElementById('svc-name').value.trim();
-                const price = parseFloat(document.getElementById('svc-price').value) || 0;
-                if (!name || price <= 0) { UI.toast('Nama dan harga wajib diisi', 'error'); return; }
-                const items = DB.getServiceItems();
-                const data = {
-                    id: editId || Utils.generateId('SVC'),
-                    name: name,
-                    category: document.getElementById('svc-cat').value || 'Umum',
-                    price: price,
-                    duration: parseInt(document.getElementById('svc-duration').value) || 0,
-                    warranty: parseInt(document.getElementById('svc-warranty').value) || 0,
-                };
-                if (editId) {
-                    const idx = items.findIndex(s => s.id === editId);
-                    if (idx !== -1) items[idx] = { ...items[idx], ...data };
-                } else {
-                    items.push(data);
-                }
-                DB.setServiceItems(items);
-                UI.toast(editId ? 'Jasa diupdate' : 'Jasa ditambahkan');
-                App.closeModal();
-                Views.master();
-            },
-
-            masterEditService(id) {
-                const s = DB.getServiceItems().find(x => x.id === id);
-                if (!s) { UI.toast('Jasa tidak ditemukan', 'error'); return; }
-                const cats = DB.getDeviceCategories().filter(c => c.active !== false);
-                const catOpts = cats.map(c => `<option value="${c.name}" ${c.name === s.category ? 'selected' : ''}>${c.name}</option>`)
-                    .join('');
-                const html =
-                    `
-                    <div class="form-group"><label>Nama Jasa <span class="required">*</span></label><input class="form-control" id="svc-name" value="${s.name}"></div>
-                    <div class="form-group"><label>Kategori</label><select class="form-control" id="svc-cat">${catOpts}<option value="Umum">Umum</option></select></div>
-                    <div class="form-group"><label>Harga (Rp) <span class="required">*</span></label><input class="form-control" type="number" id="svc-price" value="${s.price}"></div>
-                    <div class="form-row"><div class="form-group"><label>Estimasi (menit)</label><input class="form-control" type="number" id="svc-duration" value="${s.duration || 0}"></div>
-                    <div class="form-group"><label>Garansi (hari)</label><input class="form-control" type="number" id="svc-warranty" value="${s.warranty || 0}"></div></div>`;
-                const footer =
-                    `<button class="btn btn-outline" onclick="App.closeModal()">Batal</button><button class="btn btn-primary" onclick="App.masterSaveService('${id}')">Update</button>`;
-                UI.openModal('Edit Jasa Servis', html, footer);
-            },
-
-            masterDeleteService(id) {
-                if (!confirm('Hapus jasa ini?')) return;
-                let items = DB.getServiceItems();
-                items = items.filter(s => s.id !== id);
-                DB.setServiceItems(items);
-                UI.toast('Jasa dihapus');
-                Views.master();
-            },
-
-            // Parts in master
-            masterAddPart() {
-                const cats = DB.getDeviceCategories().filter(c => c.active !== false);
-                const catOpts = cats.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
-                const html =
-                    `
-                    <div class="form-row"><div class="form-group"><label>Nama Sparepart <span class="required">*</span></label><input class="form-control" id="mp-name" placeholder="Nama..."></div>
-                    <div class="form-group"><label>Kategori</label><select class="form-control" id="mp-cat">${catOpts}<option value="Umum">Umum</option></select></div></div>
-                    <div class="form-row"><div class="form-group"><label>Merk</label><input class="form-control" id="mp-brand" placeholder="Merk..."></div>
-                    <div class="form-group"><label>Model</label><input class="form-control" id="mp-model" placeholder="Model..."></div></div>
-                    <div class="form-row"><div class="form-group"><label>Harga Modal (Rp)</label><input class="form-control" type="number" id="mp-cost" value="0"></div>
-                    <div class="form-group"><label>Harga Jual (Rp) <span class="required">*</span></label><input class="form-control" type="number" id="mp-price" value="0"></div></div>
-                    <div class="form-row"><div class="form-group"><label>Stok</label><input class="form-control" type="number" id="mp-stock" value="1"></div>
-                    <div class="form-group"><label>Min Stok</label><input class="form-control" type="number" id="mp-min" value="1"></div></div>
-                    <div class="form-row"><div class="form-group"><label>Supplier</label><input class="form-control" id="mp-supplier" placeholder="Supplier..."></div>
-                    <div class="form-group"><label>Lokasi</label><input class="form-control" id="mp-location" placeholder="Rak..."></div></div>`;
-                const footer =
-                    `<button class="btn btn-outline" onclick="App.closeModal()">Batal</button><button class="btn btn-primary" onclick="App.masterSavePart()">Simpan</button>`;
-                UI.openModal('Tambah Sparepart', html, footer);
-            },
-
-            masterSavePart(editId) {
-                const name = document.getElementById('mp-name').value.trim();
-                const price = parseFloat(document.getElementById('mp-price').value) || 0;
-                if (!name || price <= 0) { UI.toast('Nama dan harga jual wajib diisi', 'error'); return; }
-                const parts = DB.getParts();
-                const data = {
-                    id: editId || Utils.generateId('P'),
-                    name: name,
-                    category: document.getElementById('mp-cat').value || 'Umum',
-                    brand: document.getElementById('mp-brand').value.trim(),
-                    model: document.getElementById('mp-model').value.trim(),
-                    cost: parseFloat(document.getElementById('mp-cost').value) || 0,
-                    price: price,
-                    stock: parseInt(document.getElementById('mp-stock').value) || 0,
-                    minStock: parseInt(document.getElementById('mp-min').value) || 1,
-                    supplier: document.getElementById('mp-supplier').value.trim(),
-                    location: document.getElementById('mp-location').value.trim(),
-                };
-                if (editId) {
-                    const idx = parts.findIndex(p => p.id === editId);
-                    if (idx !== -1) parts[idx] = { ...parts[idx], ...data };
-                } else {
-                    parts.push(data);
-                }
-                DB.setParts(parts);
-                UI.toast(editId ? 'Sparepart diupdate' : 'Sparepart ditambahkan');
-                App.closeModal();
-                Views.master();
-            },
-
-            masterEditPart(id) {
-                const p = DB.getParts().find(x => x.id === id);
-                if (!p) { UI.toast('Sparepart tidak ditemukan', 'error'); return; }
-                const cats = DB.getDeviceCategories().filter(c => c.active !== false);
-                const catOpts = cats.map(c => `<option value="${c.name}" ${c.name === p.category ? 'selected' : ''}>${c.name}</option>`)
-                    .join('');
-                const html =
-                    `
-                    <div class="form-row"><div class="form-group"><label>Nama Sparepart <span class="required">*</span></label><input class="form-control" id="mp-name" value="${p.name}"></div>
-                    <div class="form-group"><label>Kategori</label><select class="form-control" id="mp-cat">${catOpts}<option value="Umum">Umum</option></select></div></div>
-                    <div class="form-row"><div class="form-group"><label>Merk</label><input class="form-control" id="mp-brand" value="${p.brand || ''}"></div>
-                    <div class="form-group"><label>Model</label><input class="form-control" id="mp-model" value="${p.model || ''}"></div></div>
-                    <div class="form-row"><div class="form-group"><label>Harga Modal (Rp)</label><input class="form-control" type="number" id="mp-cost" value="${p.cost || 0}"></div>
-                    <div class="form-group"><label>Harga Jual (Rp) <span class="required">*</span></label><input class="form-control" type="number" id="mp-price" value="${p.price}"></div></div>
-                    <div class="form-row"><div class="form-group"><label>Stok</label><input class="form-control" type="number" id="mp-stock" value="${p.stock || 0}"></div>
-                    <div class="form-group"><label>Min Stok</label><input class="form-control" type="number" id="mp-min" value="${p.minStock || 1}"></div></div>
-                    <div class="form-row"><div class="form-group"><label>Supplier</label><input class="form-control" id="mp-supplier" value="${p.supplier || ''}"></div>
-                    <div class="form-group"><label>Lokasi</label><input class="form-control" id="mp-location" value="${p.location || ''}"></div></div>`;
-                const footer =
-                    `<button class="btn btn-outline" onclick="App.closeModal()">Batal</button><button class="btn btn-primary" onclick="App.masterSavePart('${id}')">Update</button>`;
-                UI.openModal('Edit Sparepart', html, footer);
-            },
-
-            masterDeletePart(id) {
-                if (!confirm('Hapus sparepart ini?')) return;
-                let parts = DB.getParts();
-                parts = parts.filter(p => p.id !== id);
-                DB.setParts(parts);
-                UI.toast('Sparepart dihapus');
-                Views.master();
-            },
-
-            // Suppliers
-            masterAddSupplier() {
-                const html =
-                    `
-                    <div class="form-group"><label>Nama Supplier <span class="required">*</span></label><input class="form-control" id="sup-name" placeholder="Nama supplier..."></div>
-                    <div class="form-group"><label>WhatsApp</label><input class="form-control" id="sup-phone" placeholder="08..."></div>
-                    <div class="form-group"><label>Alamat</label><input class="form-control" id="sup-addr" placeholder="Alamat..."></div>
-                    <div class="form-group"><label>Catatan</label><input class="form-control" id="sup-notes" placeholder="Catatan..."></div>`;
-                const footer =
-                    `<button class="btn btn-outline" onclick="App.closeModal()">Batal</button><button class="btn btn-primary" onclick="App.masterSaveSupplier()">Simpan</button>`;
-                UI.openModal('Tambah Supplier', html, footer);
-            },
-
-            masterSaveSupplier(editId) {
-                const name = document.getElementById('sup-name').value.trim();
-                if (!name) { UI.toast('Nama supplier wajib diisi', 'error'); return; }
-                const suppliers = DB.getSuppliers();
-                const data = {
-                    id: editId || Utils.generateId('SPL'),
-                    name: name,
-                    phone: document.getElementById('sup-phone').value.trim(),
-                    address: document.getElementById('sup-addr').value.trim(),
-                    notes: document.getElementById('sup-notes').value.trim(),
-                    totalPurchase: 0,
-                };
-                if (editId) {
-                    const idx = suppliers.findIndex(s => s.id === editId);
-                    if (idx !== -1) suppliers[idx] = { ...suppliers[idx], ...data };
-                } else {
-                    suppliers.push(data);
-                }
-                DB.setSuppliers(suppliers);
-                UI.toast(editId ? 'Supplier diupdate' : 'Supplier ditambahkan');
-                App.closeModal();
-                Views.master();
-            },
-
-            masterEditSupplier(id) {
-                const s = DB.getSuppliers().find(x => x.id === id);
-                if (!s) { UI.toast('Supplier tidak ditemukan', 'error'); return; }
-                const html =
-                    `
-                    <div class="form-group"><label>Nama Supplier <span class="required">*</span></label><input class="form-control" id="sup-name" value="${s.name}"></div>
-                    <div class="form-group"><label>WhatsApp</label><input class="form-control" id="sup-phone" value="${s.phone || ''}"></div>
-                    <div class="form-group"><label>Alamat</label><input class="form-control" id="sup-addr" value="${s.address || ''}"></div>
-                    <div class="form-group"><label>Catatan</label><input class="form-control" id="sup-notes" value="${s.notes || ''}"></div>`;
-                const footer =
-                    `<button class="btn btn-outline" onclick="App.closeModal()">Batal</button><button class="btn btn-primary" onclick="App.masterSaveSupplier('${id}')">Update</button>`;
-                UI.openModal('Edit Supplier', html, footer);
-            },
-
-            masterDeleteSupplier(id) {
-                if (!confirm('Hapus supplier ini?')) return;
-                let suppliers = DB.getSuppliers();
-                suppliers = suppliers.filter(s => s.id !== id);
-                DB.setSuppliers(suppliers);
-                UI.toast('Supplier dihapus');
-                Views.master();
-            },
-
-            // ---- Inventory ----
-            invAdd() {
-                const cats = DB.getDeviceCategories().filter(c => c.active !== false);
-                const catOpts = cats.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
-                const html =
-                    `
-                    <div class="form-row"><div class="form-group"><label>Nama Sparepart <span class="required">*</span></label><input class="form-control" id="inv-name" placeholder="Nama..."></div>
-                    <div class="form-group"><label>Kategori</label><select class="form-control" id="inv-cat">${catOpts}<option value="Umum">Umum</option></select></div></div>
-                    <div class="form-row"><div class="form-group"><label>Merk</label><input class="form-control" id="inv-brand" placeholder="Merk..."></div>
-                    <div class="form-group"><label>Model</label><input class="form-control" id="inv-model" placeholder="Model..."></div></div>
-                    <div class="form-row"><div class="form-group"><label>Harga Modal (Rp)</label><input class="form-control" type="number" id="inv-cost" value="0"></div>
-                    <div class="form-group"><label>Harga Jual (Rp)</label><input class="form-control" type="number" id="inv-price" value="0"></div></div>
-                    <div class="form-row"><div class="form-group"><label>Stok</label><input class="form-control" type="number" id="inv-stock" value="1"></div>
-                    <div class="form-group"><label>Min Stok</label><input class="form-control" type="number" id="inv-min" value="1"></div></div>
-                    <div class="form-row"><div class="form-group"><label>Supplier</label><input class="form-control" id="inv-supplier" placeholder="Supplier..."></div>
-                    <div class="form-group"><label>Lokasi</label><input class="form-control" id="inv-location" placeholder="Rak..."></div></div>`;
-                const footer =
-                    `<button class="btn btn-outline" onclick="App.closeModal()">Batal</button><button class="btn btn-primary" onclick="App.invSave()">Simpan</button>`;
-                UI.openModal('Tambah Sparepart', html, footer);
-            },
-
-            invSave(editId) {
-                const name = document.getElementById('inv-name').value.trim();
-                const price = parseFloat(document.getElementById('inv-price').value) || 0;
-                if (!name || price <= 0) { UI.toast('Nama dan harga jual wajib diisi', 'error'); return; }
-                const parts = DB.getParts();
-                const data = {
-                    id: editId || Utils.generateId('P'),
-                    name: name,
-                    category: document.getElementById('inv-cat').value || 'Umum',
-                    brand: document.getElementById('inv-brand').value.trim(),
-                    model: document.getElementById('inv-model').value.trim(),
-                    cost: parseFloat(document.getElementById('inv-cost').value) || 0,
-                    price: price,
-                    stock: parseInt(document.getElementById('inv-stock').value) || 0,
-                    minStock: parseInt(document.getElementById('inv-min').value) || 1,
-                    supplier: document.getElementById('inv-supplier').value.trim(),
-                    location: document.getElementById('inv-location').value.trim(),
-                };
-                if (editId) {
-                    const idx = parts.findIndex(p => p.id === editId);
-                    if (idx !== -1) parts[idx] = { ...parts[idx], ...data };
-                } else {
-                    parts.push(data);
-                }
-                DB.setParts(parts);
-                UI.toast(editId ? 'Sparepart diupdate' : 'Sparepart ditambahkan');
-                App.closeModal();
-                Views.inventory();
-            },
-
-            invEdit(id) {
-                const p = DB.getParts().find(x => x.id === id);
-                if (!p) { UI.toast('Sparepart tidak ditemukan', 'error'); return; }
-                const cats = DB.getDeviceCategories().filter(c => c.active !== false);
-                const catOpts = cats.map(c => `<option value="${c.name}" ${c.name === p.category ? 'selected' : ''}>${c.name}</option>`)
-                    .join('');
-                const html =
-                    `
-                    <div class="form-row"><div class="form-group"><label>Nama Sparepart <span class="required">*</span></label><input class="form-control" id="inv-name" value="${p.name}"></div>
-                    <div class="form-group"><label>Kategori</label><select class="form-control" id="inv-cat">${catOpts}<option value="Umum">Umum</option></select></div></div>
-                    <div class="form-row"><div class="form-group"><label>Merk</label><input class="form-control" id="inv-brand" value="${p.brand || ''}"></div>
-                    <div class="form-group"><label>Model</label><input class="form-control" id="inv-model" value="${p.model || ''}"></div></div>
-                    <div class="form-row"><div class="form-group"><label>Harga Modal (Rp)</label><input class="form-control" type="number" id="inv-cost" value="${p.cost || 0}"></div>
-                    <div class="form-group"><label>Harga Jual (Rp)</label><input class="form-control" type="number" id="inv-price" value="${p.price}"></div></div>
-                    <div class="form-row"><div class="form-group"><label>Stok</label><input class="form-control" type="number" id="inv-stock" value="${p.stock || 0}"></div>
-                    <div class="form-group"><label>Min Stok</label><input class="form-control" type="number" id="inv-min" value="${p.minStock || 1}"></div></div>
-                    <div class="form-row"><div class="form-group"><label>Supplier</label><input class="form-control" id="inv-supplier" value="${p.supplier || ''}"></div>
-                    <div class="form-group"><label>Lokasi</label><input class="form-control" id="inv-location" value="${p.location || ''}"></div></div>`;
-                const footer =
-                    `<button class="btn btn-outline" onclick="App.closeModal()">Batal</button><button class="btn btn-primary" onclick="App.invSave('${id}')">Update</button>`;
-                UI.openModal('Edit Sparepart', html, footer);
-            },
-
-            invDelete(id) {
-                if (!confirm('Hapus sparepart ini?')) return;
-                let parts = DB.getParts();
-                parts = parts.filter(p => p.id !== id);
-                DB.setParts(parts);
-                UI.toast('Sparepart dihapus');
-                Views.inventory();
-            },
-
-            searchParts(query) {
-                const parts = DB.getParts();
-                const filtered = Utils.filterList(parts, query, ['name', 'category', 'brand', 'id']);
-                const tbody = document.getElementById('inventory-tbody');
-                if (tbody) {
-                    tbody.innerHTML = filtered.map(p =>
-                        `
-                        <tr><td>${p.id}</td><td><strong>${p.name}</strong></td><td>${p.category}</td>
-                            <td>${Utils.rupiah(p.cost)}</td><td>${Utils.rupiah(p.price)}</td>
-                            <td><span class="badge ${p.stock <= p.minStock ? 'badge-danger' : p.stock <= p.minStock * 2 ? 'badge-warning' : 'badge-success'}">${p.stock}</span></td>
-                            <td><button class="btn btn-sm btn-outline" onclick="App.invEdit('${p.id}')"><i class="fas fa-pen"></i></button>
-                            <button class="btn btn-sm btn-danger" onclick="App.invDelete('${p.id}')"><i class="fas fa-trash"></i></button></td></tr>`
-                    ).join('') ||
-                        '<tr><td colspan="7" class="text-center text-muted" style="padding:1.5rem;">Tidak ditemukan</td></tr>';
-                }
-            },
-
-            // ---- Technicians ----
-            techAdd() {
-                const html =
-                    `
-                    <div class="form-group"><label>Nama Teknisi <span class="required">*</span></label><input class="form-control" id="tech-name" placeholder="Nama..."></div>
-                    <div class="form-group"><label>Nomor HP</label><input class="form-control" id="tech-phone" placeholder="08..."></div>
-                    <div class="form-group"><label>Keahlian (pisah koma)</label><input class="form-control" id="tech-skills" placeholder="Laptop, HP, AC..."></div>
-                    <div class="form-group"><label>Status</label><select class="form-control" id="tech-active"><option value="1">Aktif</option><option value="0">Nonaktif</option></select></div>`;
-                const footer =
-                    `<button class="btn btn-outline" onclick="App.closeModal()">Batal</button><button class="btn btn-primary" onclick="App.techSave()">Simpan</button>`;
-                UI.openModal('Tambah Teknisi', html, footer);
-            },
-
-            techSave(editId) {
-                const name = document.getElementById('tech-name').value.trim();
-                if (!name) { UI.toast('Nama teknisi wajib diisi', 'error'); return; }
-                const techs = DB.getTechnicians();
-                const data = {
-                    id: editId || Utils.generateId('T'),
-                    name: name,
-                    phone: document.getElementById('tech-phone').value.trim(),
-                    skills: document.getElementById('tech-skills').value.split(',').map(s => s.trim()).filter(Boolean),
-                    active: document.getElementById('tech-active').value === '1',
-                    servicesCount: 0,
-                    totalJasa: 0,
-                };
-                if (editId) {
-                    const idx = techs.findIndex(t => t.id === editId);
-                    if (idx !== -1) techs[idx] = { ...techs[idx], ...data };
-                } else {
-                    techs.push(data);
-                }
-                DB.setTechnicians(techs);
-                UI.toast(editId ? 'Teknisi diupdate' : 'Teknisi ditambahkan');
-                App.closeModal();
-                Views.technicians();
-            },
-
-            techEdit(id) {
-                const t = DB.getTechnicians().find(x => x.id === id);
-                if (!t) { UI.toast('Teknisi tidak ditemukan', 'error'); return; }
-                const html =
-                    `
-                    <div class="form-group"><label>Nama Teknisi <span class="required">*</span></label><input class="form-control" id="tech-name" value="${t.name}"></div>
-                    <div class="form-group"><label>Nomor HP</label><input class="form-control" id="tech-phone" value="${t.phone || ''}"></div>
-                    <div class="form-group"><label>Keahlian (pisah koma)</label><input class="form-control" id="tech-skills" value="${(t.skills || []).join(', ')}"></div>
-                    <div class="form-group"><label>Status</label><select class="form-control" id="tech-active"><option value="1" ${t.active ? 'selected' : ''}>Aktif</option><option value="0" ${!t.active ? 'selected' : ''}>Nonaktif</option></select></div>`;
-                const footer =
-                    `<button class="btn btn-outline" onclick="App.closeModal()">Batal</button><button class="btn btn-primary" onclick="App.techSave('${id}')">Update</button>`;
-                UI.openModal('Edit Teknisi', html, footer);
-            },
-
-            techDelete(id) {
-                if (!confirm('Hapus teknisi ini?')) return;
-                let techs = DB.getTechnicians();
-                techs = techs.filter(t => t.id !== id);
-                DB.setTechnicians(techs);
-                UI.toast('Teknisi dihapus');
-                Views.technicians();
-            },
-
             // ---- Settings ----
             saveSettings(e) {
                 e.preventDefault();
@@ -4127,14 +3175,9 @@
             exportData() {
                 const data = {
                     customers: DB.getCustomers(),
-                    services: DB.getServices(),
-                    serviceItems: DB.getServiceItems(),
-                    parts: DB.getParts(),
                     technicians: DB.getTechnicians(),
-                    suppliers: DB.getSuppliers(),
                     transactions: DB.getTransactions(),
-                    deviceCategories: DB.getDeviceCategories(),
-                    brands: DB.getBrands(),
+                    parts: DB.getParts(),
                     settings: DB.getSettings(),
                     exportedAt: new Date().toISOString(),
                     version: '3.0'
@@ -4166,14 +3209,9 @@
                         }
                         if (!confirm('Restore akan mengganti semua data saat ini. Lanjutkan?')) return;
                         DB.setCustomers(data.customers || []);
-                        DB.setServices(data.services || []);
-                        DB.setServiceItems(data.serviceItems || []);
-                        DB.setParts(data.parts || []);
                         DB.setTechnicians(data.technicians || []);
-                        DB.setSuppliers(data.suppliers || []);
                         DB.setTransactions(data.transactions || []);
-                        DB.setDeviceCategories(data.deviceCategories || []);
-                        DB.setBrands(data.brands || []);
+                        DB.setParts(data.parts || []);
                         if (data.settings) DB.setSettings(data.settings);
                         UI.toast('Data berhasil direstore!');
                         App.navigate('dashboard');
@@ -4195,7 +3233,7 @@
         };
 
         // ================================================================
-        //  7. BOOTSTRAP
+        //  8. BOOTSTRAP
         // ================================================================
         document.addEventListener('DOMContentLoaded', () => {
             App.init();
@@ -4205,6 +3243,7 @@
         window.Utils = Utils;
         window.DB = DB;
         window.Views = Views;
+        window.SERVICE_CATALOG = SERVICE_CATALOG;
     </script>
 </body>
 </html>
