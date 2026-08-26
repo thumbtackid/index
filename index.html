@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Malik Servis Pro — Nota Cepat</title>
+    <title>Malik Servis — Nota Cepat</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js">
     </script>
@@ -14,13 +14,11 @@
         }
     </script>
     <style>
-        /* ===== SAME STYLES AS BEFORE (keep all styles) ===== */
+        /* ===== RESET & ROOT ===== */
         :root {
             --primary: #0f3b5e;
             --primary-light: #1a5a8a;
-            --primary-dark: #0a2a42;
             --accent: #2a9d8f;
-            --accent-light: #e8f5f3;
             --success: #2a9d8f;
             --warning: #e9c46a;
             --danger: #e76f51;
@@ -86,9 +84,6 @@
         .text-xl {
             font-size: 1.25rem;
         }
-        .text-2xl {
-            font-size: 1.5rem;
-        }
         .font-bold {
             font-weight: 700;
         }
@@ -119,22 +114,13 @@
         .text-primary {
             color: var(--primary);
         }
-        .text-info {
-            color: var(--info);
-        }
         .truncate {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
-        .uppercase {
-            text-transform: uppercase;
-        }
-        .capitalize {
-            text-transform: capitalize;
-        }
 
-        /* ===== LAYOUT ===== */
+        /* ===== SIDEBAR ===== */
         #sidebar {
             width: var(--sidebar-width);
             background: var(--gray-900);
@@ -192,7 +178,6 @@
             font-size: 0.82rem;
             font-weight: 500;
             margin-bottom: 1px;
-            position: relative;
         }
         .nav-item i {
             width: 1.25rem;
@@ -209,16 +194,8 @@
             color: #fff;
             box-shadow: 0 2px 8px rgba(26, 90, 138, 0.3);
         }
-        .nav-item .badge-nav {
-            margin-left: auto;
-            background: var(--danger);
-            color: #fff;
-            font-size: 0.55rem;
-            padding: 0.1rem 0.5rem;
-            border-radius: 20px;
-            font-weight: 600;
-        }
 
+        /* ===== MAIN ===== */
         #main-content {
             flex: 1;
             display: flex;
@@ -247,11 +224,6 @@
             font-weight: 400;
             font-size: 0.7rem;
             color: var(--gray-500);
-        }
-        header .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
         }
         header .header-right .date-badge {
             font-size: 0.7rem;
@@ -303,7 +275,6 @@
             border: none;
             background: none;
             padding: 0.2rem 0;
-            position: relative;
         }
         .bottom-nav-item i {
             font-size: 1.1rem;
@@ -356,10 +327,6 @@
             padding: 0.8rem 1rem;
             border: 1px solid var(--gray-200);
             box-shadow: var(--shadow-sm);
-            transition: var(--transition);
-        }
-        .stat-card:hover {
-            box-shadow: var(--shadow-md);
         }
         .stat-card .stat-label {
             font-size: 0.65rem;
@@ -393,12 +360,8 @@
             color: var(--success);
             background: #e0f2ef;
         }
-        .stat-card .stat-change.down {
-            color: var(--danger);
-            background: #fde8e3;
-        }
 
-        /* ===== FORMS ===== */
+        /* ===== FORM ===== */
         .form-group {
             margin-bottom: 0.8rem;
         }
@@ -432,34 +395,10 @@
         .form-control::placeholder {
             color: var(--gray-400);
         }
-        select.form-control {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364758b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 0.75rem center;
-            padding-right: 2rem;
-        }
-        textarea.form-control {
-            resize: vertical;
-            min-height: 50px;
-        }
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 0.8rem;
-        }
-        .form-row-3 {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 0.8rem;
-        }
-
-        .input-group {
-            display: flex;
-            gap: 0.4rem;
-        }
-        .input-group .form-control {
-            flex: 1;
         }
 
         /* ===== BUTTONS ===== */
@@ -507,13 +446,6 @@
             background: #d65a3b;
             box-shadow: 0 4px 12px rgba(231, 111, 81, 0.3);
         }
-        .btn-warning {
-            background: var(--warning);
-            color: var(--gray-800);
-        }
-        .btn-warning:hover {
-            background: #dbb84a;
-        }
         .btn-outline {
             background: transparent;
             border: 1.5px solid var(--gray-200);
@@ -523,33 +455,13 @@
             background: var(--gray-100);
             border-color: var(--gray-300);
         }
-        .btn-ghost {
-            background: transparent;
-            color: var(--gray-600);
-        }
-        .btn-ghost:hover {
-            background: var(--gray-100);
-        }
         .btn-sm {
             padding: 0.2rem 0.6rem;
             font-size: 0.65rem;
             min-height: 28px;
         }
-        .btn-xs {
-            padding: 0.1rem 0.4rem;
-            font-size: 0.55rem;
-            min-height: 22px;
-            border-radius: 6px;
-        }
         .btn-block {
             width: 100%;
-            justify-content: center;
-        }
-        .btn-icon {
-            width: 34px;
-            height: 34px;
-            padding: 0;
-            border-radius: 50%;
             justify-content: center;
         }
 
@@ -584,18 +496,6 @@
             background: var(--gray-200);
             color: var(--gray-600);
         }
-        .badge-primary {
-            background: #dbeafe;
-            color: var(--primary);
-        }
-        .badge-purple {
-            background: #ede9fe;
-            color: #6d28d9;
-        }
-        .badge-pink {
-            background: #fce7f3;
-            color: #9d174d;
-        }
 
         /* ===== TABLES ===== */
         .table-wrap {
@@ -617,9 +517,6 @@
             letter-spacing: 0.04em;
             color: var(--gray-500);
             border-bottom: 2px solid var(--gray-200);
-            position: sticky;
-            top: 0;
-            z-index: 2;
         }
         table tbody td {
             padding: 0.45rem 0.7rem;
@@ -761,12 +658,6 @@
         .toast-error {
             border-left: 4px solid var(--danger);
         }
-        .toast-warning {
-            border-left: 4px solid var(--warning);
-        }
-        .toast-info {
-            border-left: 4px solid var(--info);
-        }
         .toast i {
             font-size: 1rem;
         }
@@ -775,12 +666,6 @@
         }
         .toast-error i {
             color: var(--danger);
-        }
-        .toast-warning i {
-            color: var(--warning);
-        }
-        .toast-info i {
-            color: var(--info);
         }
         @keyframes slideIn {
             from {
@@ -812,17 +697,109 @@
         }
 
         /* ===== POS LAYOUT ===== */
-        .pos-grid {
+        .pos-wrap {
             display: grid;
             grid-template-columns: 1.6fr 1fr;
             gap: 1.25rem;
             align-items: start;
         }
-        .pos-grid .sticky-side {
+        .pos-wrap .sticky-side {
             position: sticky;
             top: 0;
         }
 
+        /* Service Catalog */
+        .cat-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 0.8rem;
+            border-bottom: 2px solid var(--gray-200);
+            padding-bottom: 0.5rem;
+        }
+        .cat-tab {
+            padding: 0.3rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            background: var(--gray-100);
+            color: var(--gray-600);
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+        }
+        .cat-tab.active {
+            background: var(--primary);
+            color: #fff;
+        }
+        .cat-tab:hover:not(.active) {
+            background: var(--gray-200);
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 0.6rem;
+            margin-top: 0.5rem;
+        }
+        .service-card {
+            background: var(--gray-50);
+            border: 1.5px solid var(--gray-200);
+            border-radius: 10px;
+            padding: 0.6rem 0.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+        .service-card:hover {
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: var(--shadow-sm);
+            transform: translateY(-2px);
+        }
+        .service-card .name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: block;
+            line-height: 1.3;
+        }
+        .service-card .price {
+            font-size: 0.7rem;
+            color: var(--gray-600);
+            display: block;
+            margin-top: 0.1rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .service-card .cat-label {
+            font-size: 0.55rem;
+            color: var(--gray-400);
+            display: block;
+            margin-top: 0.1rem;
+            background: var(--gray-200);
+            padding: 0.05rem 0.4rem;
+            border-radius: 10px;
+            display: inline-block;
+            margin-top: 0.2rem;
+        }
+        .service-card .added-badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: var(--success);
+            color: #fff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #fff;
+        }
+
+        /* Selected items */
         .item-list {
             border: 1px solid var(--gray-200);
             border-radius: 8px;
@@ -878,6 +855,7 @@
             opacity: 0.4;
         }
 
+        /* Summary */
         .payment-summary {
             background: var(--gray-50);
             border-radius: 8px;
@@ -896,44 +874,6 @@
             border-top: 2px solid var(--gray-300);
             padding-top: 0.4rem;
             margin-top: 0.2rem;
-        }
-
-        /* ===== SERVICE GRID ===== */
-        .service-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-        .service-card {
-            background: var(--gray-50);
-            border: 1px solid var(--gray-200);
-            border-radius: 8px;
-            padding: 0.5rem 0.6rem;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .service-card:hover {
-            border-color: var(--primary);
-            background: #fff;
-            box-shadow: var(--shadow-sm);
-        }
-        .service-card .name {
-            font-size: 0.75rem;
-            font-weight: 600;
-            display: block;
-        }
-        .service-card .price {
-            font-size: 0.7rem;
-            color: var(--gray-600);
-            display: block;
-            margin-top: 0.1rem;
-        }
-        .service-card .cat {
-            font-size: 0.6rem;
-            color: var(--gray-400);
-            display: block;
         }
 
         /* ===== PRINT ===== */
@@ -979,12 +919,6 @@
             .thermal-print .fw-bold {
                 font-weight: 700;
             }
-            .thermal-print .mt-1 {
-                margin-top: 4px;
-            }
-            .thermal-print .mb-1 {
-                margin-bottom: 4px;
-            }
             .thermal-print .text-sm {
                 font-size: 9px;
             }
@@ -1013,11 +947,6 @@
             .a4-print .header h1 {
                 font-size: 22px;
                 margin: 0;
-            }
-            .a4-print .row {
-                display: flex;
-                justify-content: space-between;
-                padding: 4px 0;
             }
             .a4-print .grid-2 {
                 display: grid;
@@ -1057,14 +986,11 @@
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 992px) {
-            .pos-grid {
+            .pos-wrap {
                 grid-template-columns: 1fr;
             }
-            .pos-grid .sticky-side {
+            .pos-wrap .sticky-side {
                 position: static;
-            }
-            .form-row-3 {
-                grid-template-columns: 1fr 1fr;
             }
         }
         @media (max-width: 768px) {
@@ -1104,13 +1030,6 @@
             header .page-title {
                 font-size: 0.9rem;
             }
-            header .page-title .sub {
-                display: none;
-            }
-            header .header-right .date-badge {
-                font-size: 0.6rem;
-                padding: 0.15rem 0.5rem;
-            }
             #content-area {
                 padding: 0.6rem 0.7rem;
             }
@@ -1124,17 +1043,11 @@
             .stat-card .stat-value {
                 font-size: 1rem;
             }
-            .stat-card .stat-label {
-                font-size: 0.55rem;
-            }
             .card {
                 padding: 0.7rem 0.8rem;
             }
             .form-row {
                 grid-template-columns: 1fr;
-            }
-            .form-row-3 {
-                grid-template-columns: 1fr 1fr;
             }
             .modal {
                 max-width: 100%;
@@ -1148,39 +1061,27 @@
                 padding: 0.6rem 0.8rem;
                 flex-wrap: wrap;
             }
-            .modal-footer .btn {
-                flex: 1;
-                min-width: 70px;
-            }
             #toast-container {
                 bottom: 72px;
                 right: 0.5rem;
                 left: 0.5rem;
                 max-width: 100%;
             }
-            .toast {
-                font-size: 0.75rem;
-                padding: 0.6rem 0.8rem;
+            .service-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             }
-            table {
-                font-size: 0.7rem;
+            .service-card .name {
+                font-size: 0.65rem;
             }
-            table thead th,
-            table tbody td {
-                padding: 0.3rem 0.4rem;
+            .service-card .price {
+                font-size: 0.6rem;
             }
-            .item-row {
-                padding: 0.3rem 0.5rem;
-                flex-wrap: wrap;
-            }
-            .item-row .item-actions {
-                margin-left: auto;
+            .cat-tab {
+                font-size: 0.6rem;
+                padding: 0.2rem 0.6rem;
             }
             .nav-links .nav-label {
                 display: none;
-            }
-            .service-grid {
-                grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
             }
         }
         @media (max-width: 480px) {
@@ -1190,9 +1091,6 @@
             }
             .stat-card .stat-value {
                 font-size: 0.85rem;
-            }
-            .form-row-3 {
-                grid-template-columns: 1fr;
             }
             .btn {
                 font-size: 0.7rem;
@@ -1204,8 +1102,14 @@
                 padding: 0.15rem 0.4rem;
                 min-height: 24px;
             }
-            .card-title {
-                font-size: 0.75rem;
+            .service-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+            .service-card {
+                padding: 0.4rem 0.3rem;
+            }
+            .service-card .name {
+                font-size: 0.6rem;
             }
             .payment-summary .row {
                 font-size: 0.7rem;
@@ -1213,35 +1117,17 @@
             .payment-summary .row.total {
                 font-size: 0.85rem;
             }
-            .service-grid {
-                grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-            }
-            .service-card .name {
-                font-size: 0.65rem;
-            }
-            .service-card .price {
-                font-size: 0.6rem;
-            }
         }
 
         /* ===== UTILITIES ===== */
         .flex {
             display: flex;
         }
-        .flex-col {
-            flex-direction: column;
-        }
         .items-center {
             align-items: center;
         }
         .justify-between {
             justify-content: space-between;
-        }
-        .justify-end {
-            justify-content: flex-end;
-        }
-        .gap-1 {
-            gap: 0.25rem;
         }
         .gap-2 {
             gap: 0.5rem;
@@ -1252,20 +1138,11 @@
         .gap-4 {
             gap: 1rem;
         }
-        .gap-6 {
-            gap: 1.5rem;
-        }
         .flex-1 {
             flex: 1;
         }
-        .flex-shrink-0 {
-            flex-shrink: 0;
-        }
         .w-full {
             width: 100%;
-        }
-        .mt-1 {
-            margin-top: 0.25rem;
         }
         .mt-2 {
             margin-top: 0.5rem;
@@ -1276,9 +1153,6 @@
         .mt-4 {
             margin-top: 1rem;
         }
-        .mb-1 {
-            margin-bottom: 0.25rem;
-        }
         .mb-2 {
             margin-bottom: 0.5rem;
         }
@@ -1288,70 +1162,17 @@
         .mb-4 {
             margin-bottom: 1rem;
         }
-        .mr-2 {
-            margin-right: 0.5rem;
-        }
         .ml-auto {
             margin-left: auto;
-        }
-        .p-0 {
-            padding: 0;
-        }
-        .p-2 {
-            padding: 0.5rem;
-        }
-        .p-3 {
-            padding: 0.75rem;
-        }
-        .p-4 {
-            padding: 1rem;
-        }
-        .relative {
-            position: relative;
-        }
-        .hidden {
-            display: none !important;
-        }
-        .block {
-            display: block;
-        }
-        .text-ellipsis {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        .border-bottom {
-            border-bottom: 1px solid var(--gray-200);
         }
         .divider {
             border-top: 1px solid var(--gray-200);
             margin: 0.6rem 0;
         }
-        .divider-dashed {
-            border-top: 1px dashed var(--gray-300);
-            margin: 0.6rem 0;
-        }
-        .sticky-top {
-            position: sticky;
-            top: 0;
-            z-index: 5;
-        }
-        .bg-white {
-            background: #fff;
-        }
-        .rounded {
-            border-radius: 8px;
-        }
-        .shadow-sm {
-            box-shadow: var(--shadow-sm);
-        }
-        .cursor-pointer {
-            cursor: pointer;
-        }
-        .chart-container {
-            position: relative;
-            height: 180px;
-            max-height: 180px;
+        .text-ellipsis {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
         .menu-toggle {
             display: none;
@@ -1389,12 +1210,6 @@
         .status-dot.secondary {
             background: var(--gray-400);
         }
-        .status-dot.purple {
-            background: #8b5cf6;
-        }
-        .status-dot.pink {
-            background: #ec4899;
-        }
         .chip {
             display: inline-flex;
             align-items: center;
@@ -1405,22 +1220,6 @@
             font-weight: 500;
             background: var(--gray-100);
             color: var(--gray-600);
-        }
-        .chip-primary {
-            background: #dbeafe;
-            color: var(--primary);
-        }
-        .chip-success {
-            background: #d1fae5;
-            color: #065f46;
-        }
-        .chip-danger {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-        .chip-warning {
-            background: #fef3c7;
-            color: #b45309;
         }
         .receipt-preview {
             background: #f8fafc;
@@ -1493,14 +1292,13 @@
             <a class="nav-item" data-view="pos"><i class="fas fa-plus-circle"></i> Transaksi Baru</a>
             <a class="nav-item" data-view="history"><i class="fas fa-list-check"></i> Data Servis</a>
             <a class="nav-item" data-view="customers"><i class="fas fa-users"></i> Pelanggan</a>
-
             <div class="nav-label">Laporan &amp; Sistem</div>
             <a class="nav-item" data-view="reports"><i class="fas fa-file-invoice-dollar"></i> Laporan</a>
             <a class="nav-item" data-view="settings"><i class="fas fa-gear"></i> Pengaturan</a>
             <a class="nav-item" data-view="backup"><i class="fas fa-database"></i> Backup &amp; Restore</a>
         </nav>
         <div style="padding:0.5rem 1.5rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.6rem;color:rgba(255,255,255,0.25);">
-            v3.0 — Nota Cepat
+            v3.1 — Nota Cepat
         </div>
     </aside>
 
@@ -1566,11 +1364,10 @@
 
     <script>
         // ================================================================
-        //  1. DATABASE LAYER — simplified (no master data)
+        //  1. DATABASE LAYER
         // ================================================================
         const DB = {
             _prefix: 'ms_',
-
             _get(key) {
                 try { return JSON.parse(localStorage.getItem(this._prefix + key)) || null; } catch { return null; }
             },
@@ -1593,8 +1390,6 @@
                     tagline: 'Spesialis Elektronik & Teknologi',
                     receiptFooter: 'Terima kasih atas kepercayaan Anda.\nGaransi tidak berlaku untuk kerusakan fisik/cair.',
                     defaultWarranty: 7,
-                    tax: 0,
-                    discountDefault: 0,
                     woFormat: 'MS-{date}-{seq}'
                 };
                 const saved = this._get('settings');
@@ -1602,7 +1397,6 @@
             },
             setSettings(v) { this._set('settings', v); },
 
-            // --- Generate WO ---
             generateWO() {
                 const now = new Date();
                 const y = now.getFullYear();
@@ -1616,49 +1410,25 @@
                 let format = settings.woFormat || 'MS-{date}-{seq}';
                 return format.replace(/{date}/g, dateStr).replace(/{seq}/g, seq);
             },
-
             genId(prefix) { return prefix + Date.now().toString(36).toUpperCase(); },
 
-            // --- Default data ---
             init() {
                 if (!this._get('customers')) {
                     this.setCustomers([]);
                     this.setTechnicians([
-                        { id: 'T001', name: 'Ahmad', phone: '081234567891', skills: ['Laptop', 'HP'], active: true,
-                            servicesCount: 0, totalJasa: 0 },
-                        { id: 'T002', name: 'Budi', phone: '081234567892', skills: ['AC', 'Printer'], active: true,
-                            servicesCount: 0, totalJasa: 0 },
+                        { id: 'T001', name: 'Ahmad', phone: '081234567891', active: true, servicesCount: 0 },
+                        { id: 'T002', name: 'Budi', phone: '081234567892', active: true, servicesCount: 0 },
                     ]);
                     this.setTransactions([]);
-                    // Default spareparts (for optional add-on)
-                    this._set('parts', [
-                        { id: 'P001', name: 'Keyboard Laptop Lenovo', category: 'Laptop', brand: 'Lenovo',
-                            cost: 250000, price: 350000, stock: 5 },
-                        { id: 'P002', name: 'LCD HP Samsung A50', category: 'HP', brand: 'Samsung', cost: 400000,
-                            price: 550000, stock: 2 },
-                        { id: 'P003', name: 'Thermal Paste Deepcool', category: 'PC', brand: 'Deepcool', cost: 30000,
-                            price: 75000, stock: 10 },
-                        { id: 'P004', name: 'Baterai Laptop Asus', category: 'Laptop', brand: 'Asus', cost: 350000,
-                            price: 500000, stock: 3 },
-                        { id: 'P005', name: 'Kabel Charger Type-C', category: 'HP', brand: 'Generic', cost: 45000,
-                            price: 85000, stock: 8 },
-                    ]);
                     this.setSettings(this.getSettings());
                 }
-                // Ensure technicians exist
                 if (this.getTechnicians().length === 0) {
                     this.setTechnicians([
-                        { id: 'T001', name: 'Ahmad', phone: '081234567891', skills: ['Laptop', 'HP'], active: true,
-                            servicesCount: 0, totalJasa: 0 },
-                        { id: 'T002', name: 'Budi', phone: '081234567892', skills: ['AC', 'Printer'], active: true,
-                            servicesCount: 0, totalJasa: 0 },
+                        { id: 'T001', name: 'Ahmad', phone: '081234567891', active: true, servicesCount: 0 },
+                        { id: 'T002', name: 'Budi', phone: '081234567892', active: true, servicesCount: 0 },
                     ]);
                 }
-            },
-
-            // --- Get parts (for add-on) ---
-            getParts() { return this._get('parts') || []; },
-            setParts(v) { this._set('parts', v); }
+            }
         };
 
         // ================================================================
@@ -1695,8 +1465,8 @@
                 const map = {
                     'Menunggu pemeriksaan': 'badge-warning',
                     'Sedang diperiksa': 'badge-info',
-                    'Menunggu persetujuan': 'badge-purple',
-                    'Menunggu sparepart': 'badge-pink',
+                    'Menunggu persetujuan': 'badge-warning',
+                    'Menunggu sparepart': 'badge-warning',
                     'Sedang dikerjakan': 'badge-info',
                     'Selesai': 'badge-success',
                     'Sudah diambil': 'badge-secondary',
@@ -1705,17 +1475,10 @@
                 const cls = map[status] || 'badge-secondary';
                 return `<span class="badge ${cls}">${status}</span>`;
             },
-            getPaymentStatus(total, dp) {
-                if (!dp || dp === 0) return { label: 'Belum Bayar', cls: 'badge-danger' };
-                if (dp >= total) return { label: 'Lunas', cls: 'badge-success' };
-                return { label: 'DP / Piutang', cls: 'badge-warning' };
-            },
             toast(msg, type = 'success') {
                 const container = document.getElementById('toast-container');
                 const toast = document.createElement('div');
-                const iconMap = { success: 'fa-check-circle', error: 'fa-exclamation-circle', warning: 'fa-triangle-exclamation',
-                    info: 'fa-info-circle' };
-                const icon = iconMap[type] || 'fa-check-circle';
+                const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
                 toast.className = `toast toast-${type}`;
                 toast.innerHTML = `<i class="fas ${icon}"></i> <span>${msg}</span>`;
                 container.appendChild(toast);
@@ -1724,7 +1487,6 @@
                     setTimeout(() => toast.remove(), 350);
                 }, 3500);
             },
-            generateId(prefix) { return prefix + Date.now().toString(36).toUpperCase(); },
             filterList(arr, query, keys) {
                 if (!query) return arr;
                 const q = query.toLowerCase().trim();
@@ -1732,53 +1494,14 @@
                     const v = item[k];
                     return v && String(v).toLowerCase().includes(q);
                 }));
-            },
-            debounce(fn, delay = 300) {
-                let timer;
-                return function(...args) {
-                    clearTimeout(timer);
-                    timer = setTimeout(() => fn.apply(this, args), delay);
-                };
             }
         };
 
         // ================================================================
-        //  3. APPLICATION STATE
-        // ================================================================
-        const AppState = {
-            currentView: 'dashboard',
-            pos: {
-                customerId: null,
-                customerName: '',
-                customerWA: '',
-                customerAddress: '',
-                deviceCategory: 'Laptop',
-                deviceBrand: '',
-                deviceModel: '',
-                deviceSerial: '',
-                deviceAccessories: '',
-                deviceCondition: '',
-                issue: '',
-                diagnosis: '',
-                services: [], // { name, price, category, isCustom? }
-                parts: [], // { name, cost, price, qty, isCustom? }
-                discount: 0,
-                dp: 0,
-                status: 'Menunggu pemeriksaan',
-                technicianId: '',
-                notes: '',
-                warranty: 7,
-            },
-            editingTxId: null,
-            // Service catalog (hardcoded)
-            serviceCatalog: [],
-        };
-
-        // ================================================================
-        //  4. SERVICE CATALOG (Lengkap)
+        //  3. SERVICE CATALOG (Lengkap)
         // ================================================================
         const SERVICE_CATALOG = [
-            // === HP / SMARTPHONE ===
+            // HP
             { id: 'S001', name: 'Ganti LCD (include part)', category: 'HP', price: 350000 },
             { id: 'S002', name: 'Ganti Baterai (include part)', category: 'HP', price: 200000 },
             { id: 'S003', name: 'Ganti Charging Port (include part)', category: 'HP', price: 150000 },
@@ -1789,8 +1512,7 @@
             { id: 'S008', name: 'Ganti Kamera (include part)', category: 'HP', price: 220000 },
             { id: 'S009', name: 'Ganti Microphone (include part)', category: 'HP', price: 130000 },
             { id: 'S010', name: 'Perbaikan Water Damage (jasa+part)', category: 'HP', price: 300000 },
-
-            // === LAPTOP ===
+            // Laptop
             { id: 'S011', name: 'Instal Windows + Office (jasa)', category: 'Laptop', price: 150000 },
             { id: 'S012', name: 'Cleaning & Repaste (jasa)', category: 'Laptop', price: 200000 },
             { id: 'S013', name: 'Ganti Keyboard (include part)', category: 'Laptop', price: 450000 },
@@ -1801,57 +1523,57 @@
             { id: 'S018', name: 'Ganti Fan / Kipas (include part)', category: 'Laptop', price: 300000 },
             { id: 'S019', name: 'Ganti Touchpad (include part)', category: 'Laptop', price: 350000 },
             { id: 'S020', name: 'Ganti Port Charging (include part)', category: 'Laptop', price: 250000 },
-
-            // === PC / KOMPUTER ===
+            // PC
             { id: 'S021', name: 'Rakit PC (jasa)', category: 'PC', price: 250000 },
             { id: 'S022', name: 'Instal Windows (jasa)', category: 'PC', price: 100000 },
             { id: 'S023', name: 'Ganti PSU (include part)', category: 'PC', price: 350000 },
             { id: 'S024', name: 'Ganti RAM (include part)', category: 'PC', price: 500000 },
             { id: 'S025', name: 'Ganti VGA (include part)', category: 'PC', price: 1200000 },
             { id: 'S026', name: 'Cleaning PC (jasa)', category: 'PC', price: 150000 },
-            { id: 'S027', name: 'Ganti Motherboard (include part)', category: 'PC', price: 800000 },
-            { id: 'S028', name: 'Ganti Processor (include part)', category: 'PC', price: 1500000 },
-
-            // === PRINTER ===
-            { id: 'S029', name: 'Cleaning Head (jasa)', category: 'Printer', price: 100000 },
-            { id: 'S030', name: 'Service Mekanik (jasa)', category: 'Printer', price: 150000 },
-            { id: 'S031', name: 'Ganti Roller (include part)', category: 'Printer', price: 250000 },
-            { id: 'S032', name: 'Ganti Cartridge (include part)', category: 'Printer', price: 300000 },
-            { id: 'S033', name: 'Perbaikan Mainboard (jasa+part)', category: 'Printer', price: 400000 },
-            { id: 'S034', name: 'Ganti Fuser (include part)', category: 'Printer', price: 500000 },
-
-            // === AC ===
-            { id: 'S035', name: 'Cuci AC (jasa)', category: 'AC', price: 150000 },
-            { id: 'S036', name: 'Isi Freon (include gas)', category: 'AC', price: 250000 },
-            { id: 'S037', name: 'Perbaikan Kebocoran (jasa+part)', category: 'AC', price: 350000 },
-            { id: 'S038', name: 'Ganti Kompresor (include part)', category: 'AC', price: 1500000 },
-            { id: 'S039', name: 'Ganti Kapasitor (include part)', category: 'AC', price: 300000 },
-            { id: 'S040', name: 'Service Elektronik AC (jasa+part)', category: 'AC', price: 400000 },
-
-            // === TV ===
-            { id: 'S041', name: 'Perbaikan Power Supply (jasa+part)', category: 'TV', price: 300000 },
-            { id: 'S042', name: 'Ganti Panel LCD (include part)', category: 'TV', price: 1200000 },
-            { id: 'S043', name: 'Perbaikan Mainboard (jasa+part)', category: 'TV', price: 400000 },
-            { id: 'S044', name: 'Ganti Inverter (include part)', category: 'TV', price: 350000 },
-            { id: 'S045', name: 'Ganti Backlight (include part)', category: 'TV', price: 500000 },
-
-            // === KULKAS ===
-            { id: 'S046', name: 'Service Kompresor (jasa+part)', category: 'Kulkas', price: 600000 },
-            { id: 'S047', name: 'Isi Freon Kulkas (include gas)', category: 'Kulkas', price: 300000 },
-            { id: 'S048', name: 'Ganti Thermostat (include part)', category: 'Kulkas', price: 250000 },
-            { id: 'S049', name: 'Perbaikan Kebocoran (jasa+part)', category: 'Kulkas', price: 350000 },
-
-            // === MESIN CUCI ===
-            { id: 'S050', name: 'Service Mesin Cuci (jasa)', category: 'Mesin Cuci', price: 200000 },
-            { id: 'S051', name: 'Ganti Motor (include part)', category: 'Mesin Cuci', price: 700000 },
-            { id: 'S052', name: 'Ganti Pompa Air (include part)', category: 'Mesin Cuci', price: 350000 },
-            { id: 'S053', name: 'Perbaikan Board (jasa+part)', category: 'Mesin Cuci', price: 400000 },
-
-            // === LAINNYA (Umum) ===
-            { id: 'S054', name: 'Diagnosa Kerusakan (jasa)', category: 'Umum', price: 75000 },
-            { id: 'S055', name: 'Konsultasi Teknis (jasa)', category: 'Umum', price: 50000 },
-            { id: 'S056', name: 'Jasa Teknisi per Jam (jasa)', category: 'Umum', price: 100000 },
+            // Printer
+            { id: 'S027', name: 'Cleaning Head (jasa)', category: 'Printer', price: 100000 },
+            { id: 'S028', name: 'Service Mekanik (jasa)', category: 'Printer', price: 150000 },
+            { id: 'S029', name: 'Ganti Roller (include part)', category: 'Printer', price: 250000 },
+            { id: 'S030', name: 'Ganti Cartridge (include part)', category: 'Printer', price: 300000 },
+            // AC
+            { id: 'S031', name: 'Cuci AC (jasa)', category: 'AC', price: 150000 },
+            { id: 'S032', name: 'Isi Freon (include gas)', category: 'AC', price: 250000 },
+            { id: 'S033', name: 'Perbaikan Kebocoran (jasa+part)', category: 'AC', price: 350000 },
+            { id: 'S034', name: 'Ganti Kompresor (include part)', category: 'AC', price: 1500000 },
+            // TV
+            { id: 'S035', name: 'Perbaikan Power Supply (jasa+part)', category: 'TV', price: 300000 },
+            { id: 'S036', name: 'Ganti Panel LCD (include part)', category: 'TV', price: 1200000 },
+            { id: 'S037', name: 'Perbaikan Mainboard (jasa+part)', category: 'TV', price: 400000 },
+            // Kulkas
+            { id: 'S038', name: 'Service Kompresor (jasa+part)', category: 'Kulkas', price: 600000 },
+            { id: 'S039', name: 'Isi Freon Kulkas (include gas)', category: 'Kulkas', price: 300000 },
+            // Mesin Cuci
+            { id: 'S040', name: 'Service Mesin Cuci (jasa)', category: 'Mesin Cuci', price: 200000 },
+            { id: 'S041', name: 'Ganti Motor (include part)', category: 'Mesin Cuci', price: 700000 },
+            // Umum
+            { id: 'S042', name: 'Diagnosa Kerusakan (jasa)', category: 'Umum', price: 75000 },
+            { id: 'S043', name: 'Konsultasi Teknis (jasa)', category: 'Umum', price: 50000 },
+            { id: 'S044', name: 'Jasa Teknisi per Jam (jasa)', category: 'Umum', price: 100000 },
         ];
+
+        // ================================================================
+        //  4. APPLICATION STATE
+        // ================================================================
+        const AppState = {
+            currentView: 'dashboard',
+            pos: {
+                customerName: '',
+                customerWA: '',
+                services: [], // { name, price, category }
+                discount: 0,
+                dp: 0,
+                status: 'Menunggu pemeriksaan',
+                technicianId: '',
+                warranty: 7,
+            },
+            editingTxId: null,
+            activeCategory: 'HP',
+        };
 
         // ================================================================
         //  5. UI RENDER ENGINE
@@ -1921,44 +1643,23 @@
                 if (window.innerWidth <= 768) App.toggleSidebar(false);
             },
 
-            // --- POS item render ---
             renderPOSItems() {
                 const state = AppState.pos;
-                const sList = document.getElementById('pos-services-list');
-                const pList = document.getElementById('pos-parts-list');
-                if (sList) {
+                const list = document.getElementById('pos-selected-list');
+                if (list) {
                     if (state.services.length === 0) {
-                        sList.innerHTML =
-                            `<div class="empty-state"><i class="fas fa-wrench"></i> Belum ada layanan dipilih</div>`;
+                        list.innerHTML =
+                            `<div class="empty-state"><i class="fas fa-cart-plus"></i> Belum ada layanan dipilih</div>`;
                     } else {
-                        sList.innerHTML = state.services.map((s, i) => `
+                        list.innerHTML = state.services.map((s, i) => `
                             <div class="item-row">
                                 <div class="item-info">
                                     <div class="name">${s.name}</div>
-                                    <div class="sub">${s.category || ''} ${s.isCustom ? '• Custom' : ''}</div>
+                                    <div class="sub">${s.category}</div>
                                 </div>
                                 <div class="item-actions">
                                     <span class="price-tag">${Utils.rupiah(s.price)}</span>
                                     <button class="btn btn-sm btn-danger" onclick="App.posRemoveService(${i})"><i class="fas fa-times"></i></button>
-                                </div>
-                            </div>
-                        `).join('');
-                    }
-                }
-                if (pList) {
-                    if (state.parts.length === 0) {
-                        pList.innerHTML =
-                            `<div class="empty-state"><i class="fas fa-box"></i> Belum ada sparepart tambahan</div>`;
-                    } else {
-                        pList.innerHTML = state.parts.map((p, i) => `
-                            <div class="item-row">
-                                <div class="item-info">
-                                    <div class="name">${p.name}</div>
-                                    <div class="sub">${p.qty}x @ ${Utils.rupiah(p.price)} ${p.isCustom ? '• Custom' : ''}</div>
-                                </div>
-                                <div class="item-actions">
-                                    <span class="price-tag">${Utils.rupiah(p.price * p.qty)}</span>
-                                    <button class="btn btn-sm btn-danger" onclick="App.posRemovePart(${i})"><i class="fas fa-times"></i></button>
                                 </div>
                             </div>
                         `).join('');
@@ -1969,27 +1670,19 @@
 
             updatePOSSummary() {
                 const state = AppState.pos;
-                const totalJasa = state.services.reduce((s, i) => s + i.price, 0);
-                const totalPart = state.parts.reduce((s, i) => s + (i.price * i.qty), 0);
-                const totalCostPart = state.parts.reduce((s, i) => s + (i.cost * i.qty), 0);
-                const subtotal = totalJasa + totalPart;
+                const total = state.services.reduce((s, i) => s + i.price, 0);
                 const discount = state.discount || 0;
-                const grandTotal = subtotal - discount;
+                const grandTotal = total - discount;
                 const el = (id) => document.getElementById(id);
-                el('pos-sum-jasa') && (el('pos-sum-jasa').textContent = Utils.rupiah(totalJasa));
-                el('pos-sum-part') && (el('pos-sum-part').textContent = Utils.rupiah(totalPart));
-                el('pos-sum-subtotal') && (el('pos-sum-subtotal').textContent = Utils.rupiah(subtotal));
+                el('pos-sum-total') && (el('pos-sum-total').textContent = Utils.rupiah(total));
                 el('pos-sum-discount') && (el('pos-sum-discount').textContent = Utils.rupiah(discount));
-                el('pos-sum-total') && (el('pos-sum-total').textContent = Utils.rupiah(grandTotal));
-                const labaPart = totalPart - totalCostPart;
-                const labaKotor = totalJasa + labaPart - discount;
-                el('pos-sum-laba') && (el('pos-sum-laba').textContent = Utils.rupiah(labaKotor));
+                el('pos-sum-grand') && (el('pos-sum-grand').textContent = Utils.rupiah(grandTotal));
                 const dp = state.dp || 0;
                 const sisa = grandTotal - dp;
                 el('pos-sum-sisa') && (el('pos-sum-sisa').textContent = Utils.rupiah(sisa > 0 ? sisa : 0));
+                el('pos-count') && (el('pos-count').textContent = state.services.length + ' item');
             },
 
-            // --- Receipt ---
             showReceipt(txId) {
                 const tx = DB.getTransactions().find(t => t.wo === txId);
                 if (!tx) { this.toast('Transaksi tidak ditemukan', 'error'); return; }
@@ -1998,13 +1691,7 @@
                 if (tx.services && tx.services.length) {
                     tx.services.forEach(s => {
                         detailHtml +=
-                            `<div class="flex-between"><span>LAYANAN: ${s.name}</span><span>${Utils.rupiah(s.price)}</span></div>`;
-                    });
-                }
-                if (tx.parts && tx.parts.length) {
-                    tx.parts.forEach(p => {
-                        detailHtml +=
-                            `<div class="flex-between"><span>SPAREPART: ${p.name} (${p.qty}x)</span><span>${Utils.rupiah(p.price * p.qty)}</span></div>`;
+                            `<div class="flex-between"><span>${s.name}</span><span>${Utils.rupiah(s.price)}</span></div>`;
                     });
                 }
                 const isLunas = (tx.dp || 0) >= tx.total;
@@ -2018,10 +1705,6 @@
                         <div><strong>Tanggal:</strong> ${Utils.formatDate(tx.date)}</div>
                         <div><strong>Pelanggan:</strong> ${tx.customerName}</div>
                         ${tx.customerWA ? `<div><strong>WA:</strong> ${tx.customerWA}</div>` : ''}
-                        <div class="divider"></div>
-                        <div><strong>Perangkat:</strong> ${tx.deviceCategory} ${tx.deviceBrand || ''} ${tx.deviceModel || ''}</div>
-                        <div><strong>Keluhan:</strong> ${tx.issue || '-'}</div>
-                        ${tx.diagnosis ? `<div><strong>Diagnosa:</strong> ${tx.diagnosis}</div>` : ''}
                         <div class="divider"></div>
                         ${detailHtml}
                         ${tx.discount > 0 ? `<div class="flex-between"><span>Diskon</span><span>-${Utils.rupiah(tx.discount)}</span></div>` : ''}
@@ -2048,13 +1731,12 @@
                         </div>
                         <div class="grid-2">
                             <div><p><strong>No WO:</strong> ${tx.wo}</p><p><strong>Tanggal:</strong> ${Utils.formatDate(tx.date)}</p><p><strong>Pelanggan:</strong> ${tx.customerName}</p>${tx.customerWA ? `<p><strong>WA:</strong> ${tx.customerWA}</p>` : ''}</div>
-                            <div><p><strong>Perangkat:</strong> ${tx.deviceCategory} ${tx.deviceBrand || ''} ${tx.deviceModel || ''}</p><p><strong>Keluhan:</strong> ${tx.issue || '-'}</p>${tx.diagnosis ? `<p><strong>Diagnosa:</strong> ${tx.diagnosis}</p>` : ''}<p><strong>Status:</strong> ${tx.status}</p></div>
+                            <div><p><strong>Status:</strong> ${tx.status}</p>${tx.technician ? `<p><strong>Teknisi:</strong> ${tx.technician}</p>` : ''}${tx.warranty ? `<p><strong>Garansi:</strong> ${tx.warranty} hari</p>` : ''}</div>
                         </div>
                         <table class="table">
-                            <thead><tr><th>Deskripsi</th><th style="text-align:right;">Qty</th><th style="text-align:right;">Harga</th><th style="text-align:right;">Total</th></tr></thead>
+                            <thead><tr><th>Layanan</th><th style="text-align:right;">Harga</th></tr></thead>
                             <tbody>
-                                ${(tx.services || []).map(s => `<tr><td>LAYANAN: ${s.name}</td><td style="text-align:right;">1</td><td style="text-align:right;">${Utils.rupiah(s.price)}</td><td style="text-align:right;">${Utils.rupiah(s.price)}</td></tr>`).join('')}
-                                ${(tx.parts || []).map(p => `<tr><td>SPAREPART: ${p.name}</td><td style="text-align:right;">${p.qty}</td><td style="text-align:right;">${Utils.rupiah(p.price)}</td><td style="text-align:right;">${Utils.rupiah(p.price * p.qty)}</td></tr>`).join('')}
+                                ${(tx.services || []).map(s => `<tr><td>${s.name}</td><td style="text-align:right;">${Utils.rupiah(s.price)}</td></tr>`).join('')}
                             </tbody>
                         </table>
                         <div class="total-box" style="text-align:right;">
@@ -2064,7 +1746,6 @@
                             <div style="font-weight:600;">Sisa: ${Utils.rupiah(Math.max(0, tx.total - (tx.dp || 0)))}</div>
                             <div style="margin-top:4px;font-weight:600;color:${isLunas ? 'var(--success)' : 'var(--danger)'};">${isLunas ? '✅ LUNAS' : '⏳ BELUM LUNAS'}</div>
                         </div>
-                        ${tx.warranty ? `<p style="margin-top:8px;"><strong>Garansi:</strong> ${tx.warranty} hari</p>` : ''}
                         <div class="footer">${settings.receiptFooter || ''}</div>
                     </div>
                 `;
@@ -2124,28 +1805,25 @@
                 const settings = DB.getSettings();
                 const sisa = Math.max(0, tx.total - (tx.dp || 0));
                 const msg =
-                    `Halo Bapak/Ibu ${tx.customerName},\n\nInfo Servis dari *${settings.shopName}*:\n\nNo WO: ${tx.wo}\nPerangkat: ${tx.deviceCategory} ${tx.deviceBrand || ''} ${tx.deviceModel || ''}\nKeluhan: ${tx.issue || '-'}\nStatus: *${tx.status}*\nTotal Biaya: ${Utils.rupiah(tx.total)}\nDP: ${Utils.rupiah(tx.dp || 0)}\nSisa: ${Utils.rupiah(sisa)}\n\nTerima kasih telah menggunakan layanan kami.`;
+                    `Halo Bapak/Ibu ${tx.customerName},\n\nInfo Servis dari *${settings.shopName}*:\n\nNo WO: ${tx.wo}\nStatus: *${tx.status}*\nTotal Biaya: ${Utils.rupiah(tx.total)}\nDP: ${Utils.rupiah(tx.dp || 0)}\nSisa: ${Utils.rupiah(sisa)}\n\nTerima kasih.`;
                 window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
             }
         };
 
         // ================================================================
-        //  6. VIEW RENDERERS
+        //  6. VIEWS
         // ================================================================
         const Views = {
 
-            // ---------- DASHBOARD ----------
             dashboard() {
                 const txs = DB.getTransactions();
                 const today = Utils.todayStr();
                 let omzetToday = 0,
-                    labaToday = 0,
                     masukToday = 0,
                     selesaiToday = 0,
                     belumSelesai = 0,
                     piutangTotal = 0;
-                let totalOmzet = 0,
-                    totalLaba = 0;
+                let totalOmzet = 0;
                 txs.forEach(t => {
                     const isToday = t.date && t.date.startsWith(today);
                     const total = t.total || 0;
@@ -2153,19 +1831,11 @@
                     const sisa = total - dp;
                     if (isToday) {
                         omzetToday += total;
-                        const jasaTotal = (t.services || []).reduce((s, i) => s + i.price, 0);
-                        const partTotal = (t.parts || []).reduce((s, i) => s + (i.price * i.qty), 0);
-                        const partCost = (t.parts || []).reduce((s, i) => s + (i.cost * i.qty), 0);
-                        labaToday += (jasaTotal + partTotal - partCost - (t.discount || 0));
                         masukToday++;
                         if (t.status === 'Selesai' || t.status === 'Sudah diambil') selesaiToday++;
                         else if (t.status !== 'Dibatalkan') belumSelesai++;
                     }
                     totalOmzet += total;
-                    const j2 = (t.services || []).reduce((s, i) => s + i.price, 0);
-                    const p2 = (t.parts || []).reduce((s, i) => s + (i.price * i.qty), 0);
-                    const c2 = (t.parts || []).reduce((s, i) => s + (i.cost * i.qty), 0);
-                    totalLaba += (j2 + p2 - c2 - (t.discount || 0));
                     if (sisa > 0 && t.status !== 'Dibatalkan' && t.status !== 'Sudah diambil') {
                         piutangTotal += sisa;
                     }
@@ -2173,8 +1843,7 @@
                 const html = `
                     <div class="stat-grid">
                         <div class="stat-card"><div class="stat-label"><i class="fas fa-coins" style="color:var(--success);"></i> Omzet Hari Ini</div>
-                            <div class="stat-value" style="color:var(--success);">${Utils.rupiah(omzetToday)}</div>
-                            <div class="stat-change up">+${Utils.rupiah(labaToday)} laba</div></div>
+                            <div class="stat-value" style="color:var(--success);">${Utils.rupiah(omzetToday)}</div></div>
                         <div class="stat-card"><div class="stat-label"><i class="fas fa-chart-line" style="color:var(--primary);"></i> Total Omzet</div>
                             <div class="stat-value">${Utils.rupiah(totalOmzet)}</div>
                             <div class="stat-change">${txs.length} transaksi</div></div>
@@ -2182,12 +1851,10 @@
                             <div class="stat-value" style="color:var(--warning);">${masukToday}</div>
                             <div class="stat-change">${selesaiToday} selesai</div></div>
                         <div class="stat-card"><div class="stat-label"><i class="fas fa-clock" style="color:var(--info);"></i> Belum Selesai</div>
-                            <div class="stat-value" style="color:var(--info);">${belumSelesai}</div>
-                            <div class="stat-change">${txs.filter(t => t.status === 'Selesai' || t.status === 'Sudah diambil').length} total selesai</div></div>
+                            <div class="stat-value" style="color:var(--info);">${belumSelesai}</div></div>
                         <div class="stat-card"><div class="stat-label"><i class="fas fa-hand-holding-usd" style="color:var(--danger);"></i> Piutang</div>
-                            <div class="stat-value" style="color:var(--danger);">${Utils.rupiah(piutangTotal)}</div>
-                            <div class="stat-change">${txs.filter(t => (t.total - (t.dp||0)) > 0 && t.status !== 'Dibatalkan' && t.status !== 'Sudah diambil').length} tagihan</div></div>
-                        <div class="stat-card"><div class="stat-label"><i class="fas fa-boxes" style="color:var(--purple);"></i> Katalog Layanan</div>
+                            <div class="stat-value" style="color:var(--danger);">${Utils.rupiah(piutangTotal)}</div></div>
+                        <div class="stat-card"><div class="stat-label"><i class="fas fa-list" style="color:var(--purple);"></i> Katalog Layanan</div>
                             <div class="stat-value">${SERVICE_CATALOG.length}</div>
                             <div class="stat-change">siap pakai</div></div>
                     </div>
@@ -2198,12 +1865,12 @@
                         </div>
                         <div class="table-wrap">
                             <table>
-                                <thead><tr><th>No WO</th><th>Pelanggan</th><th>Perangkat</th><th>Status</th><th>Total</th></tr></thead>
+                                <thead><tr><th>No WO</th><th>Pelanggan</th><th>Status</th><th>Total</th></tr></thead>
                                 <tbody>
                                     ${txs.slice(-6).reverse().map(t => `
-                                        <tr><td><strong>${t.wo}</strong></td><td>${t.customerName}</td><td>${t.deviceCategory} ${t.deviceBrand || ''}</td><td>${Utils.getStatusBadge(t.status)}</td><td>${Utils.rupiah(t.total)}</td></tr>
+                                        <tr><td><strong>${t.wo}</strong></td><td>${t.customerName}</td><td>${Utils.getStatusBadge(t.status)}</td><td>${Utils.rupiah(t.total)}</td></tr>
                                     `).join('')}
-                                    ${txs.length === 0 ? '<tr><td colspan="5" class="text-center text-muted" style="padding:2rem;">Belum ada transaksi</td></tr>' : ''}
+                                    ${txs.length === 0 ? '<tr><td colspan="4" class="text-center text-muted" style="padding:2rem;">Belum ada transaksi</td></tr>' : ''}
                                 </tbody>
                             </table>
                         </div>
@@ -2212,29 +1879,16 @@
                 document.getElementById('view-dashboard').innerHTML = html;
             },
 
-            // ---------- POS (Transaksi Baru) ----------
             pos() {
                 if (!AppState.editingTxId) {
                     AppState.pos = {
-                        customerId: null,
                         customerName: '',
                         customerWA: '',
-                        customerAddress: '',
-                        deviceCategory: 'Laptop',
-                        deviceBrand: '',
-                        deviceModel: '',
-                        deviceSerial: '',
-                        deviceAccessories: '',
-                        deviceCondition: '',
-                        issue: '',
-                        diagnosis: '',
                         services: [],
-                        parts: [],
                         discount: 0,
                         dp: 0,
                         status: 'Menunggu pemeriksaan',
                         technicianId: '',
-                        notes: '',
                         warranty: 7,
                     };
                 }
@@ -2242,91 +1896,62 @@
                 const technicians = DB.getTechnicians();
                 const techOpts = technicians.map(t =>
                     `<option value="${t.id}" ${t.id === state.technicianId ? 'selected' : ''}>${t.name}</option>`).join('');
-                // Get unique categories from catalog
                 const categories = [...new Set(SERVICE_CATALOG.map(s => s.category))];
-                const catOpts = categories.map(c =>
-                    `<option value="${c}" ${c === state.deviceCategory ? 'selected' : ''}>${c}</option>`
-                ).join('');
-                // Service grid by selected category
-                const selectedCat = state.deviceCategory;
-                const servicesInCat = SERVICE_CATALOG.filter(s => s.category === selectedCat);
-                const gridHtml = servicesInCat.map(s => `
-                    <div class="service-card" onclick="App.posAddServiceFromCatalog('${s.id}')">
-                        <span class="name">${s.name}</span>
-                        <span class="price">${Utils.rupiah(s.price)}</span>
-                        <span class="cat">${s.category}</span>
-                    </div>
-                `).join('');
+                const activeCat = AppState.activeCategory || 'HP';
+
+                // Build service grid for active category
+                const servicesInCat = SERVICE_CATALOG.filter(s => s.category === activeCat);
+                const gridHtml = servicesInCat.map(s => {
+                    const added = state.services.some(item => item.id === s.id);
+                    return `
+                        <div class="service-card" onclick="App.posAddService('${s.id}')" style="${added ? 'border-color:var(--success);' : ''}">
+                            <span class="name">${s.name}</span>
+                            <span class="price">${Utils.rupiah(s.price)}</span>
+                            <span class="cat-label">${s.category}</span>
+                            ${added ? '<span class="added-badge">✓</span>' : ''}
+                        </div>
+                    `;
+                }).join('');
 
                 const html = `
-                    <div class="pos-grid">
+                    <div class="pos-wrap">
                         <div>
                             <!-- Customer -->
                             <div class="card mb-4">
-                                <div class="card-header"><span class="card-title"><i class="fas fa-user"></i> Data Pelanggan</span>
+                                <div class="card-header"><span class="card-title"><i class="fas fa-user"></i> Pelanggan</span>
                                     <button class="btn btn-sm btn-outline" onclick="App.posSelectCustomer()"><i class="fas fa-search"></i> Cari</button>
                                 </div>
                                 <div class="form-row">
-                                    <div class="form-group"><label>Nama Pelanggan <span class="required">*</span></label>
+                                    <div class="form-group"><label>Nama <span class="required">*</span></label>
                                         <input class="form-control" id="pos-cust-name" value="${state.customerName}" placeholder="Nama..." onchange="App.posUpdateField('customerName', this.value)"></div>
                                     <div class="form-group"><label>WhatsApp</label>
                                         <input class="form-control" id="pos-cust-wa" value="${state.customerWA}" placeholder="08..." onchange="App.posUpdateField('customerWA', this.value)"></div>
                                 </div>
-                                <div class="form-group"><label>Alamat</label>
-                                    <input class="form-control" id="pos-cust-addr" value="${state.customerAddress}" placeholder="Alamat..." onchange="App.posUpdateField('customerAddress', this.value)"></div>
                             </div>
 
-                            <!-- Device -->
-                            <div class="card mb-4">
-                                <div class="card-header"><span class="card-title"><i class="fas fa-laptop"></i> Data Perangkat</span></div>
-                                <div class="form-row-3">
-                                    <div class="form-group"><label>Kategori <span class="required">*</span></label>
-                                        <select class="form-control" id="pos-dev-cat" onchange="App.posCategoryChange(this.value)">
-                                            ${catOpts}
-                                        </select>
-                                    </div>
-                                    <div class="form-group"><label>Merk</label>
-                                        <input class="form-control" id="pos-dev-brand" value="${state.deviceBrand}" placeholder="Merk..." onchange="App.posUpdateField('deviceBrand', this.value)"></div>
-                                    <div class="form-group"><label>Model</label>
-                                        <input class="form-control" id="pos-dev-model" value="${state.deviceModel}" placeholder="Model..." onchange="App.posUpdateField('deviceModel', this.value)"></div>
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group"><label>Nomor Seri / IMEI</label>
-                                        <input class="form-control" id="pos-dev-serial" value="${state.deviceSerial}" placeholder="Serial/IMEI..." onchange="App.posUpdateField('deviceSerial', this.value)"></div>
-                                    <div class="form-group"><label>Kelengkapan</label>
-                                        <input class="form-control" id="pos-dev-access" value="${state.deviceAccessories}" placeholder="Charger, kabel..." onchange="App.posUpdateField('deviceAccessories', this.value)"></div>
-                                </div>
-                                <div class="form-group"><label>Kondisi Fisik</label>
-                                    <input class="form-control" id="pos-dev-condition" value="${state.deviceCondition}" placeholder="Kondisi fisik..." onchange="App.posUpdateField('deviceCondition', this.value)"></div>
-                                <div class="form-group"><label>Keluhan / Kerusakan <span class="required">*</span></label>
-                                    <textarea class="form-control" id="pos-issue" rows="2" placeholder="Keluhan..." onchange="App.posUpdateField('issue', this.value)">${state.issue}</textarea></div>
-                                <div class="form-group"><label>Hasil Pemeriksaan Awal</label>
-                                    <textarea class="form-control" id="pos-diagnosis" rows="2" placeholder="Diagnosa awal..." onchange="App.posUpdateField('diagnosis', this.value)">${state.diagnosis}</textarea></div>
-                            </div>
-
-                            <!-- Layanan -->
+                            <!-- Catalog -->
                             <div class="card mb-4">
                                 <div class="card-header">
                                     <span class="card-title"><i class="fas fa-list"></i> Pilih Layanan</span>
-                                    <div class="flex gap-2">
-                                        <button class="btn btn-sm btn-outline" onclick="App.posAddCustomService()"><i class="fas fa-plus"></i> Custom</button>
-                                        <button class="btn btn-sm btn-primary" onclick="App.posAddSparepartOnly()"><i class="fas fa-box"></i> Sparepart</button>
-                                    </div>
+                                    <span class="text-sm text-muted" id="pos-count">0 item</span>
+                                </div>
+                                <div class="cat-tabs">
+                                    ${categories.map(c => `
+                                        <button class="cat-tab ${c === activeCat ? 'active' : ''}" onclick="App.posSetCategory('${c}')">${c}</button>
+                                    `).join('')}
                                 </div>
                                 <div class="service-grid" id="service-grid">
                                     ${gridHtml || '<div class="empty-state">Tidak ada layanan untuk kategori ini</div>'}
                                 </div>
                             </div>
 
-                            <!-- Daftar Item -->
+                            <!-- Selected -->
                             <div class="card mb-4">
                                 <div class="card-header">
-                                    <span class="card-title"><i class="fas fa-cart-plus"></i> Item Transaksi</span>
+                                    <span class="card-title"><i class="fas fa-cart-plus"></i> Item Dipilih</span>
+                                    ${state.services.length > 0 ? `<button class="btn btn-sm btn-danger" onclick="App.posClearAll()">Kosongkan</button>` : ''}
                                 </div>
-                                <div><strong>Layanan</strong></div>
-                                <div id="pos-services-list" class="item-list"></div>
-                                <div class="mt-2"><strong>Sparepart Tambahan</strong></div>
-                                <div id="pos-parts-list" class="item-list"></div>
+                                <div id="pos-selected-list" class="item-list"></div>
                             </div>
                         </div>
 
@@ -2335,12 +1960,9 @@
                             <div class="card sticky-side">
                                 <div class="card-header"><span class="card-title"><i class="fas fa-calculator"></i> Ringkasan</span></div>
                                 <div class="payment-summary">
-                                    <div class="row"><span>Total Layanan</span><span id="pos-sum-jasa">Rp 0</span></div>
-                                    <div class="row"><span>Total Sparepart</span><span id="pos-sum-part">Rp 0</span></div>
-                                    <div class="row"><span>Subtotal</span><span id="pos-sum-subtotal">Rp 0</span></div>
+                                    <div class="row"><span>Total</span><span id="pos-sum-total">Rp 0</span></div>
                                     <div class="row"><span>Diskon</span><span id="pos-sum-discount">Rp 0</span></div>
-                                    <div class="row total"><span>TOTAL</span><span id="pos-sum-total" style="color:var(--primary);">Rp 0</span></div>
-                                    <div class="row"><span>Estimasi Laba Kotor</span><span id="pos-sum-laba" style="color:var(--success);">Rp 0</span></div>
+                                    <div class="row total"><span>TOTAL</span><span id="pos-sum-grand" style="color:var(--primary);">Rp 0</span></div>
                                 </div>
                                 <div class="divider"></div>
                                 <div class="form-group">
@@ -2352,12 +1974,12 @@
                                     <input class="form-control" type="number" id="pos-dp" value="${state.dp}" onchange="App.posUpdateField('dp', parseFloat(this.value)||0)" min="0">
                                 </div>
                                 <div class="row" style="font-weight:600;font-size:0.95rem;margin:0.2rem 0 0.4rem;">
-                                    <span>Sisa Pembayaran</span>
+                                    <span>Sisa</span>
                                     <span id="pos-sum-sisa" style="color:var(--danger);">Rp 0</span>
                                 </div>
                                 <div class="divider"></div>
                                 <div class="form-row">
-                                    <div class="form-group"><label>Status Servis</label>
+                                    <div class="form-group"><label>Status</label>
                                         <select class="form-control" id="pos-status" onchange="App.posUpdateField('status', this.value)">
                                             ${['Menunggu pemeriksaan','Sedang diperiksa','Menunggu persetujuan','Menunggu sparepart','Sedang dikerjakan','Selesai','Sudah diambil','Dibatalkan'].map(s =>
                                                 `<option value="${s}" ${s === state.status ? 'selected' : ''}>${s}</option>`
@@ -2371,15 +1993,14 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group"><label>Catatan</label>
-                                    <input class="form-control" id="pos-notes" value="${state.notes}" placeholder="Catatan..." onchange="App.posUpdateField('notes', this.value)"></div>
                                 <div class="form-group"><label>Garansi (hari)</label>
-                                    <input class="form-control" type="number" id="pos-warranty" value="${state.warranty}" onchange="App.posUpdateField('warranty', parseFloat(this.value)||0)" min="0"></div>
+                                    <input class="form-control" type="number" id="pos-warranty" value="${state.warranty}" onchange="App.posUpdateField('warranty', parseFloat(this.value)||0)" min="0">
+                                </div>
                                 ${AppState.editingTxId ? `
-                                    <button class="btn btn-warning btn-block mt-3" onclick="App.posUpdateTransaction()"><i class="fas fa-save"></i> Update Servis</button>
-                                    <button class="btn btn-outline btn-block mt-2" onclick="App.posCancelEdit()">Batal Edit</button>
+                                    <button class="btn btn-warning btn-block mt-3" onclick="App.posUpdateTransaction()"><i class="fas fa-save"></i> Update</button>
+                                    <button class="btn btn-outline btn-block mt-2" onclick="App.posCancelEdit()">Batal</button>
                                 ` : `
-                                    <button class="btn btn-success btn-block mt-3" onclick="App.posSaveTransaction()"><i class="fas fa-save"></i> Simpan & Buat Nota</button>
+                                    <button class="btn btn-success btn-block mt-3" onclick="App.posSaveTransaction()"><i class="fas fa-save"></i> Simpan & Cetak Nota</button>
                                 `}
                             </div>
                         </div>
@@ -2389,28 +2010,19 @@
                 UI.renderPOSItems();
             },
 
-            // ---------- HISTORY ----------
             history() {
                 const txs = DB.getTransactions().reverse();
                 let html = `
                     <div class="card">
                         <div class="card-header">
                             <span class="card-title"><i class="fas fa-list-check"></i> Data Servis</span>
-                            <div class="flex gap-2">
-                                <div class="search-box">
-                                    <i class="fas fa-search"></i>
-                                    <input class="form-control" style="padding-left:2.2rem;width:200px;" placeholder="Cari..." oninput="App.searchHistory(this.value)">
-                                </div>
+                            <div class="search-box">
+                                <input class="form-control" style="padding-left:2.2rem;width:200px;" placeholder="Cari..." oninput="App.searchHistory(this.value)">
                             </div>
-                        </div>
-                        <div class="filter-chips" id="history-filters">
-                            ${['Semua','Menunggu pemeriksaan','Sedang diperiksa','Menunggu persetujuan','Menunggu sparepart','Sedang dikerjakan','Selesai','Sudah diambil','Dibatalkan'].map(s =>
-                                `<span class="filter-chip ${s === 'Semua' ? 'active' : ''}" onclick="App.filterHistory('${s}')">${s}</span>`
-                            ).join('')}
                         </div>
                         <div class="table-wrap">
                             <table>
-                                <thead><tr><th>No WO</th><th>Tanggal</th><th>Pelanggan</th><th>Perangkat</th><th>Status</th><th>Total</th><th>Aksi</th></tr></thead>
+                                <thead><tr><th>No WO</th><th>Tanggal</th><th>Pelanggan</th><th>Status</th><th>Total</th><th>Aksi</th></tr></thead>
                                 <tbody id="history-tbody">
                                     ${Views._historyRows(txs)}
                                 </tbody>
@@ -2424,14 +2036,13 @@
 
             _historyRows(txs) {
                 if (!txs || txs.length === 0) {
-                    return `<tr><td colspan="7" class="text-center text-muted" style="padding:2rem;">Belum ada data servis</td></tr>`;
+                    return `<tr><td colspan="6" class="text-center text-muted" style="padding:2rem;">Belum ada data servis</td></tr>`;
                 }
                 return txs.map(t => `
                     <tr>
                         <td><strong>${t.wo}</strong></td>
                         <td>${Utils.formatDateShort(t.date)}</td>
                         <td>${t.customerName}</td>
-                        <td>${t.deviceCategory} ${t.deviceBrand || ''}</td>
                         <td>${Utils.getStatusBadge(t.status)}</td>
                         <td>${Utils.rupiah(t.total)}</td>
                         <td>
@@ -2442,7 +2053,6 @@
                 `).join('');
             },
 
-            // ---------- CUSTOMERS ----------
             customers() {
                 const customers = DB.getCustomers();
                 let html = `
@@ -2452,19 +2062,18 @@
                             <button class="btn btn-sm btn-primary" onclick="App.customerAdd()"><i class="fas fa-plus"></i> Tambah</button>
                         </div>
                         <div class="search-box mb-3">
-                            <i class="fas fa-search"></i>
                             <input class="form-control" style="padding-left:2.2rem;" placeholder="Cari pelanggan..." oninput="App.searchCustomers(this.value)">
                         </div>
                         <div class="table-wrap">
                             <table>
-                                <thead><tr><th>Nama</th><th>WA</th><th>Alamat</th><th>Servis</th><th>Aksi</th></tr></thead>
+                                <thead><tr><th>Nama</th><th>WA</th><th>Servis</th><th>Aksi</th></tr></thead>
                                 <tbody id="customers-tbody">
                                     ${customers.map(c => `
-                                        <tr><td><strong>${c.name}</strong></td><td>${c.phone || '-'}</td><td>${c.address || '-'}</td><td>${c.serviceCount || 0}</td>
+                                        <tr><td><strong>${c.name}</strong></td><td>${c.phone || '-'}</td><td>${c.serviceCount || 0}</td>
                                             <td><button class="btn btn-sm btn-outline" onclick="App.viewCustomer('${c.id}')"><i class="fas fa-eye"></i></button>
                                             <button class="btn btn-sm btn-danger" onclick="App.deleteCustomer('${c.id}')"><i class="fas fa-trash"></i></button></td></tr>
                                     `).join('')}
-                                    ${customers.length === 0 ? '<tr><td colspan="5" class="text-center text-muted" style="padding:1.5rem;">Belum ada pelanggan</td></tr>' : ''}
+                                    ${customers.length === 0 ? '<tr><td colspan="4" class="text-center text-muted" style="padding:1.5rem;">Belum ada pelanggan</td></tr>' : ''}
                                 </tbody>
                             </table>
                         </div>
@@ -2473,49 +2082,31 @@
                 document.getElementById('view-customers').innerHTML = html;
             },
 
-            // ---------- REPORTS ----------
             reports() {
                 const txs = DB.getTransactions();
                 const totalOmzet = txs.reduce((s, t) => s + (t.total || 0), 0);
-                const totalLaba = txs.reduce((s, t) => {
-                    const j = (t.services || []).reduce((a, i) => a + i.price, 0);
-                    const p = (t.parts || []).reduce((a, i) => a + (i.price * i.qty), 0);
-                    const c = (t.parts || []).reduce((a, i) => a + (i.cost * i.qty), 0);
-                    return s + (j + p - c - (t.discount || 0));
-                }, 0);
                 const statusCount = {};
                 txs.forEach(t => { statusCount[t.status] = (statusCount[t.status] || 0) + 1; });
                 const days = [];
                 const omzetData = [];
-                const labaData = [];
                 for (let i = 6; i >= 0; i--) {
                     const d = new Date();
                     d.setDate(d.getDate() - i);
                     const ds = d.toISOString().split('T')[0];
                     days.push(d.toLocaleDateString('id-ID', { weekday: 'short' }));
                     const dayTxs = txs.filter(t => t.date && t.date.startsWith(ds));
-                    const o = dayTxs.reduce((s, t) => s + (t.total || 0), 0);
-                    const l = dayTxs.reduce((s, t) => {
-                        const j = (t.services || []).reduce((a, i) => a + i.price, 0);
-                        const p = (t.parts || []).reduce((a, i) => a + (i.price * i.qty), 0);
-                        const c = (t.parts || []).reduce((a, i) => a + (i.cost * i.qty), 0);
-                        return s + (j + p - c - (t.discount || 0));
-                    }, 0);
-                    omzetData.push(o);
-                    labaData.push(l);
+                    omzetData.push(dayTxs.reduce((s, t) => s + (t.total || 0), 0));
                 }
                 const html = `
                     <div class="stat-grid">
                         <div class="stat-card"><div class="stat-label">Total Omzet</div><div class="stat-value">${Utils.rupiah(totalOmzet)}</div></div>
-                        <div class="stat-card"><div class="stat-label">Total Laba Kotor</div><div class="stat-value" style="color:var(--success);">${Utils.rupiah(totalLaba)}</div></div>
                         <div class="stat-card"><div class="stat-label">Total Transaksi</div><div class="stat-value">${txs.length}</div></div>
-                        <div class="stat-card"><div class="stat-label">Margin Laba</div><div class="stat-value">${totalOmzet ? Math.round((totalLaba/totalOmzet)*100) : 0}%</div></div>
                     </div>
                     <div class="card mb-4">
                         <div class="card-header"><span class="card-title"><i class="fas fa-chart-bar"></i> Omzet 7 Hari</span></div>
                         <div class="chart-container"><canvas id="chart-omzet"></canvas></div>
                     </div>
-                    <div class="card mb-4">
+                    <div class="card">
                         <div class="card-header"><span class="card-title"><i class="fas fa-chart-pie"></i> Status Servis</span></div>
                         <div style="display:flex;flex-wrap:wrap;gap:0.5rem;padding:0.3rem 0;">
                             ${Object.entries(statusCount).map(([s, c]) => `<span class="chip">${s}: <strong>${c}</strong></span>`).join('')}
@@ -2532,12 +2123,8 @@
                             type: 'line',
                             data: {
                                 labels: days,
-                                datasets: [
-                                    { label: 'Omzet', data: omzetData, borderColor: '#0f3b5e',
-                                        backgroundColor: 'rgba(15,59,94,0.1)', fill: true, tension: 0.3 },
-                                    { label: 'Laba', data: labaData, borderColor: '#2a9d8f',
-                                        backgroundColor: 'rgba(42,157,143,0.1)', fill: true, tension: 0.3 }
-                                ]
+                                datasets: [{ label: 'Omzet', data: omzetData, borderColor: '#0f3b5e',
+                                    backgroundColor: 'rgba(15,59,94,0.1)', fill: true, tension: 0.3 }]
                             },
                             options: { responsive: true, maintainAspectRatio: false,
                                 plugins: { legend: { position: 'top', labels: { boxWidth: 12,
@@ -2565,7 +2152,6 @@
                 }, 200);
             },
 
-            // ---------- SETTINGS ----------
             settings() {
                 const s = DB.getSettings();
                 const html = `
@@ -2581,31 +2167,30 @@
                                 <div class="form-group"><label>Garansi Default (hari)</label><input class="form-control" type="number" name="defaultWarranty" value="${s.defaultWarranty || 7}"></div>
                                 <div class="form-group"><label>Format No WO</label><input class="form-control" name="woFormat" value="${s.woFormat || 'MS-{date}-{seq}'}"></div>
                             </div>
-                            <button class="btn btn-primary btn-block mt-3">Simpan Pengaturan</button>
+                            <button class="btn btn-primary btn-block mt-3">Simpan</button>
                         </form>
                     </div>
                 `;
                 document.getElementById('view-settings').innerHTML = html;
             },
 
-            // ---------- BACKUP ----------
             backup() {
                 const html = `
                     <div class="card mb-4">
                         <div class="card-header"><span class="card-title"><i class="fas fa-download"></i> Backup Data</span></div>
-                        <p class="text-muted text-sm mb-3">Ekspor semua data ke file JSON untuk keamanan atau migrasi.</p>
+                        <p class="text-muted text-sm mb-3">Ekspor semua data ke file JSON.</p>
                         <button class="btn btn-primary" onclick="App.exportData()"><i class="fas fa-file-export"></i> Ekspor JSON</button>
                     </div>
                     <div class="card mb-4">
                         <div class="card-header"><span class="card-title"><i class="fas fa-upload"></i> Restore Data</span></div>
-                        <p class="text-muted text-sm mb-3">Pilih file JSON hasil backup untuk mengembalikan data.</p>
+                        <p class="text-muted text-sm mb-3">Pilih file JSON hasil backup.</p>
                         <input type="file" id="restore-file" accept=".json" style="margin-bottom:0.5rem;">
                         <button class="btn btn-success" onclick="App.importData()"><i class="fas fa-file-import"></i> Restore</button>
                     </div>
                     <div class="card">
                         <div class="card-header"><span class="card-title" style="color:var(--danger);"><i class="fas fa-trash"></i> Reset Semua Data</span></div>
-                        <p class="text-muted text-sm mb-3">⚠️ Tindakan ini akan menghapus semua data secara permanen.</p>
-                        <button class="btn btn-danger" onclick="App.resetAllData()"><i class="fas fa-radiation"></i> Reset Data</button>
+                        <p class="text-muted text-sm mb-3">⚠️ Menghapus semua data secara permanen.</p>
+                        <button class="btn btn-danger" onclick="App.resetAllData()"><i class="fas fa-radiation"></i> Reset</button>
                     </div>
                 `;
                 document.getElementById('view-backup').innerHTML = html;
@@ -2613,7 +2198,7 @@
         };
 
         // ================================================================
-        //  7. APPLICATION CONTROLLER
+        //  7. APP CONTROLLER
         // ================================================================
         const App = {
 
@@ -2647,7 +2232,6 @@
                     overlay.classList.toggle('open');
                 }
             },
-            openModal(title, body, footer) { UI.openModal(title, body, footer); },
             closeModal() { UI.closeModal(); },
             toast(msg, type) { UI.toast(msg, type); },
 
@@ -2657,39 +2241,50 @@
                 if (field === 'discount' || field === 'dp') UI.updatePOSSummary();
             },
 
-            posCategoryChange(val) {
-                AppState.pos.deviceCategory = val;
-                // Re-render service grid
-                const grid = document.getElementById('service-grid');
-                if (grid) {
-                    const services = SERVICE_CATALOG.filter(s => s.category === val);
-                    grid.innerHTML = services.map(s => `
-                        <div class="service-card" onclick="App.posAddServiceFromCatalog('${s.id}')">
-                            <span class="name">${s.name}</span>
-                            <span class="price">${Utils.rupiah(s.price)}</span>
-                            <span class="cat">${s.category}</span>
-                        </div>
-                    `).join('') || '<div class="empty-state">Tidak ada layanan untuk kategori ini</div>';
-                }
+            posSetCategory(cat) {
+                AppState.activeCategory = cat;
+                Views.pos();
             },
 
-            posAddServiceFromCatalog(id) {
+            posAddService(id) {
                 const service = SERVICE_CATALOG.find(s => s.id === id);
                 if (!service) return;
-                // Check if already added (optional)
-                AppState.pos.services.push({
+                const state = AppState.pos;
+                // Check if already added
+                if (state.services.some(s => s.id === id)) {
+                    // Remove if already added (toggle)
+                    state.services = state.services.filter(s => s.id !== id);
+                    UI.renderPOSItems();
+                    UI.toast('Dihapus: ' + service.name, 'info');
+                    return;
+                }
+                state.services.push({
+                    id: service.id,
                     name: service.name,
                     price: service.price,
-                    category: service.category,
-                    isCustom: false
+                    category: service.category
                 });
                 UI.renderPOSItems();
-                UI.toast('Layanan ditambahkan: ' + service.name);
+                UI.toast('Ditambahkan: ' + service.name);
+            },
+
+            posRemoveService(index) {
+                AppState.pos.services.splice(index, 1);
+                UI.renderPOSItems();
+            },
+
+            posClearAll() {
+                if (AppState.pos.services.length === 0) return;
+                if (confirm('Kosongkan semua layanan yang dipilih?')) {
+                    AppState.pos.services = [];
+                    UI.renderPOSItems();
+                    Views.pos();
+                }
             },
 
             posSelectCustomer() {
                 const customers = DB.getCustomers();
-                if (customers.length === 0) { UI.toast('Belum ada pelanggan terdaftar', 'warning'); return; }
+                if (customers.length === 0) { UI.toast('Belum ada pelanggan', 'warning'); return; }
                 let opts = customers.map(c => `<option value="${c.id}">${c.name} - ${c.phone || ''}</option>`).join('');
                 const html =
                     `<div class="form-group"><label>Pilih Pelanggan</label><select class="form-control" id="modal-cust-select">${opts}</select></div>`;
@@ -2702,197 +2297,56 @@
                 const id = document.getElementById('modal-cust-select').value;
                 const cust = DB.getCustomers().find(c => c.id === id);
                 if (cust) {
-                    AppState.pos.customerId = cust.id;
                     AppState.pos.customerName = cust.name;
                     AppState.pos.customerWA = cust.phone || '';
-                    AppState.pos.customerAddress = cust.address || '';
                     Views.pos();
-                    UI.toast('Pelanggan dipilih: ' + cust.name);
+                    UI.toast('Pelanggan: ' + cust.name);
                 }
                 App.closeModal();
             },
-
-            // --- Custom Service ---
-            posAddCustomService() {
-                const html = `
-                    <div class="form-group"><label>Nama Layanan <span class="required">*</span></label>
-                        <input class="form-control" id="cs-name" placeholder="Contoh: Ganti IC Power"></div>
-                    <div class="form-group"><label>Kategori</label>
-                        <input class="form-control" id="cs-cat" placeholder="Kategori (opsional)"></div>
-                    <div class="form-group"><label>Harga (Rp) <span class="required">*</span></label>
-                        <input class="form-control" type="number" id="cs-price" value="0"></div>
-                `;
-                const footer =
-                    `<button class="btn btn-outline" onclick="App.closeModal()">Batal</button><button class="btn btn-primary" onclick="App.posConfirmCustomService()">Tambah</button>`;
-                UI.openModal('Tambah Layanan Custom', html, footer);
-            },
-
-            posConfirmCustomService() {
-                const name = document.getElementById('cs-name').value.trim();
-                const price = parseFloat(document.getElementById('cs-price').value) || 0;
-                if (!name || price <= 0) { UI.toast('Nama dan harga wajib diisi', 'error'); return; }
-                const category = document.getElementById('cs-cat').value.trim() || 'Custom';
-                AppState.pos.services.push({
-                    name: name,
-                    price: price,
-                    category: category,
-                    isCustom: true
-                });
-                App.closeModal();
-                UI.renderPOSItems();
-                UI.toast('Layanan custom ditambahkan');
-            },
-
-            // --- Add Sparepart Only ---
-            posAddSparepartOnly() {
-                const parts = DB.getParts();
-                let opts = parts.map(p =>
-                    `<option value="${p.id}">${p.name} (Stok: ${p.stock}) - ${Utils.rupiah(p.price)}</option>`).join('');
-                const html = `
-                    <div class="form-group"><label>Pilih Sparepart (atau custom)</label>
-                        <select class="form-control" id="modal-part-select">${opts}<option value="__custom__">＋ Buat Baru</option></select>
-                    </div>
-                    <div class="form-group"><label>Qty</label><input class="form-control" type="number" id="modal-part-qty" value="1" min="1"></div>
-                    <div class="form-group"><label>Harga Jual (bisa diubah)</label><input class="form-control" type="number" id="modal-part-price" value="0"></div>
-                    <div class="divider"></div>
-                    <div class="text-sm text-muted">Atau isi manual jika pilih "Buat Baru":</div>
-                    <div class="form-group"><label>Nama Sparepart</label><input class="form-control" id="modal-part-name" placeholder="Nama..."></div>
-                    <div class="form-group"><label>Harga Modal</label><input class="form-control" type="number" id="modal-part-cost" value="0"></div>
-                `;
-                const footer =
-                    `<button class="btn btn-outline" onclick="App.closeModal()">Batal</button><button class="btn btn-primary" onclick="App.posConfirmSparepart()">Tambah</button>`;
-                UI.openModal('Tambah Sparepart', html, footer);
-                setTimeout(() => {
-                    const sel = document.getElementById('modal-part-select');
-                    const priceInp = document.getElementById('modal-part-price');
-                    const nameInp = document.getElementById('modal-part-name');
-                    const costInp = document.getElementById('modal-part-cost');
-                    if (sel && priceInp) {
-                        sel.onchange = function() {
-                            if (this.value === '__custom__') {
-                                nameInp.style.display = 'block';
-                                costInp.style.display = 'block';
-                                priceInp.value = 0;
-                            } else {
-                                nameInp.style.display = 'none';
-                                costInp.style.display = 'none';
-                                const p = DB.getParts().find(x => x.id === this.value);
-                                if (p) {
-                                    priceInp.value = p.price || 0;
-                                    nameInp.value = p.name;
-                                    costInp.value = p.cost || 0;
-                                }
-                            }
-                        };
-                        sel.onchange();
-                    }
-                }, 100);
-            },
-
-            posConfirmSparepart() {
-                const sel = document.getElementById('modal-part-select');
-                const qty = parseInt(document.getElementById('modal-part-qty').value) || 1;
-                let price = parseFloat(document.getElementById('modal-part-price').value) || 0;
-                let name = document.getElementById('modal-part-name').value.trim();
-                let cost = parseFloat(document.getElementById('modal-part-cost').value) || 0;
-                let isCustom = false;
-
-                if (sel.value === '__custom__') {
-                    if (!name || price <= 0) { UI.toast('Nama dan harga wajib diisi', 'error'); return; }
-                    isCustom = true;
-                } else {
-                    const part = DB.getParts().find(p => p.id === sel.value);
-                    if (!part) { UI.toast('Pilih sparepart yang valid', 'error'); return; }
-                    if (qty > part.stock) { UI.toast('Stok tidak mencukupi! Tersedia: ' + part.stock, 'error'); return; }
-                    name = part.name;
-                    cost = part.cost;
-                    // Deduct stock
-                    const partsDb = DB.getParts();
-                    const idx = partsDb.findIndex(p => p.id === part.id);
-                    if (idx !== -1) partsDb[idx].stock = Math.max(0, partsDb[idx].stock - qty);
-                    DB.setParts(partsDb);
-                }
-
-                AppState.pos.parts.push({
-                    name: name,
-                    cost: cost,
-                    price: price,
-                    qty: qty,
-                    isCustom: isCustom
-                });
-                App.closeModal();
-                UI.renderPOSItems();
-                UI.toast('Sparepart ditambahkan: ' + name);
-            },
-
-            posRemoveService(index) { AppState.pos.services.splice(index, 1);
-                UI.renderPOSItems(); },
-            posRemovePart(index) { AppState.pos.parts.splice(index, 1);
-                UI.renderPOSItems(); },
 
             posSaveTransaction() {
                 const state = AppState.pos;
                 if (!state.customerName.trim()) { UI.toast('Nama pelanggan wajib diisi', 'error'); return; }
-                if (!state.issue.trim()) { UI.toast('Keluhan wajib diisi', 'error'); return; }
-                if (state.services.length === 0 && state.parts.length === 0) {
-                    UI.toast('Tambahkan minimal 1 layanan atau sparepart', 'error');
-                    return;
-                }
-                const totalJasa = state.services.reduce((s, i) => s + i.price, 0);
-                const totalPart = state.parts.reduce((s, i) => s + (i.price * i.qty), 0);
-                const totalCostPart = state.parts.reduce((s, i) => s + (i.cost * i.qty), 0);
-                const subtotal = totalJasa + totalPart;
+                if (state.services.length === 0) { UI.toast('Pilih minimal 1 layanan', 'error'); return; }
+                const total = state.services.reduce((s, i) => s + i.price, 0);
                 const discount = state.discount || 0;
-                const grandTotal = subtotal - discount;
+                const grandTotal = total - discount;
                 if (grandTotal <= 0) { UI.toast('Total harus lebih dari 0', 'error'); return; }
                 const dp = state.dp || 0;
                 if (dp > grandTotal) { UI.toast('DP tidak boleh lebih dari total', 'error'); return; }
 
                 const wo = DB.generateWO();
                 const tech = DB.getTechnicians().find(t => t.id === state.technicianId);
-
                 const tx = {
                     wo: wo,
                     date: new Date().toISOString(),
                     customerName: state.customerName,
                     customerWA: state.customerWA,
-                    customerAddress: state.customerAddress,
-                    customerId: state.customerId || null,
-                    deviceCategory: state.deviceCategory,
-                    deviceBrand: state.deviceBrand,
-                    deviceModel: state.deviceModel,
-                    deviceSerial: state.deviceSerial,
-                    deviceAccessories: state.deviceAccessories,
-                    deviceCondition: state.deviceCondition,
-                    issue: state.issue,
-                    diagnosis: state.diagnosis,
-                    services: state.services.map(s => ({ ...s })),
-                    parts: state.parts.map(p => ({ ...p })),
+                    customerId: null,
+                    services: state.services.map(s => ({ name: s.name, price: s.price, category: s.category })),
                     discount: discount,
                     total: grandTotal,
                     dp: dp,
                     status: state.status,
                     technicianId: state.technicianId || null,
                     technician: tech ? tech.name : '',
-                    notes: state.notes,
                     warranty: state.warranty || 0,
                 };
 
                 // Update customer
                 let customers = DB.getCustomers();
-                if (state.customerId) {
-                    const cIdx = customers.findIndex(c => c.id === state.customerId);
-                    if (cIdx !== -1) {
-                        customers[cIdx].serviceCount = (customers[cIdx].serviceCount || 0) + 1;
-                        customers[cIdx].lastService = tx.date;
-                        customers[cIdx].totalSpent = (customers[cIdx].totalSpent || 0) + grandTotal;
-                    }
+                const existing = customers.find(c => c.name.toLowerCase() === state.customerName.toLowerCase());
+                if (existing) {
+                    existing.serviceCount = (existing.serviceCount || 0) + 1;
+                    existing.lastService = tx.date;
+                    existing.totalSpent = (existing.totalSpent || 0) + grandTotal;
+                    tx.customerId = existing.id;
                 } else {
                     const newCust = {
-                        id: Utils.generateId('CUST'),
+                        id: Utils.genId('CUST'),
                         name: state.customerName,
                         phone: state.customerWA,
-                        address: state.customerAddress,
                         serviceCount: 1,
                         totalSpent: grandTotal,
                         lastService: tx.date
@@ -2902,43 +2356,30 @@
                 }
                 DB.setCustomers(customers);
 
-                // Update technician stats
+                // Update technician
                 if (state.technicianId) {
                     const techs = DB.getTechnicians();
                     const tIdx = techs.findIndex(t => t.id === state.technicianId);
                     if (tIdx !== -1) {
                         techs[tIdx].servicesCount = (techs[tIdx].servicesCount || 0) + 1;
-                        techs[tIdx].totalJasa = (techs[tIdx].totalJasa || 0) + totalJasa;
                         DB.setTechnicians(techs);
                     }
                 }
 
-                // Save transaction
+                // Save
                 const txs = DB.getTransactions();
                 txs.push(tx);
                 DB.setTransactions(txs);
 
-                UI.toast('Servis ' + wo + ' berhasil dibuat!');
+                UI.toast('Servis ' + wo + ' berhasil!');
                 AppState.pos = {
-                    customerId: null,
                     customerName: '',
                     customerWA: '',
-                    customerAddress: '',
-                    deviceCategory: 'Laptop',
-                    deviceBrand: '',
-                    deviceModel: '',
-                    deviceSerial: '',
-                    deviceAccessories: '',
-                    deviceCondition: '',
-                    issue: '',
-                    diagnosis: '',
                     services: [],
-                    parts: [],
                     discount: 0,
                     dp: 0,
                     status: 'Menunggu pemeriksaan',
                     technicianId: '',
-                    notes: '',
                     warranty: 7,
                 };
                 AppState.editingTxId = null;
@@ -2946,35 +2387,27 @@
                 setTimeout(() => UI.showReceipt(wo), 500);
             },
 
-            // ---- Edit transaction ----
             editTransaction(wo) {
                 const tx = DB.getTransactions().find(t => t.wo === wo);
                 if (!tx) { UI.toast('Transaksi tidak ditemukan', 'error'); return; }
                 AppState.editingTxId = wo;
                 AppState.pos = {
-                    customerId: tx.customerId || null,
                     customerName: tx.customerName || '',
                     customerWA: tx.customerWA || '',
-                    customerAddress: tx.customerAddress || '',
-                    deviceCategory: tx.deviceCategory || 'Laptop',
-                    deviceBrand: tx.deviceBrand || '',
-                    deviceModel: tx.deviceModel || '',
-                    deviceSerial: tx.deviceSerial || '',
-                    deviceAccessories: tx.deviceAccessories || '',
-                    deviceCondition: tx.deviceCondition || '',
-                    issue: tx.issue || '',
-                    diagnosis: tx.diagnosis || '',
-                    services: (tx.services || []).map(s => ({ ...s })),
-                    parts: (tx.parts || []).map(p => ({ ...p })),
+                    services: (tx.services || []).map(s => ({
+                        id: 'E' + Date.now() + Math.random(),
+                        name: s.name,
+                        price: s.price,
+                        category: s.category || 'Umum'
+                    })),
                     discount: tx.discount || 0,
                     dp: tx.dp || 0,
                     status: tx.status || 'Menunggu pemeriksaan',
                     technicianId: tx.technicianId || '',
-                    notes: tx.notes || '',
                     warranty: tx.warranty || 0,
                 };
                 App.navigate('pos');
-                UI.toast('Edit mode: ' + wo);
+                UI.toast('Edit: ' + wo);
             },
 
             posUpdateTransaction() {
@@ -2984,40 +2417,26 @@
                 const txs = DB.getTransactions();
                 const idx = txs.findIndex(t => t.wo === wo);
                 if (idx === -1) { UI.toast('Transaksi tidak ditemukan', 'error'); return; }
-                const totalJasa = state.services.reduce((s, i) => s + i.price, 0);
-                const totalPart = state.parts.reduce((s, i) => s + (i.price * i.qty), 0);
-                const totalCostPart = state.parts.reduce((s, i) => s + (i.cost * i.qty), 0);
-                const subtotal = totalJasa + totalPart;
+                const total = state.services.reduce((s, i) => s + i.price, 0);
                 const discount = state.discount || 0;
-                const grandTotal = subtotal - discount;
+                const grandTotal = total - discount;
                 if (grandTotal <= 0) { UI.toast('Total harus lebih dari 0', 'error'); return; }
                 const tech = DB.getTechnicians().find(t => t.id === state.technicianId);
                 txs[idx] = {
                     ...txs[idx],
                     customerName: state.customerName,
                     customerWA: state.customerWA,
-                    customerAddress: state.customerAddress,
-                    deviceCategory: state.deviceCategory,
-                    deviceBrand: state.deviceBrand,
-                    deviceModel: state.deviceModel,
-                    deviceSerial: state.deviceSerial,
-                    deviceAccessories: state.deviceAccessories,
-                    deviceCondition: state.deviceCondition,
-                    issue: state.issue,
-                    diagnosis: state.diagnosis,
-                    services: state.services.map(s => ({ ...s })),
-                    parts: state.parts.map(p => ({ ...p })),
+                    services: state.services.map(s => ({ name: s.name, price: s.price, category: s.category || 'Umum' })),
                     discount: discount,
                     total: grandTotal,
                     dp: state.dp || 0,
                     status: state.status,
                     technicianId: state.technicianId || null,
                     technician: tech ? tech.name : '',
-                    notes: state.notes,
                     warranty: state.warranty || 0,
                 };
                 DB.setTransactions(txs);
-                UI.toast('Servis ' + wo + ' berhasil diupdate!');
+                UI.toast('Servis ' + wo + ' diupdate!');
                 AppState.editingTxId = null;
                 App.navigate('history');
                 setTimeout(() => UI.showReceipt(wo), 500);
@@ -3026,25 +2445,13 @@
             posCancelEdit() {
                 AppState.editingTxId = null;
                 AppState.pos = {
-                    customerId: null,
                     customerName: '',
                     customerWA: '',
-                    customerAddress: '',
-                    deviceCategory: 'Laptop',
-                    deviceBrand: '',
-                    deviceModel: '',
-                    deviceSerial: '',
-                    deviceAccessories: '',
-                    deviceCondition: '',
-                    issue: '',
-                    diagnosis: '',
                     services: [],
-                    parts: [],
                     discount: 0,
                     dp: 0,
                     status: 'Menunggu pemeriksaan',
                     technicianId: '',
-                    notes: '',
                     warranty: 7,
                 };
                 App.navigate('pos');
@@ -3054,18 +2461,7 @@
             // ---- History ----
             searchHistory(query) {
                 const txs = window._historyData || DB.getTransactions().reverse();
-                const filtered = Utils.filterList(txs, query, ['wo', 'customerName', 'deviceCategory', 'deviceBrand',
-                    'status'
-                ]);
-                document.getElementById('history-tbody').innerHTML = Views._historyRows(filtered);
-            },
-
-            filterHistory(status) {
-                document.querySelectorAll('#history-filters .filter-chip').forEach(el => {
-                    el.classList.toggle('active', el.textContent === status);
-                });
-                const txs = window._historyData || DB.getTransactions().reverse();
-                const filtered = status === 'Semua' ? txs : txs.filter(t => t.status === status);
+                const filtered = Utils.filterList(txs, query, ['wo', 'customerName', 'status']);
                 document.getElementById('history-tbody').innerHTML = Views._historyRows(filtered);
             },
 
@@ -3077,9 +2473,8 @@
             customerAdd() {
                 const html =
                     `
-                    <div class="form-group"><label>Nama <span class="required">*</span></label><input class="form-control" id="cust-name" placeholder="Nama pelanggan..."></div>
-                    <div class="form-group"><label>WhatsApp</label><input class="form-control" id="cust-phone" placeholder="08..."></div>
-                    <div class="form-group"><label>Alamat</label><input class="form-control" id="cust-addr" placeholder="Alamat..."></div>`;
+                    <div class="form-group"><label>Nama <span class="required">*</span></label><input class="form-control" id="cust-name" placeholder="Nama..."></div>
+                    <div class="form-group"><label>WhatsApp</label><input class="form-control" id="cust-phone" placeholder="08..."></div>`;
                 const footer =
                     `<button class="btn btn-outline" onclick="App.closeModal()">Batal</button><button class="btn btn-primary" onclick="App.customerSave()">Simpan</button>`;
                 UI.openModal('Tambah Pelanggan', html, footer);
@@ -3087,35 +2482,33 @@
 
             customerSave() {
                 const name = document.getElementById('cust-name').value.trim();
-                if (!name) { UI.toast('Nama pelanggan wajib diisi', 'error'); return; }
+                if (!name) { UI.toast('Nama wajib diisi', 'error'); return; }
                 const customers = DB.getCustomers();
                 customers.push({
-                    id: Utils.generateId('CUST'),
+                    id: Utils.genId('CUST'),
                     name: name,
                     phone: document.getElementById('cust-phone').value.trim(),
-                    address: document.getElementById('cust-addr').value.trim(),
                     serviceCount: 0,
                     totalSpent: 0,
                     lastService: null
                 });
                 DB.setCustomers(customers);
-                UI.toast('Pelanggan berhasil ditambahkan');
+                UI.toast('Pelanggan ditambahkan');
                 App.closeModal();
                 Views.customers();
             },
 
             searchCustomers(query) {
                 const customers = DB.getCustomers();
-                const filtered = Utils.filterList(customers, query, ['name', 'phone', 'address']);
+                const filtered = Utils.filterList(customers, query, ['name', 'phone']);
                 const tbody = document.getElementById('customers-tbody');
                 if (tbody) {
                     tbody.innerHTML = filtered.map(c =>
                         `
-                        <tr><td><strong>${c.name}</strong></td><td>${c.phone || '-'}</td><td>${c.address || '-'}</td><td>${c.serviceCount || 0}</td>
+                        <tr><td><strong>${c.name}</strong></td><td>${c.phone || '-'}</td><td>${c.serviceCount || 0}</td>
                             <td><button class="btn btn-sm btn-outline" onclick="App.viewCustomer('${c.id}')"><i class="fas fa-eye"></i></button>
                             <button class="btn btn-sm btn-danger" onclick="App.deleteCustomer('${c.id}')"><i class="fas fa-trash"></i></button></td></tr>`
-                    ).join('') ||
-                        '<tr><td colspan="5" class="text-center text-muted" style="padding:1.5rem;">Tidak ditemukan</td></tr>';
+                    ).join('') || '<tr><td colspan="4" class="text-center text-muted" style="padding:1.5rem;">Tidak ditemukan</td></tr>';
                 }
             },
 
@@ -3123,23 +2516,15 @@
                 const cust = DB.getCustomers().find(c => c.id === id);
                 if (!cust) { UI.toast('Pelanggan tidak ditemukan', 'error'); return; }
                 const txs = DB.getTransactions().filter(t => t.customerId === id || t.customerName === cust.name);
-                let historyHtml = txs.length === 0 ? '<p class="text-muted">Belum ada servis</p>' :
-                    txs.map(t =>
-                        `<div class="flex justify-between items-center border-bottom" style="padding:0.3rem 0;">
-                            <span><strong>${t.wo}</strong> - ${t.deviceCategory} ${t.deviceBrand || ''}</span>
-                            <span>${Utils.rupiah(t.total)} <span class="badge ${t.status === 'Selesai' || t.status === 'Sudah diambil' ? 'badge-success' : 'badge-warning'}">${t.status}</span></span>
-                        </div>`
-                    ).join('');
                 const html =
                     `
                     <div><strong>Nama:</strong> ${cust.name}</div>
                     <div><strong>WA:</strong> ${cust.phone || '-'}</div>
-                    <div><strong>Alamat:</strong> ${cust.address || '-'}</div>
-                    <div><strong>Total Servis:</strong> ${cust.serviceCount || 0}</div>
+                    <div><strong>Servis:</strong> ${cust.serviceCount || 0}</div>
                     <div><strong>Total Belanja:</strong> ${Utils.rupiah(cust.totalSpent || 0)}</div>
                     <div class="divider"></div>
-                    <div><strong>Riwayat Servis:</strong></div>
-                    ${historyHtml}
+                    <div><strong>Riwayat:</strong></div>
+                    ${txs.map(t => `<div style="padding:0.2rem 0;border-bottom:1px solid var(--gray-100);">${t.wo} - ${Utils.rupiah(t.total)} <span class="badge ${t.status === 'Selesai' ? 'badge-success' : 'badge-warning'}">${t.status}</span></div>`).join('') || '<div class="text-muted">Belum ada servis</div>'}
                 `;
                 UI.openModal('Detail Pelanggan', html, '');
             },
@@ -3177,25 +2562,24 @@
                     customers: DB.getCustomers(),
                     technicians: DB.getTechnicians(),
                     transactions: DB.getTransactions(),
-                    parts: DB.getParts(),
                     settings: DB.getSettings(),
                     exportedAt: new Date().toISOString(),
-                    version: '3.0'
+                    version: '3.1'
                 };
                 const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = `malik-servis-backup-${Utils.todayStr()}.json`;
+                a.download = `malik-backup-${Utils.todayStr()}.json`;
                 a.click();
                 URL.revokeObjectURL(url);
-                UI.toast('Data berhasil diekspor!');
+                UI.toast('Data diekspor!');
             },
 
             importData() {
                 const fileInput = document.getElementById('restore-file');
                 if (!fileInput.files || fileInput.files.length === 0) {
-                    UI.toast('Pilih file JSON terlebih dahulu', 'warning');
+                    UI.toast('Pilih file JSON', 'warning');
                     return;
                 }
                 const file = fileInput.files[0];
@@ -3204,30 +2588,29 @@
                     try {
                         const data = JSON.parse(e.target.result);
                         if (!data.customers || !data.transactions) {
-                            UI.toast('Format file tidak valid', 'error');
+                            UI.toast('Format tidak valid', 'error');
                             return;
                         }
-                        if (!confirm('Restore akan mengganti semua data saat ini. Lanjutkan?')) return;
+                        if (!confirm('Restore akan mengganti semua data. Lanjutkan?')) return;
                         DB.setCustomers(data.customers || []);
                         DB.setTechnicians(data.technicians || []);
                         DB.setTransactions(data.transactions || []);
-                        DB.setParts(data.parts || []);
                         if (data.settings) DB.setSettings(data.settings);
-                        UI.toast('Data berhasil direstore!');
+                        UI.toast('Data direstore!');
                         App.navigate('dashboard');
                     } catch (err) {
-                        UI.toast('Gagal membaca file: ' + err.message, 'error');
+                        UI.toast('Gagal: ' + err.message, 'error');
                     }
                 };
                 reader.readAsText(file);
             },
 
             resetAllData() {
-                if (!confirm('⚠️ PERINGATAN: Ini akan menghapus SEMUA data. Lanjutkan?')) return;
-                if (!confirm('KONFIRMASI KEDUA: Yakin ingin reset semua data?')) return;
+                if (!confirm('⚠️ Hapus SEMUA data? Konfirmasi lagi.')) return;
+                if (!confirm('Yakin? Data tidak bisa dikembalikan.')) return;
                 localStorage.clear();
                 DB.init();
-                UI.toast('Semua data telah direset!');
+                UI.toast('Data direset!');
                 window.location.reload();
             }
         };
