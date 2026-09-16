@@ -414,7 +414,7 @@ const DB = {
   getManualReceipts() { return this._get('manual_receipts') || []; },
   setManualReceipts(v) { this._set('manual_receipts', v); },
   getSettings() {
-    const def = { shopName: 'Malik Servis', phone: '081234567890', address: 'Jl. Contoh No. 123, Semarang', tagline: 'Spesialis Elektronik & Teknologi', receiptFooter: 'Terima kasih atas kepercayaan Anda.\nGaransi tidak berlaku untuk kerusakan fisik/cair.', defaultWarranty: 7, woFormat: 'MS-{date}-{seq}' };
+    const def = { shopName: 'Malik Servis', phone: '085713087659', address: 'Dk.Jamalsari Rt004/R2002 No.52 ,Kedungpane,Mijen Jl.Untung Suropati Semarang', tagline: 'Spesialis Elektronik & Teknologi', receiptFooter: 'Terima kasih atas kepercayaan Anda.\nGaransi tidak berlaku untuk kerusakan fisik/cair.', defaultWarranty: 7, woFormat: 'MS-{date}-{seq}' };
     const s = this._get('settings');
     return s ? { ...def, ...s } : def;
   },
@@ -446,7 +446,7 @@ const DB = {
     if (!this._get('manual_receipts')) this.setManualReceipts([]);
     if (this.getTechnicians().length === 0) {
       this.setTechnicians([
-        { id: 'T001', name: 'Ahmad', phone: '081234567891', active: true, servicesCount: 0 },
+        { id: 'T001', name: 'Farhan', phone: '085713087659', active: true, servicesCount: 0 },
         { id: 'T002', name: 'Budi', phone: '081234567892', active: true, servicesCount: 0 },
       ]);
     }
