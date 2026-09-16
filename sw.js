@@ -1,4 +1,4 @@
-const CACHE = 'malik-servis-v3.3';
+const CACHE = 'malik-servis-v3.4';
 const CORE = ['./', './index.html'];
 
 self.addEventListener('install', (e) => {
