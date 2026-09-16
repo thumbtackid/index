@@ -17,7 +17,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <style>
-/* ===== RESET & ROOT ===== */
 :root{--primary:#0f3b5e;--primary-light:#1a5a8a;--accent:#2a9d8f;--success:#2a9d8f;--warning:#e9c46a;--danger:#e76f51;--info:#4a9eff;--gray-50:#f8fafc;--gray-100:#f1f5f9;--gray-200:#e2e8f0;--gray-300:#cbd5e1;--gray-400:#94a3b8;--gray-500:#64748b;--gray-600:#475569;--gray-700:#334155;--gray-800:#1e293b;--gray-900:#0f172a;--sidebar-width:260px;--bottom-nav-height:64px;--card-radius:12px;--shadow-sm:0 1px 3px rgba(0,0,0,.06);--shadow-md:0 4px 16px rgba(0,0,0,.08);--shadow-lg:0 12px 40px rgba(0,0,0,.12);--transition:all .25s cubic-bezier(.4,0,.2,1)}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,system-ui,sans-serif;background:var(--gray-50);color:var(--gray-800);display:flex;height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased}
@@ -131,7 +130,6 @@ table tbody tr:last-child td{border-bottom:none}
 .manual-item-row:last-child{border-bottom:none}
 .manual-item-row .form-control{padding:.35rem .5rem;font-size:.78rem}
 .manual-item-subtotal{font-size:.78rem;font-weight:600;text-align:right;color:var(--gray-700);white-space:nowrap}
-.token-display{font-family:'Courier New',Courier,monospace;font-size:1.05rem;letter-spacing:2px;font-weight:700;text-align:center;background:#fff8e1;border:2px dashed var(--warning);border-radius:8px;padding:.55rem;color:#7a5b00;word-break:break-all}
 .flex{display:flex}.items-center{align-items:center}.justify-between{justify-content:space-between}
 .gap-2{gap:.5rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.flex-1{flex:1}.w-full{width:100%}
 .mt-2{margin-top:.5rem}.mt-3{margin-top:.75rem}.mt-4{margin-top:1rem}
@@ -140,7 +138,6 @@ table tbody tr:last-child td{border-bottom:none}
 .divider{border-top:1px solid var(--gray-200);margin:.6rem 0}
 .menu-toggle{display:none;background:none;border:none;font-size:1.2rem;color:var(--gray-700);cursor:pointer;padding:.2rem}
 @media(max-width:768px){.menu-toggle{display:block}}
-.status-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:3px}
 .chip{display:inline-flex;align-items:center;gap:.25rem;padding:.1rem .5rem;border-radius:16px;font-size:.6rem;font-weight:500;background:var(--gray-100);color:var(--gray-600)}
 .receipt-preview{background:#f8fafc;border-radius:8px;padding:.8rem;border:1px solid var(--gray-200);max-height:500px;overflow-y:auto}
 .receipt-preview .thermal-print{margin:0 auto}
@@ -247,7 +244,7 @@ table tbody tr:last-child td{border-bottom:none}
     <a class="nav-item" data-view="settings"><i class="fas fa-gear"></i> Pengaturan</a>
     <a class="nav-item" data-view="backup"><i class="fas fa-database"></i> Backup &amp; Restore</a>
   </nav>
-  <div style="padding:.5rem 1.5rem;border-top:1px solid rgba(255,255,255,.06);font-size:.6rem;color:rgba(255,255,255,.25)">v3.3 — Nota PNG/JPG</div>
+  <div style="padding:.5rem 1.5rem;border-top:1px solid rgba(255,255,255,.06);font-size:.6rem;color:rgba(255,255,255,.25)">v3.4 — Stable</div>
 </aside>
 
 <main id="main-content">
@@ -260,7 +257,6 @@ table tbody tr:last-child td{border-bottom:none}
       <div class="date-badge"><i class="fas fa-calendar-day"></i><span id="header-date">Memuat...</span></div>
     </div>
   </header>
-
   <div id="content-area">
     <div id="view-dashboard" class="view-section"></div>
     <div id="view-pos" class="view-section hidden"></div>
@@ -322,7 +318,7 @@ table tbody tr:last-child td{border-bottom:none}
 
 <script>
 // ================================================================
-// PWA — Manifest & SW auto-generated
+// PWA
 // ================================================================
 const PWA = {
   deferredPrompt: null,
@@ -343,16 +339,16 @@ const PWA = {
     });
   },
   injectManifest() {
-    const iconUrl = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%230f3b5e'/%3E%3Ctext x='256' y='352' font-size='300' text-anchor='middle' fill='%232a9d8f' font-family='sans-serif' font-weight='bold'%3EM%3C/text%3E%3C/svg%3E";
+    const icon512 = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='96' fill='%230f3b5e'/%3E%3Ctext x='256' y='352' font-size='300' text-anchor='middle' fill='%232a9d8f' font-family='sans-serif' font-weight='bold'%3EM%3C/text%3E%3C/svg%3E";
     const icon192 = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='36' fill='%230f3b5e'/%3E%3Ctext x='96' y='132' font-size='120' text-anchor='middle' fill='%232a9d8f' font-family='sans-serif' font-weight='bold'%3EM%3C/text%3E%3C/svg%3E";
-    let basePath = location.pathname.replace(/[^/]*$/, '');
-    if (basePath === '') basePath = '/';
+    const startUrl = location.origin + location.pathname;
     const manifest = {
       name: "Malik Servis — Nota Cepat",
       short_name: "Malik Servis",
       description: "Aplikasi nota servis, token listrik & pembayaran",
-      start_url: basePath,
-      scope: basePath,
+      start_url: startUrl,
+      scope: startUrl,
+      id: startUrl,
       display: "standalone",
       orientation: "portrait",
       background_color: "#0f3b5e",
@@ -361,8 +357,8 @@ const PWA = {
       categories: ["business", "productivity", "finance"],
       icons: [
         { src: icon192, sizes: "192x192", type: "image/svg+xml", purpose: "any" },
-        { src: iconUrl, sizes: "512x512", type: "image/svg+xml", purpose: "any" },
-        { src: iconUrl, sizes: "512x512", type: "image/svg+xml", purpose: "maskable" }
+        { src: icon512, sizes: "512x512", type: "image/svg+xml", purpose: "any" },
+        { src: icon512, sizes: "512x512", type: "image/svg+xml", purpose: "maskable" }
       ]
     };
     const mBlob = new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' });
@@ -370,29 +366,15 @@ const PWA = {
   },
   registerSW() {
     if (!('serviceWorker' in navigator)) return;
-    const swCode = [
-      "const CACHE='malik-servis-single-v1';",
-      "const CORE=[location.href];",
-      "self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE).catch(()=>null)));});",
-      "self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});",
-      "self.addEventListener('fetch',e=>{",
-      "  if(e.request.method!=='GET')return;",
-      "  const u=new URL(e.request.url);",
-      "  if(u.protocol!=='http:'&&u.protocol!=='https:')return;",
-      "  e.respondWith(caches.match(e.request).then(cached=>{",
-      "    const net=fetch(e.request).then(res=>{",
-      "      if(res&&res.status===200&&res.type!=='opaque'){const cl=res.clone();caches.open(CACHE).then(c=>c.put(e.request,cl));}",
-      "      return res;",
-      "    }).catch(()=>cached);",
-      "    return cached||net;",
-      "  }));",
-      "});"
-    ].join('\n');
-    const swBlob = new Blob([swCode], { type: 'application/javascript' });
-    navigator.serviceWorker.register(URL.createObjectURL(swBlob)).then(() => {
-      console.log('[PWA] SW registered');
+    if (location.protocol === 'file:') {
+      console.info('[PWA] file:// mode — SW tidak didukung, tapi aplikasi tetap jalan.');
+      return;
+    }
+    navigator.serviceWorker.register('sw.js', { scope: './' }).then(() => {
+      console.log('[PWA] Service Worker registered ✅');
     }).catch((err) => {
       console.warn('[PWA] SW gagal register:', err.message);
+      console.info('[PWA] Pastikan file sw.js ada di folder yang sama dengan index.html');
     });
   },
   install() {
@@ -679,7 +661,7 @@ const UI = {
         <div class="flex-between fw-bold" style="font-size:1.1em;"><span>TOTAL</span><span>${Utils.rupiah(tx.total)}</span></div>
         <div class="flex-between"><span>DP</span><span>${Utils.rupiah(tx.dp || 0)}</span></div>
         <div class="flex-between"><strong>SISA</strong><strong>${Utils.rupiah(Math.max(0, tx.total - (tx.dp || 0)))}</strong></div>
-        <div class="flex-between"><span>Status</span><span>${lunas ? '✅ LUNAS' : '⏳ BELUM LUNAS'}</span></div>
+        <div class="flex-between"><span>Status</span><span>${lunas ? 'LUNAS' : 'BELUM LUNAS'}</span></div>
         <div class="divider"></div>
         <div><strong>Status Servis:</strong> ${tx.status}</div>
         ${tx.technician ? `<div><strong>Teknisi:</strong> ${tx.technician}</div>` : ''}
@@ -707,7 +689,7 @@ const UI = {
           <div style="font-size:1.3rem;font-weight:700;">Total: ${Utils.rupiah(tx.total)}</div>
           <div>DP: ${Utils.rupiah(tx.dp || 0)}</div>
           <div style="font-weight:600;">Sisa: ${Utils.rupiah(Math.max(0, tx.total - (tx.dp || 0)))}</div>
-          <div style="margin-top:4px;font-weight:600;">${lunas ? '✅ LUNAS' : '⏳ BELUM LUNAS'}</div>
+          <div style="margin-top:4px;font-weight:600;">${lunas ? 'LUNAS' : 'BELUM LUNAS'}</div>
         </div>
         <div class="footer">${s.receiptFooter || ''}</div>
       </div>`;
@@ -1333,7 +1315,6 @@ const App = {
   },
   closeModal() { UI.closeModal(); },
   toast(m, t) { UI.toast(m, t); },
-
   posUpdateField(f, v) { AppState.pos[f] = v; if (f === 'discount' || f === 'dp') UI.updatePOSSummary(); },
   posSetCategory(c) { AppState.activeCategory = c; Views.pos(); },
   posAddService(id) {
@@ -1457,7 +1438,6 @@ const App = {
     UI.toast('Transaksi dihapus');
     Views.history();
   },
-
   downloadReceiptImage(layout, format) {
     const data = window._lastReceipt;
     if (!data) { UI.toast('Nota belum siap', 'error'); return; }
@@ -1472,7 +1452,6 @@ const App = {
     const name = 'Nota-' + (data.no || 'Manual');
     UI.downloadAsImage(html, name, format || 'png');
   },
-
   manualUpdateField(f, v) { AppState.manual[f] = v; UI.manualUpdateSummary(); },
   manualSetType(t) { AppState.manual.type = t; Views.manual(); UI.toast('Jenis: ' + t, 'info'); },
   manualUpdateToken(f, v) { AppState.manual.tokenData[f] = v; UI.manualUpdateSummary(); },
@@ -1564,7 +1543,7 @@ const App = {
     if (!p.startsWith('62')) p = '62' + p;
     const s = DB.getSettings();
     const tokenLine = (r.type === 'token-listrik' && r.tokenData && r.tokenData.token) ? `\n\n*TOKEN LISTRIK:*\n${Utils.formatToken(r.tokenData.token)}${r.tokenData.kwh ? '\n' + r.tokenData.kwh : ''}` : '';
-    const statusLine = r.paid >= r.total ? '\nStatus: ✅ LUNAS' : '\nSisa: ' + Utils.rupiah(r.total - r.paid);
+    const statusLine = r.paid >= r.total ? '\nStatus: LUNAS' : '\nSisa: ' + Utils.rupiah(r.total - r.paid);
     const msg = `Halo ${r.customerName},\n\nNota dari *${s.shopName}*\n\nNo: ${r.no}\nTanggal: ${Utils.formatDate(r.date)}\nTotal: ${Utils.rupiah(r.total)}\nMetode: ${r.paymentMethod}${statusLine}${tokenLine}\n\nTerima kasih.`;
     window.open(`https://wa.me/${p}?text=${encodeURIComponent(msg)}`, '_blank');
   },
@@ -1591,7 +1570,6 @@ const App = {
   viewReceipt(wo) { UI.showReceipt(wo); },
   shareWA(wo) { UI.shareWA(wo); },
   printReceipt(m) { UI.printReceipt(m); },
-
   customerAdd() {
     UI.openModal('Tambah Pelanggan',
       `<div class="form-group"><label>Nama <span class="required">*</span></label><input class="form-control" id="cust-name" placeholder="Nama..."></div>
@@ -1651,7 +1629,7 @@ const App = {
     const data = {
       customers: DB.getCustomers(), technicians: DB.getTechnicians(),
       transactions: DB.getTransactions(), manual_receipts: DB.getManualReceipts(),
-      settings: DB.getSettings(), exportedAt: new Date().toISOString(), version: '3.3'
+      settings: DB.getSettings(), exportedAt: new Date().toISOString(), version: '3.4'
     };
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
